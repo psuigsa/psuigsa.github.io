@@ -401,24 +401,11 @@ export default function ParticleIndiaMap() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 5 }}>
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-igsa-saffron/5 via-igsa-orange/3 to-igsa-green/5"></div>
-      
-      {/* Particle Canvas */}
+    <div className="absolute inset-0 w-full h-full">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full cursor-none"
-        style={{ background: 'transparent' }}
+        className="w-full h-full pointer-events-auto"
       />
-
-      {/* Instructions */}
-      {particles.length > 0 && (
-        <div className="absolute bottom-4 left-4 bg-black/20 backdrop-blur-sm text-white px-3 py-2 rounded-lg text-sm animate-fade-in z-10">
-          <div>Move your mouse to interact with particles</div>
-          <div className="text-xs opacity-70">{debugInfo}</div>
-        </div>
-      )}
     </div>
   );
 }

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { ChevronRight, Users, BookOpen, Calendar, MapPin, Heart, Star } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ParticleIndiaMap from "@/components/ParticleIndiaMap";
-import InteractiveText from "@/components/InteractiveText";
 import AutoFitText from "@/components/AutoFitText";
 
 export default function Index() {
@@ -75,23 +74,19 @@ export default function Index() {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 pointer-events-none">
-          <div className="transition-all duration-1000 ease-in-out">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 animate-fade-in">
-              <div className="pointer-events-auto">
-                <InteractiveText
-                  text={heroSlides[currentSlide].title}
-                  gradient={heroSlides[currentSlide].gradient}
-                  className={`bg-gradient-to-r ${heroSlides[currentSlide].gradient} bg-clip-text text-transparent`}
-                />
-              </div>
+          <div className="transition-all duration-1000 ease-in-out pointer-events-none">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 animate-fade-in pointer-events-none">
+              <span className={`bg-gradient-to-r ${heroSlides[currentSlide].gradient} bg-clip-text text-transparent transition-all duration-1000 pointer-events-none`}>
+                {heroSlides[currentSlide].title}
+              </span>
             </h1>
-            <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 mb-6 animate-slide-up">
+            <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 mb-6 animate-slide-up pointer-events-none">
               {heroSlides[currentSlide].subtitle}
             </h2>
-            <p>
+            <p className="pointer-events-none">
               <AutoFitText
                 text={heroSlides[currentSlide].description}
-                className="sm:text-base md:text-lg lg:text-xl leading-tight tracking-tight sm:whitespace-normal"
+                className="sm:text-base md:text-lg lg:text-xl leading-tight tracking-tight sm:whitespace-normal pointer-events-none"
                 minPx={9}
                 maxPx={13}
               />
@@ -129,7 +124,7 @@ export default function Index() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce pointer-events-none">
           <div className="w-6 h-10 border-2 border-igsa-saffron rounded-full flex justify-center">
             <div className="w-1 h-3 bg-igsa-saffron rounded-full mt-2 animate-pulse"></div>
           </div>
