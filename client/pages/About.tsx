@@ -31,9 +31,27 @@ export default function About() {
                 To create a supportive and inclusive community for Indian graduate students, 
                 fostering academic excellence, cultural celebration, and lifelong connections.
               </p>
-              <p className="text-lg text-gray-600">
+              <p className="text-lg text-gray-600 mb-6">
                 We bridge the gap between home and your new academic journey, providing 
                 resources, support, and a sense of belonging in State College.
+              </p>
+              <p className="text-lg text-gray-600 mb-6">
+                Formed in the Spring of 2003, this student-run organization acts as a platform to 
+                integrate Indian graduate students and post-doctoral scholars at Penn State representing 
+                India and the Indian community. Our goal is to provide incoming Indian graduate students 
+                and scholars the know-how of navigating the graduate/professional life in State College, 
+                Pennsylvania and help smoothen their transition to a new place. We welcome current and incoming 
+                Indian Graduate students into our organization.
+              </p>
+              <p className="text-lg text-gray-600">
+                Main motivation behind the formation of IGSA is to create a platform for Indian graduate students 
+                and research scholars to connect with each other and have a sense of belongingness in a foreign land. 
+                Occassionally, we also hold events to celebrate the rich and diverse Indian culture and encourage 
+                participation from all members of the Indian community and friends from other nationalities. 
+                Our events are aimed to introduce and showcase the Indian culture to American and International 
+                Communities at Penn State.  We, as an organization, encourage and collaborate with other communities 
+                and groups at University Park, such as the Indian Culture and Language Club, Penn State Vedic Society, 
+                Hindu Student Council, Association of India's Development, Penn State JaDhoom, Natya, Penn State Cricket Club among others.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
