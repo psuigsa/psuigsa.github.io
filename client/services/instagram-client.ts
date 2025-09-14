@@ -35,28 +35,52 @@ class ClientInstagramService {
     }
   }
 
+  /**
+   * UPDATED FETCH METHOD WITH MULTIPLE STRATEGIES
+   * Tries different approaches to scrape Instagram data
+   */
   private async fetchFreshPosts(limit: number): Promise<InstagramPost[]> {
-    // Try multiple methods in order of preference
+    // Updated strategy order - prioritize methods most likely to work
     const methods = [
+      () => this.fetchDirectly(),
       () => this.fetchViaProxy(),
-      () => this.fetchViaRSS(),
-      () => this.fetchViaCorsproxy()
+      () => this.fetchViaCorsproxy(),
+      () => this.fetchViaRSS()
     ];
 
     for (const method of methods) {
       try {
-        console.log('Attempting to fetch Instagram posts...');
+        console.log('🔄 Attempting Instagram fetch method...');
         const posts = await method();
         if (posts.length > 0) {
+          console.log(`✅ Successfully fetched ${posts.length} posts`);
           return posts.slice(0, limit);
         }
       } catch (error) {
-        console.log('Method failed, trying next...');
+        console.log(`⚠️ Method failed: ${error.message}`);
         continue;
       }
     }
 
     throw new Error('All fetch methods failed');
+  }
+
+  /**
+   * Try to fetch directly (will likely fail due to CORS but worth trying)
+   */
+  private async fetchDirectly(): Promise<InstagramPost[]> {
+    const response = await fetch(`https://www.instagram.com/${this.username}/`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const html = await response.text();
+    return this.parseInstagramHTML(html);
   }
 
   private async fetchViaProxy(): Promise<InstagramPost[]> {
@@ -87,35 +111,193 @@ class ClientInstagramService {
     throw new Error('RSS method not implemented');
   }
 
+  /**
+   * UPDATED PARSING METHOD WITH MULTIPLE STRATEGIES
+   * 
+   * This method tries multiple extraction approaches to handle Instagram's
+   * frequently changing HTML structure.
+   * 
+   * MAINTENANCE: Update these strategies if Instagram changes their structure
+   */
   private parseInstagramHTML(html: string): InstagramPost[] {
+    console.log(`📄 Parsing HTML content (${html.length} characters)`);
+    
+    // Strategy 1: Try modern JSON-LD approach
     try {
-      // Extract JSON data from Instagram's HTML
-      const jsonMatch = html.match(/window\._sharedData\s*=\s*({.+?});/);
-      
-      if (jsonMatch) {
-        const sharedData = JSON.parse(jsonMatch[1]);
-        const userData = sharedData?.entry_data?.ProfilePage?.[0]?.graphql?.user;
+      const posts = this.extractFromJsonLD(html);
+      if (posts.length > 0) {
+        console.log(`✅ Extracted ${posts.length} posts using JSON-LD method`);
+        return posts;
+      }
+    } catch (error) {
+      console.log('⚠️ JSON-LD extraction failed:', error.message);
+    }
+
+    // Strategy 2: Try React application data
+    try {
+      const posts = this.extractFromReactData(html);
+      if (posts.length > 0) {
+        console.log(`✅ Extracted ${posts.length} posts using React data method`);
+        return posts;
+      }
+    } catch (error) {
+      console.log('⚠️ React data extraction failed:', error.message);
+    }
+
+    // Strategy 3: Try legacy window._sharedData (deprecated but might work)
+    try {
+      const posts = this.extractFromLegacySharedData(html);
+      if (posts.length > 0) {
+        console.log(`✅ Extracted ${posts.length} posts using legacy method`);
+        return posts;
+      }
+    } catch (error) {
+      console.log('⚠️ Legacy shared data extraction failed:', error.message);
+    }
+
+    // Strategy 4: Try meta tags fallback
+    try {
+      const posts = this.extractFromMetaTags(html);
+      if (posts.length > 0) {
+        console.log(`✅ Extracted ${posts.length} posts using meta tags method`);
+        return posts;
+      }
+    } catch (error) {
+      console.log('⚠️ Meta tags extraction failed:', error.message);
+    }
+    
+    throw new Error('All parsing strategies failed - Instagram structure may have changed');
+  }
+
+  private extractFromJsonLD(html: string): InstagramPost[] {
+    const jsonLdMatches = html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs);
+    
+    if (!jsonLdMatches) {
+      throw new Error('No JSON-LD data found');
+    }
+
+    for (const match of jsonLdMatches) {
+      try {
+        const jsonContent = match.replace(/<script[^>]*>/, '').replace(/<\/script>/, '');
+        const data = JSON.parse(jsonContent);
         
-        if (userData?.edge_owner_to_timeline_media?.edges) {
-          return userData.edge_owner_to_timeline_media.edges.map((edge: any) => {
-            const node = edge.node;
-            return {
-              id: node.id,
-              caption: node.edge_media_to_caption?.edges[0]?.node?.text || '',
-              media_url: node.display_url,
-              media_type: node.is_video ? 'VIDEO' : (node.edge_sidecar_to_children ? 'CAROUSEL_ALBUM' : 'IMAGE'),
-              permalink: `https://www.instagram.com/p/${node.shortcode}/`,
-              timestamp: new Date(node.taken_at_timestamp * 1000).toISOString(),
-              username: this.username
-            };
-          });
+        if (data['@type'] === 'SocialMediaPosting' || data.mainEntity?.['@type'] === 'SocialMediaPosting') {
+          const posts = Array.isArray(data) ? data : [data];
+          return posts.map((post: any, index: number) => ({
+            id: `jsonld_${index}`,
+            caption: post.text || post.description || '',
+            media_url: post.image || post.url || 'https://via.placeholder.com/400',
+            media_type: 'IMAGE' as const,
+            permalink: post.url || `https://instagram.com/${this.username}`,
+            timestamp: post.datePublished || new Date().toISOString(),
+            username: this.username
+          }));
+        }
+      } catch (error) {
+        continue; // Try next JSON-LD block
+      }
+    }
+    
+    throw new Error('No valid JSON-LD social media data found');
+  }
+
+  private extractFromReactData(html: string): InstagramPost[] {
+    const patterns = [
+      /window\.__additionalDataLoaded\s*\(\s*['"]\S+['"]\s*,\s*({.+?})\s*\)/s,
+      /window\._sharedData\s*=\s*({.+?});/s,
+      /"props":\s*({.+?"user":.+?"edge_owner_to_timeline_media".+?})/s,
+      /"graphql":\s*({.+?"user":.+?"edge_owner_to_timeline_media".+?})/s
+    ];
+
+    for (const pattern of patterns) {
+      const match = html.match(pattern);
+      if (match) {
+        try {
+          const data = JSON.parse(match[1]);
+          
+          const possiblePaths = [
+            data?.user?.edge_owner_to_timeline_media?.edges,
+            data?.entry_data?.ProfilePage?.[0]?.graphql?.user?.edge_owner_to_timeline_media?.edges,
+            data?.graphql?.user?.edge_owner_to_timeline_media?.edges,
+            data?.props?.user?.edge_owner_to_timeline_media?.edges
+          ];
+
+          for (const edges of possiblePaths) {
+            if (Array.isArray(edges) && edges.length > 0) {
+              return edges.map((edge: any) => {
+                const node = edge.node;
+                return {
+                  id: node.id || `react_${Math.random().toString(36).substr(2, 9)}`,
+                  caption: node.edge_media_to_caption?.edges?.[0]?.node?.text || '',
+                  media_url: node.display_url || node.thumbnail_src || 'https://via.placeholder.com/400',
+                  media_type: node.is_video ? 'VIDEO' : (node.edge_sidecar_to_children ? 'CAROUSEL_ALBUM' : 'IMAGE'),
+                  permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+                  timestamp: new Date((node.taken_at_timestamp || Date.now() / 1000) * 1000).toISOString(),
+                  username: this.username
+                };
+              });
+            }
+          }
+        } catch (error) {
+          continue; // Try next pattern
         }
       }
-      
-      throw new Error('No posts found in HTML');
-    } catch (error) {
-      throw new Error('Failed to parse Instagram HTML');
     }
+    
+    throw new Error('No valid React application data found');
+  }
+
+  private extractFromLegacySharedData(html: string): InstagramPost[] {
+    const jsonMatch = html.match(/window\._sharedData\s*=\s*({.+?});/);
+    
+    if (!jsonMatch) {
+      throw new Error('No legacy shared data found');
+    }
+
+    const sharedData = JSON.parse(jsonMatch[1]);
+    const userData = sharedData?.entry_data?.ProfilePage?.[0]?.graphql?.user;
+    
+    if (userData?.edge_owner_to_timeline_media?.edges) {
+      return userData.edge_owner_to_timeline_media.edges.map((edge: any) => {
+        const node = edge.node;
+        return {
+          id: node.id,
+          caption: node.edge_media_to_caption?.edges[0]?.node?.text || '',
+          media_url: node.display_url,
+          media_type: node.is_video ? 'VIDEO' : (node.edge_sidecar_to_children ? 'CAROUSEL_ALBUM' : 'IMAGE'),
+          permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+          timestamp: new Date(node.taken_at_timestamp * 1000).toISOString(),
+          username: this.username
+        };
+      });
+    }
+    
+    throw new Error('No posts found in legacy shared data');
+  }
+
+  private extractFromMetaTags(html: string): InstagramPost[] {
+    const getMetaContent = (property: string): string => {
+      const match = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${property}["'][^>]*content=["']([^"']+)["']`, 'i'));
+      return match ? match[1] : '';
+    };
+
+    const title = getMetaContent('og:title') || getMetaContent('twitter:title');
+    const description = getMetaContent('og:description') || getMetaContent('twitter:description');
+    const image = getMetaContent('og:image') || getMetaContent('twitter:image');
+    
+    if (!title && !description && !image) {
+      throw new Error('No useful meta tag data found');
+    }
+
+    return [{
+      id: `meta_${Date.now()}`,
+      caption: description || `Latest from @${this.username}`,
+      media_url: image || 'https://via.placeholder.com/400',
+      media_type: 'IMAGE' as const,
+      permalink: `https://instagram.com/${this.username}`,
+      timestamp: new Date().toISOString(),
+      username: this.username
+    }];
   }
 
   private getFromCache(ignoreExpiry = false): InstagramPost[] | null {

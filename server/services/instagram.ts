@@ -48,15 +48,81 @@ class InstagramService {
     }
   }
 
+  /**
+   * UPDATED SCRAPING METHOD WITH MULTIPLE STRATEGIES
+   * 
+   * This method tries multiple extraction strategies to handle Instagram's
+   * frequently changing HTML structure. Update the extraction functions
+   * below if Instagram changes their data format.
+   */
   private async scrapePublicPosts(limit: number): Promise<InstagramPost[]> {
     try {
-      // Instagram's public JSON endpoint for profiles
+      console.log(`🔍 Attempting to scrape Instagram posts for @${this.username}`);
+      
+      // First try: Direct Instagram page with modern headers
+      const response = await axios.get(`https://www.instagram.com/${this.username}/`, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'gzip, deflate, br',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'none',
+          'Sec-Fetch-User': '?1',
+          'Upgrade-Insecure-Requests': '1'
+        },
+        timeout: 15000,
+      });
+
+      const html = response.data;
+      console.log(`📄 Retrieved HTML content (${html.length} characters)`);
+
+      // Try multiple extraction strategies
+      const strategies = [
+        () => this.extractFromJsonLD(html, limit),
+        () => this.extractFromReactData(html, limit),
+        () => this.extractFromLegacySharedData(html, limit),
+        () => this.extractFromMetaTags(html, limit)
+      ];
+
+      for (const strategy of strategies) {
+        try {
+          const posts = strategy();
+          if (posts.length > 0) {
+            console.log(`✅ Successfully extracted ${posts.length} posts`);
+            return posts;
+          }
+        } catch (error) {
+          console.log(`⚠️ Strategy failed: ${error.message}`);
+          continue;
+        }
+      }
+      
+      throw new Error('All extraction strategies failed - Instagram structure may have changed');
+    } catch (error) {
+      console.error('❌ Error scraping Instagram:', error.message);
+      
+      // Alternative: Try the old JSON endpoint method as final attempt
+      return await this.fetchViaLegacyEndpoint(limit);
+    }
+  }
+
+  /**
+   * LEGACY METHOD: Try the old Instagram endpoint (likely to fail)
+   * Keep this as a fallback but expect it to not work
+   */
+  private async fetchViaLegacyEndpoint(limit: number): Promise<InstagramPost[]> {
+    try {
+      console.log('🔄 Trying legacy Instagram JSON endpoint');
       const url = `https://www.instagram.com/${this.username}/?__a=1&__d=dis`;
       
       const response = await axios.get(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+          'Accept': 'application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.5',
           'Accept-Encoding': 'gzip, deflate',
           'Cache-Control': 'no-cache',
@@ -66,7 +132,6 @@ class InstagramService {
 
       const data = response.data;
       
-      // Extract posts from the response
       if (data?.graphql?.user?.edge_owner_to_timeline_media?.edges) {
         const edges = data.graphql.user.edge_owner_to_timeline_media.edges;
         
@@ -85,12 +150,10 @@ class InstagramService {
         });
       }
       
-      throw new Error('No posts found in response');
+      throw new Error('Legacy endpoint returned no posts');
     } catch (error) {
-      console.error('Error scraping Instagram:', error);
-      
-      // Alternative: Try fetching from Instagram's embed endpoint
-      return await this.fetchViaEmbed(limit);
+      console.log('⚠️ Legacy endpoint failed (expected):', error.message);
+      throw error;
     }
   }
 
@@ -137,6 +200,145 @@ class InstagramService {
       console.error('Embed method also failed:', error);
       throw error;
     }
+  }
+
+  /**
+   * EXTRACTION METHODS - UPDATE THESE IF INSTAGRAM CHANGES STRUCTURE
+   */
+
+  private extractFromJsonLD(html: string, limit: number): InstagramPost[] {
+    const jsonLdMatches = html.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/gs);
+    
+    if (!jsonLdMatches) {
+      throw new Error('No JSON-LD data found');
+    }
+
+    for (const match of jsonLdMatches) {
+      try {
+        const jsonContent = match.replace(/<script[^>]*>/, '').replace(/<\/script>/, '');
+        const data = JSON.parse(jsonContent);
+        
+        if (data['@type'] === 'SocialMediaPosting' || data.mainEntity?.['@type'] === 'SocialMediaPosting') {
+          const posts = Array.isArray(data) ? data : [data];
+          return posts.slice(0, limit).map((post: any, index: number) => ({
+            id: `jsonld_${index}`,
+            caption: post.text || post.description || '',
+            media_url: post.image || post.url || 'https://via.placeholder.com/400',
+            media_type: 'IMAGE' as const,
+            permalink: post.url || `https://instagram.com/${this.username}`,
+            timestamp: post.datePublished || new Date().toISOString(),
+            username: this.username
+          }));
+        }
+      } catch (error) {
+        continue;
+      }
+    }
+    
+    throw new Error('No valid JSON-LD social media data found');
+  }
+
+  private extractFromReactData(html: string, limit: number): InstagramPost[] {
+    const patterns = [
+      /window\.__additionalDataLoaded\s*\(\s*['"]\S+['"]\s*,\s*({.+?})\s*\)/s,
+      /window\._sharedData\s*=\s*({.+?});/s,
+      /"props":\s*({.+?"user":.+?"edge_owner_to_timeline_media".+?})/s,
+      /"graphql":\s*({.+?"user":.+?"edge_owner_to_timeline_media".+?})/s
+    ];
+
+    for (const pattern of patterns) {
+      const match = html.match(pattern);
+      if (match) {
+        try {
+          const data = JSON.parse(match[1]);
+          
+          const possiblePaths = [
+            data?.user?.edge_owner_to_timeline_media?.edges,
+            data?.entry_data?.ProfilePage?.[0]?.graphql?.user?.edge_owner_to_timeline_media?.edges,
+            data?.graphql?.user?.edge_owner_to_timeline_media?.edges,
+            data?.props?.user?.edge_owner_to_timeline_media?.edges
+          ];
+
+          for (const edges of possiblePaths) {
+            if (Array.isArray(edges) && edges.length > 0) {
+              return edges.slice(0, limit).map((edge: any) => {
+                const node = edge.node;
+                return {
+                  id: node.id || `react_${Math.random().toString(36).substr(2, 9)}`,
+                  caption: node.edge_media_to_caption?.edges?.[0]?.node?.text || '',
+                  media_url: node.display_url || node.thumbnail_src || 'https://via.placeholder.com/400',
+                  media_type: node.is_video ? 'VIDEO' : (node.edge_sidecar_to_children ? 'CAROUSEL_ALBUM' : 'IMAGE'),
+                  permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+                  timestamp: new Date((node.taken_at_timestamp || Date.now() / 1000) * 1000).toISOString(),
+                  username: this.username,
+                  thumbnail_url: node.thumbnail_src
+                };
+              });
+            }
+          }
+        } catch (error) {
+          continue;
+        }
+      }
+    }
+    
+    throw new Error('No valid React application data found');
+  }
+
+  private extractFromLegacySharedData(html: string, limit: number): InstagramPost[] {
+    const jsonMatch = html.match(/window\._sharedData\s*=\s*({.+?});/);
+    
+    if (!jsonMatch) {
+      throw new Error('No legacy shared data found');
+    }
+
+    const sharedData = JSON.parse(jsonMatch[1]);
+    const userData = sharedData?.entry_data?.ProfilePage?.[0]?.graphql?.user;
+    
+    if (userData?.edge_owner_to_timeline_media?.edges) {
+      const edges = userData.edge_owner_to_timeline_media.edges;
+      
+      return edges.slice(0, limit).map((edge: any) => {
+        const node = edge.node;
+        return {
+          id: node.id,
+          caption: node.edge_media_to_caption?.edges[0]?.node?.text || '',
+          media_url: node.display_url,
+          media_type: node.is_video ? 'VIDEO' : (node.edge_sidecar_to_children ? 'CAROUSEL_ALBUM' : 'IMAGE'),
+          permalink: `https://www.instagram.com/p/${node.shortcode}/`,
+          timestamp: new Date(node.taken_at_timestamp * 1000).toISOString(),
+          username: this.username,
+          thumbnail_url: node.thumbnail_src
+        };
+      });
+    }
+    
+    throw new Error('No posts found in legacy shared data');
+  }
+
+  private extractFromMetaTags(html: string, limit: number): InstagramPost[] {
+    const getMetaContent = (property: string): string => {
+      const match = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${property}["'][^>]*content=["']([^"']+)["']`, 'i'));
+      return match ? match[1] : '';
+    };
+
+    const title = getMetaContent('og:title') || getMetaContent('twitter:title');
+    const description = getMetaContent('og:description') || getMetaContent('twitter:description');
+    const image = getMetaContent('og:image') || getMetaContent('twitter:image');
+    
+    if (!title && !description && !image) {
+      throw new Error('No useful meta tag data found');
+    }
+
+    return [{
+      id: `meta_${Date.now()}`,
+      caption: description || `Latest from @${this.username}`,
+      media_url: image || 'https://via.placeholder.com/400',
+      media_type: 'IMAGE' as const,
+      permalink: `https://instagram.com/${this.username}`,
+      timestamp: new Date().toISOString(),
+      username: this.username
+    }];
   }
 
   private async loadFromCache(ignoreExpiry = false): Promise<InstagramPost[] | null> {
