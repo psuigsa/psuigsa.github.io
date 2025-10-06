@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, Users, BookOpen, Calendar, MapPin, Heart, Star } from "lucide-react";
+import { ChevronRight, Users, BookOpen, Calendar, MapPin, Heart, Star, Sparkles, ArrowRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import ParticleIndiaMap from "@/components/ParticleIndiaMap";
 import AutoFitText from "@/components/AutoFitText";
+import InstagramFeed from "@/components/InstagramFeed";
 
 export default function Index() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -158,6 +159,36 @@ export default function Index() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Instagram Feed Section */}
+      <section className="py-16 bg-gradient-to-r from-igsa-saffron/5 to-igsa-orange/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center mb-4">
+              <Sparkles className="w-8 h-8 text-igsa-saffron mr-3" />
+              <h2 className="text-3xl font-bold text-gray-900">Stay Connected</h2>
+              <Sparkles className="w-8 h-8 text-igsa-orange ml-3" />
+            </div>
+            <p className="text-xl text-gray-600 mb-2">Follow our latest moments and community highlights</p>
+            <p className="text-sm text-gray-500">@psu.igsa on Instagram</p>
+          </div>
+          
+          <InstagramFeed maxPosts={8} showCaptions={true} />
+          
+          <div className="text-center mt-12">
+            <a 
+              href="https://instagram.com/psu.igsa" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-gradient-to-r from-igsa-saffron to-igsa-orange text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+            >
+              <Heart className="w-5 h-5 mr-2" />
+              Follow @psu.igsa
+              <ArrowRight className="w-5 h-5 ml-2" />
+            </a>
           </div>
         </div>
       </section>
