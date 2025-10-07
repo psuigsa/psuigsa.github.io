@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
-import { Plane, Home, MapPin, ChevronRight, BookOpen, FileText, Users } from "lucide-react";
+import { Plane, Home, MapPin, ChevronRight, BookOpen, FileText, Users, MessageCircle, Bot } from "lucide-react";
 
 export default function Resources() {
   const resourceCategories = [
@@ -128,6 +128,28 @@ export default function Resources() {
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Contact Support</h3>
               <p className="text-gray-600 text-sm">Get in touch with IGSA volunteers for personalized help</p>
             </div>
+
+            {/* New Forum Card */}
+            <Link to="/forum" className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 group">
+              <MessageCircle className="w-12 h-12 text-igsa-blue mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Community Forum</h3>
+              <p className="text-gray-600 text-sm mb-4">Join discussions, ask questions, and connect with fellow international graduate students</p>
+              <div className="flex items-center text-igsa-blue font-semibold group-hover:translate-x-2 transition-transform">
+                <span>Join Forum</span>
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </div>
+            </Link>
+
+            {/* New AI Assistant Card */}
+            <Link to="/forum" className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-1 group">
+              <Bot className="w-12 h-12 text-igsa-saffron mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">AI Assistant</h3>
+              <p className="text-gray-600 text-sm mb-4">Get instant answers to questions about events, housing, visa, and student life</p>
+              <div className="flex items-center text-igsa-saffron font-semibold group-hover:translate-x-2 transition-transform">
+                <span>Chat Now</span>
+                <ChevronRight className="w-4 h-4 ml-1" />
+              </div>
+            </Link>
           </div>
         </div>
       </section>
