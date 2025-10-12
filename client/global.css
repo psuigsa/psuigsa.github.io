@@ -144,19 +144,32 @@
     animation: slow-spin 20s linear infinite;
   }
 
+  .delay-100 {
+    animation-delay: 0.1s;
+    transition-delay: 0.1s;
+  }
+
   .delay-200 {
     animation-delay: 0.2s;
     animation-fill-mode: both;
+    transition-delay: 0.2s;
+  }
+
+  .delay-300 {
+    animation-delay: 0.3s;
+    transition-delay: 0.3s;
   }
 
   .delay-400 {
     animation-delay: 0.4s;
     animation-fill-mode: both;
+    transition-delay: 0.4s;
   }
 
   .delay-500 {
     animation-delay: 0.5s;
     animation-fill-mode: both;
+    transition-delay: 0.5s;
   }
 
   .delay-1000 {

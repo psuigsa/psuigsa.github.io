@@ -17,7 +17,7 @@ export default function ParticleIndiaMap() {
   const animationRef = useRef<number>();
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isMouseOver, setIsMouseOver] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
   const [arrivalStart, setArrivalStart] = useState<number | null>(null);
 
@@ -298,30 +298,63 @@ export default function ParticleIndiaMap() {
 
   }, []);
 
-  // Handle mouse movement
+  // Handle mouse and touch interactions
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const getEventCoordinates = (e: MouseEvent | TouchEvent) => {
       const rect = canvas.getBoundingClientRect();
-      setMousePos({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
+      
+      if ('touches' in e) {
+        // Handle touch event
+        return {
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top
+        };
+      } else {
+        // Handle mouse event
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        };
+      }
     };
 
-    const handleMouseEnter = () => setIsMouseOver(true);
-    const handleMouseLeave = () => setIsMouseOver(false);
+    const handleMove = (e: MouseEvent | TouchEvent) => {
+      setMousePos(getEventCoordinates(e));
+    };
 
-    canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mouseenter', handleMouseEnter);
-    canvas.addEventListener('mouseleave', handleMouseLeave);
+    const handleStart = () => {
+      setIsInteracting(true);
+    };
+
+    const handleEnd = () => {
+      setIsInteracting(false);
+    };
+
+    // Mouse events
+    canvas.addEventListener('mousemove', handleMove);
+    canvas.addEventListener('mouseenter', handleStart);
+    canvas.addEventListener('mouseleave', handleEnd);
+    
+    // Touch events
+    canvas.addEventListener('touchstart', handleStart);
+    canvas.addEventListener('touchmove', handleMove);
+    canvas.addEventListener('touchend', handleEnd);
+    canvas.addEventListener('touchcancel', handleEnd);
 
     return () => {
-      canvas.removeEventListener('mousemove', handleMouseMove);
-      canvas.removeEventListener('mouseenter', handleMouseEnter);
-      canvas.removeEventListener('mouseleave', handleMouseLeave);
+      // Cleanup mouse events
+      canvas.removeEventListener('mousemove', handleMove);
+      canvas.removeEventListener('mouseenter', handleStart);
+      canvas.removeEventListener('mouseleave', handleEnd);
+      
+      // Cleanup touch events
+      canvas.removeEventListener('touchstart', handleStart);
+      canvas.removeEventListener('touchmove', handleMove);
+      canvas.removeEventListener('touchend', handleEnd);
+      canvas.removeEventListener('touchcancel', handleEnd);
     };
   }, []);
 
@@ -340,7 +373,7 @@ export default function ParticleIndiaMap() {
       const arriving = arrivalStart !== null && now - arrivalStart < PHYSICS.arrivalDuration;
 
       particles.forEach((particle) => {
-        if (isMouseOver && !arriving) {
+        if (isInteracting && !arriving) {
           // Repulsion only after arrival
           const dx = particle.x - mousePos.x;
           const dy = particle.y - mousePos.y;
@@ -387,7 +420,7 @@ export default function ParticleIndiaMap() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [particles, mousePos, isMouseOver, arrivalStart]);
+  }, [particles, mousePos, isInteracting, arrivalStart]);
 
   // Handle resize
   useEffect(() => {
@@ -404,7 +437,7 @@ export default function ParticleIndiaMap() {
     <div className="absolute inset-0 w-full h-full">
       <canvas
         ref={canvasRef}
-        className="w-full h-full pointer-events-auto"
+        className="w-full h-full pointer-events-auto touch-auto"
       />
     </div>
   );

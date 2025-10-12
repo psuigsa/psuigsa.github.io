@@ -1,9 +1,26 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Navigation from "@/components/Navigation";
-import { MessageCircle, Users, Sparkles, Bot, User, Send, X } from 'lucide-react';
+import { 
+  MessageCircle, 
+  Users, 
+  Bot, 
+  User, 
+  Send, 
+  X, 
+  Search,
+  Filter,
+  Plus,
+  Pin,
+  BookOpen,
+  HelpCircle,
+  Briefcase,
+  Home,
+  Heart,
+  Reply,
+  Clock
+} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -16,16 +33,14 @@ interface ChatMessage {
   text: string;
   sender: "user" | "bot";
   timestamp: Date;
-  relatedTopics?: string[];
 }
 
 export default function Forum() {
-  const [activeTab, setActiveTab] = useState<'discussions' | 'ai'>('discussions');
   const [showAIChat, setShowAIChat] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "1",
-      text: "Hi! I'm the IGSA AI assistant. I can help you with questions about events, housing, resources, and more. What would you like to know?",
+      text: "Hi! I'm the IGSA AI assistant. I am still being developed, I will do my best to help you with any questions you have about IGSA, events, housing, or student life!",
       sender: "bot",
       timestamp: new Date()
     }
@@ -34,35 +49,8 @@ export default function Forum() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [showNewPost, setShowNewPost] = useState(false);
-  const giscusRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (activeTab === 'discussions' && giscusRef.current) {
-      // Clear any existing content
-      giscusRef.current.innerHTML = '';
-      
-      // Load Giscus
-      const script = document.createElement('script');
-      script.src = 'https://giscus.app/client.js';
-      script.setAttribute('data-repo', 'psuigsa/psuigsa.github.io');
-      script.setAttribute('data-repo-id', 'R_kgDONLqKkA'); // You'll need to get this from giscus.app
-      script.setAttribute('data-category', 'Q&A');
-      script.setAttribute('data-category-id', 'DIC_kwDONLqKkM4CkqS0'); // You'll need to get this from giscus.app
-      script.setAttribute('data-mapping', 'title');
-      script.setAttribute('data-strict', '0');
-      script.setAttribute('data-reactions-enabled', '1');
-      script.setAttribute('data-emit-metadata', '0');
-      script.setAttribute('data-input-position', 'top');
-      script.setAttribute('data-theme', 'preferred_color_scheme');
-      script.setAttribute('data-lang', 'en');
-      script.setAttribute('crossorigin', 'anonymous');
-      script.async = true;
-
-      giscusRef.current.appendChild(script);
-    }
-  }, [activeTab]);
-
-  // Simple AI response generator (completely free)
+  // Simple AI response generator
   const generateAIResponse = (query: string): string => {
     const queryLower = query.toLowerCase();
     
@@ -99,10 +87,10 @@ export default function Forum() {
     }
     
     if (queryLower.includes('involve') || queryLower.includes('volunteer') || queryLower.includes('committee')) {
-      return "There are many ways to get involved with IGSA! You can join committees, volunteer for events, attend monthly meetings, or run for executive positions. Visit our Get Involved section or contact our VP of Internal Affairs for current opportunities.";
+      return "There are many ways to get involved with IGSA! You can join committees, volunteer for events, attend monthly meetings, or run for executive positions. Visit our About section or contact our VP of Internal Affairs for current opportunities.";
     }
     
-    return "That's a great question! For detailed information, I recommend checking our Resources section which has comprehensive guides for pre-arrival, post-arrival, and living in State College. You can also post this question in our community discussions where other students and IGSA members can share their experiences and advice.";
+    return "That's a great question! For detailed information, I recommend checking our Resources section which has comprehensive guides for pre-arrival, post-arrival, and living in State College. You can also explore our Events page to see upcoming activities and networking opportunities.";
   };
 
   const handleSendMessage = () => {
@@ -125,6 +113,13 @@ export default function Forum() {
 
     setMessages(prev => [...prev, userMessage, botMessage]);
     setInputText("");
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
   };
 
   const categories = [
@@ -219,11 +214,6 @@ export default function Forum() {
     return matchesCategory && matchesSearch;
   });
 
-  const getCategoryIcon = (categoryName: string) => {
-    const category = categories.find(cat => cat.name === categoryName);
-    return category ? category.icon : MessageCircle;
-  };
-
   const getCategoryColor = (categoryName: string) => {
     switch(categoryName) {
       case "Academic": return "text-igsa-blue";
@@ -245,154 +235,44 @@ export default function Forum() {
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Community <span className="text-igsa-blue">Forum</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Connect, discuss, and share experiences with fellow Indian graduate students
             </p>
+            <div className="flex justify-center">
+              <Button
+                onClick={() => setShowAIChat(true)}
+                className="bg-gradient-to-r from-igsa-saffron to-igsa-orange hover:shadow-lg text-lg px-8 py-4 rounded-full"
+              >
+                <Bot className="w-5 h-5 mr-2" />
+                Chat with AI Assistant
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Search and Actions */}
+      {/* Quick AI Preview */}
       <section className="py-8 bg-white border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search discussions..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-igsa-blue focus:border-transparent"
-                />
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button className="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50">
-                <Filter className="w-4 h-4 mr-2" />
-                Filter
-              </button>
-              <button 
-                onClick={() => setShowNewPost(true)}
-                className="flex items-center px-6 py-2 bg-gradient-to-r from-igsa-saffron to-igsa-orange text-white rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                New Post
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="py-6 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-3 justify-center">
-            {categories.map((category, index) => {
-              const IconComponent = category.icon;
-              return (
-                <button
-                  key={index}
-                  onClick={() => setSelectedCategory(category.name)}
-                  className={`flex items-center px-4 py-2 rounded-full font-medium transition-all ${
-                    selectedCategory === category.name 
-                      ? category.color 
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                  }`}
-                >
-                  <IconComponent className="w-4 h-4 mr-2" />
-                  {category.name} ({category.count})
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Forum Posts */}
-      <section className="py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-4">
-            {filteredPosts.map((post) => {
-              const CategoryIcon = getCategoryIcon(post.category);
-              return (
-                <div key={post.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-                  <div className="flex items-start space-x-4">
-                    {/* Post Icon */}
-                    <div className={`p-2 rounded-lg bg-gray-100 flex-shrink-0 ${post.isPinned ? 'bg-igsa-saffron/10' : ''}`}>
-                      {post.isPinned ? (
-                        <Pin className="w-5 h-5 text-igsa-saffron" />
-                      ) : (
-                        <CategoryIcon className={`w-5 h-5 ${getCategoryColor(post.category)}`} />
-                      )}
-                    </div>
-
-                    {/* Post Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2 mb-2">
-                        {post.isPinned && (
-                          <span className="bg-igsa-saffron/10 text-igsa-saffron px-2 py-1 rounded text-xs font-medium">
-                            Pinned
-                          </span>
-                        )}
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${getCategoryColor(post.category)} bg-current bg-opacity-10`}>
-                          {post.category}
-                        </span>
-                      </div>
-
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-igsa-blue cursor-pointer">
-                        {post.title}
-                      </h3>
-
-                      <p className="text-gray-600 mb-3 line-clamp-2">
-                        {post.content}
-                      </p>
-
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {post.tags.map((tag, tagIndex) => (
-                          <span key={tagIndex} className="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">
-                            #{tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Post Meta */}
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span className="font-medium">{post.author}</span>
-                          <div className="flex items-center">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {post.timeAgo}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <button className="flex items-center hover:text-igsa-saffron transition-colors">
-                            <Heart className="w-4 h-4 mr-1" />
-                            {post.likes}
-                          </button>
-                          <button className="flex items-center hover:text-igsa-blue transition-colors">
-                            <Reply className="w-4 h-4 mr-1" />
-                            {post.replies}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+          <div className="bg-gradient-to-r from-igsa-blue/5 to-igsa-green/5 rounded-xl p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-igsa-saffron rounded-full flex items-center justify-center">
+                  <Bot className="w-6 h-6 text-white" />
                 </div>
-              );
-            })}
-          </div>
-
-          {filteredPosts.length === 0 && (
-            <div className="text-center py-12">
-              <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No posts found</h3>
-              <p className="text-gray-600">Try adjusting your search or category filter.</p>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">IGSA AI Assistant</h3>
+                  <p className="text-gray-600">Get instant answers about housing, events, resources, and student life</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => setShowAIChat(true)}
+                className="bg-igsa-blue hover:bg-igsa-blue/90"
+              >
+                Start Chat
+              </Button>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -414,7 +294,7 @@ export default function Forum() {
             </div>
             <div className="text-center">
               <div className="bg-white rounded-lg p-6 shadow-md">
-                <MessageSquare className="w-8 h-8 text-igsa-green mx-auto mb-2" />
+                <MessageCircle className="w-8 h-8 text-igsa-green mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-900">850+</div>
                 <div className="text-gray-600">Discussions</div>
               </div>
@@ -437,124 +317,88 @@ export default function Forum() {
         </div>
       </section>
 
-      {/* New Post Modal */}
-      <Dialog open={showNewPost} onOpenChange={setShowNewPost}>
-        <DialogContent className="max-w-2xl">
+      {/* Floating AI Chat Button */}
+      <Button
+        onClick={() => setShowAIChat(true)}
+        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-igsa-saffron hover:bg-igsa-orange z-50"
+        size="icon"
+      >
+        <Bot className="h-6 w-6 text-white" />
+      </Button>
+
+      {/* AI Chat Modal */}
+      <Dialog open={showAIChat} onOpenChange={setShowAIChat}>
+        <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
           <DialogHeader>
-            <DialogTitle>Create New Post</DialogTitle>
+            <DialogTitle className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-igsa-saffron rounded-full flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <span>IGSA AI Assistant</span>
+            </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
-              <select className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-igsa-blue">
-                <option>Select a category</option>
-                <option>Academic</option>
-                <option>Housing</option>
-                <option>Jobs</option>
-                <option>General</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
-              <input
-                type="text"
-                placeholder="Enter your post title..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-igsa-blue"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
-              <textarea
-                rows={6}
-                placeholder="Share your thoughts, questions, or information..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-igsa-blue"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
-              <input
-                type="text"
-                placeholder="Add tags separated by commas..."
-                className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-igsa-blue"
-              />
-            </div>
-            <div className="flex justify-end gap-3 pt-4">
-              <button
-                onClick={() => setShowNewPost(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50"
+          
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-[400px] max-h-[500px] border rounded-lg bg-gray-50">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex items-start gap-3 ${
+                  message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'
+                }`}
               >
-                Cancel
-              </button>
-              <button className="px-6 py-2 bg-gradient-to-r from-igsa-saffron to-igsa-orange text-white rounded-lg hover:shadow-lg">
-                Post Discussion
-              </button>
+                <div className={`rounded-full p-2 ${
+                  message.sender === 'user' 
+                    ? 'bg-igsa-blue' 
+                    : 'bg-igsa-saffron'
+                }`}>
+                  {message.sender === 'user' ? (
+                    <User className="h-4 w-4 text-white" />
+                  ) : (
+                    <Bot className="h-4 w-4 text-white" />
+                  )}
+                </div>
+                <div className={`max-w-[75%] rounded-lg p-3 ${
+                  message.sender === 'user'
+                    ? 'bg-igsa-blue text-white ml-auto'
+                    : 'bg-white border shadow-sm'
+                }`}>
+                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                  <p className={`text-xs mt-1 ${
+                    message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'
+                  }`}>
+                    {message.timestamp.toLocaleTimeString([], { 
+                      hour: '2-digit', 
+                      minute: '2-digit' 
+                    })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t pt-4">
+            <div className="flex gap-2">
+              <Input
+                placeholder="Ask me anything about IGSA, events, housing, or student life..."
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyPress={handleKeyPress}
+                className="flex-1"
+              />
+              <Button 
+                onClick={handleSendMessage}
+                disabled={!inputText.trim()}
+                className="bg-igsa-saffron hover:bg-igsa-orange"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              Press Enter to send, Shift+Enter for new line
+            </p>
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Floating AI Chat Button (always visible) */}
-      <Button
-        onClick={() => setShowAIChat(true)}
-        className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-igsa-saffron hover:bg-igsa-orange"
-        size="icon"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
-
-      {/* Floating AI Chat Window */}
-      {showAIChat && (
-        <div className="fixed bottom-20 right-6 w-80 h-96 bg-white border rounded-lg shadow-xl flex flex-col z-50">
-          <div className="p-4 border-b bg-igsa-blue text-white rounded-t-lg flex justify-between items-center">
-            <h3 className="font-semibold">Quick AI Help</h3>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              onClick={() => setShowAIChat(false)}
-              className="text-white hover:bg-white/20"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-          
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
-            <div className="flex items-start gap-2">
-              <div className="rounded-full p-1 bg-igsa-saffron">
-                <Bot className="h-3 w-3 text-white" />
-              </div>
-              <div className="bg-gray-100 rounded-lg p-2 text-sm">
-                Hi! Ask me anything about IGSA, events, housing, or student life!
-              </div>
-            </div>
-          </div>
-
-          <div className="p-3 border-t">
-            <div className="flex gap-2">
-              <Input
-                placeholder="Quick question..."
-                className="flex-1 text-sm"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    // Switch to main AI tab and close floating chat
-                    setActiveTab('ai');
-                    setShowAIChat(false);
-                  }
-                }}
-              />
-              <Button 
-                size="sm" 
-                className="bg-igsa-blue hover:bg-igsa-blue/90"
-                onClick={() => {
-                  setActiveTab('ai');
-                  setShowAIChat(false);
-                }}
-              >
-                <Send className="h-3 w-3" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
