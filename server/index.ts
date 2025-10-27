@@ -1,7 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { handleDemo } from "./routes/demo";
+import { handleDemo } from "./routes/demo.js";
+import { getInstagramPosts, refreshInstagramCache, testInstagramScraping } from "./api/instagram.js";
 
 export function createServer() {
   const app = express();
@@ -18,6 +19,11 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // Instagram API routes
+  app.get("/api/instagram/posts", getInstagramPosts);
+  app.post("/api/instagram/refresh", refreshInstagramCache);
+  app.get("/api/instagram/test", testInstagramScraping);
 
   return app;
 }
