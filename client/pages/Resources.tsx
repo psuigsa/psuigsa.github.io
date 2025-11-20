@@ -1,6 +1,70 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
-import { Plane, Home, MapPin, ChevronRight, BookOpen, FileText, Users, MessageCircle, Bot } from "lucide-react";
+import { Plane, Home, MapPin, ChevronRight, BookOpen, Users, MessageCircle, Bot, X } from "lucide-react";
+
+function JoinWhatsappCard() {
+  const [open, setOpen] = useState(false);
+  const mailto = encodeURI(
+    'mailto:psu.igsa@gmail.com?subject=WhatsApp Group Joining Request&body= !! Please include your name and phone number.!! '
+  );
+
+  return (
+    <>
+      <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between">
+        <div>
+          <BookOpen className="w-12 h-12 text-igsa-blue mb-4" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">Join WhatsApp Group</h3>
+          <p className="text-gray-600 text-sm">Request the joining details for our WhatsApp group</p>
+        </div>
+
+        <div className="mt-6">
+          <button
+            onClick={() => setOpen(true)}
+            className="inline-flex items-center px-4 py-2 bg-igsa-blue text-white rounded-md font-semibold hover:bg-igsa-blue/90 transition-colors"
+          >
+            Join WhatsApp
+          </button>
+        </div>
+      </div>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+          <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6">
+            <button
+              aria-label="Close"
+              onClick={() => setOpen(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Join the IGSA WhatsApp Group</h3>
+            <p className="text-gray-700 mb-4">Anyone who wishes to join the group should e-mail <a className="text-igsa-blue underline" href="mailto:psu.igsa@gmail.com">psu.igsa@gmail.com</a> from their Penn State address, using the subject “WhatsApp Group Joining Request”, and include their name and phone number. You will then receive the group joining details.</p>
+
+            <details className="mb-4">
+              <summary className="cursor-pointer text-igsa-blue font-semibold">How do I know my Penn State email?</summary>
+              <div className="mt-2 text-sm text-gray-700">
+                <p className="mb-2">Your Penn State email address is your Penn State username followed by <code className="bg-gray-100 px-1 py-0.5 rounded">@psu.edu</code>. The username is the one you use to log in to the Penn State application portal.</p>
+                <p className="mb-2">For example: if your name is Tulsidas Khan your username will look like tsk1234, then tsk1234@psu.edu is your email address.</p>
+                <p className="mb-2">Try signing in at <a className="text-igsa-blue underline" href="https://outlook.office.com" target="_blank" rel="noreferrer">Outlook</a> (or <a className="text-igsa-blue underline" href="https://portal.office.com" target="_blank" rel="noreferrer">portal.office.com</a>)</p>
+                <ul className="list-disc list-inside text-gray-700">
+                  <li><a className="text-igsa-blue underline" href="https://accounts.psu.edu" target="_blank" rel="noreferrer">Penn State Accounts</a></li>
+                </ul>
+              </div>
+            </details>
+
+            <div className="flex justify-end mt-6">
+              <a href={mailto} className="inline-flex items-center px-4 py-2 bg-igsa-saffron text-white rounded-md font-semibold mr-3">Email Now</a>
+              <button onClick={() => setOpen(false)} className="px-4 py-2 border border-gray-200 rounded-md">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 export default function Resources() {
   const resourceCategories = [
@@ -110,18 +174,15 @@ export default function Resources() {
             <p className="text-xl text-gray-600">Quick access to important information</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <BookOpen className="w-12 h-12 text-igsa-saffron mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Academic Resources</h3>
               <p className="text-gray-600 text-sm">University policies, academic calendar, and support services</p>
             </div>
 
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-              <FileText className="w-12 h-12 text-igsa-blue mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Important Forms</h3>
-              <p className="text-gray-600 text-sm">Download essential forms and documents</p>
-            </div>
+            {/* Join WhatsApp Card (replaces Important Forms) */}
+            <JoinWhatsappCard />
 
             <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
               <Users className="w-12 h-12 text-igsa-green mb-4" />
