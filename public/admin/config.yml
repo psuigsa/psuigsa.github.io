@@ -3,9 +3,7 @@ backend:
   repo: psuigsa/psuigsa.github.io
   branch: main
   auth_endpoint: https://github-auth-proxy.herokuapp.com/auth
-
-# TODO: Add your GitHub OAuth App Client ID here after creating the app
-# github_client_id: YOUR_CLIENT_ID_HERE
+  github_client_id: Ov23li0Xs3giaZ1IJ4VU
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
