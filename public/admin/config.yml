@@ -3,6 +3,13 @@ backend:
   repo: psuigsa/psuigsa.github.io
   branch: main
 
+auth:
+  endpoint: /.netlify/identity
+  
+identity:
+  url: /.netlify/identity
+  widget: netlify
+
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
