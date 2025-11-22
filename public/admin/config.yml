@@ -2,11 +2,6 @@ backend:
   name: github
   repo: psuigsa/psuigsa.github.io
   branch: main
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
-
-# For local development only - comment out when deploying
-# local_backend: true
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
