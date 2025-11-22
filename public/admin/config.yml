@@ -2,7 +2,8 @@ backend:
   name: github
   repo: psuigsa/psuigsa.github.io
   branch: main
-  auth_endpoint: https://github-auth-proxy.herokuapp.com/auth
+  base_url: https://github-auth-proxy.herokuapp.com
+  auth_endpoint: auth
   github_client_id: Ov23li0Xs3giaZ1IJ4VU
 
 media_folder: "public/images/uploads"
