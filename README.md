@@ -18,4 +18,4 @@ This website now includes a user-friendly admin panel for managing content witho
 - Complete setup instructions and troubleshooting
 
 ### 📚 All CMS Documentation
-See [README_CMS.md](README_CMS.md) for a complete guide to all CMS documentation and resources
+See [README_CMS.md](README_CMS.md) for a complete guide to all CMS documentation and resources.
