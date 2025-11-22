@@ -6,35 +6,18 @@
     <title>IGSA Admin Panel</title>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <style>
-      html, body {
+      html, body, #root {
         height: 100%;
         margin: 0;
         padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       }
       body {
-        background: #fff;
-      }
-      #root, #nc-root {
-        height: 100%;
-      }
-      .cms-loading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        font-size: 16px;
-        color: #666;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: #fff;
       }
     </style>
   </head>
   <body>
-    <div id="nc-root"></div>
-    <script>
-      // Debug info
-      console.log('Decap CMS Admin Panel Loading...');
-      console.log('Current URL:', window.location.href);
-      console.log('Config location: /admin/config.yml');
-    </script>
+    <div id="root"></div>
   </body>
 </html>
