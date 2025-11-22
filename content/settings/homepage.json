@@ -1,0 +1,27 @@
+{
+  "heroSlides": [
+    {
+      "title": "Welcome to IGSA",
+      "subtitle": "Indian Graduate Student Association",
+      "description": "Building bridges, Creating connections, Celebrating culture",
+      "gradient": "from-igsa-saffron to-igsa-orange"
+    },
+    {
+      "title": "Celebrate Together",
+      "subtitle": "Festivals & Cultural Events",
+      "description": "Diwali, Durga Puja, Pongal, and more awaiting you",
+      "gradient": "from-igsa-blue to-igsa-green"
+    },
+    {
+      "title": "Support Network",
+      "subtitle": "Pre & Post Arrival Resources",
+      "description": "Everything you need for your journey in State College",
+      "gradient": "from-igsa-green to-igsa-blue"
+    }
+  ],
+  "stats": {
+    "members": 500,
+    "events": 20,
+    "years": 20
+  }
+}

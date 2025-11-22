@@ -1,0 +1,126 @@
+backend:
+  name: github
+  repo: psuigsa/psuigsa.github.io
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# For local development only - comment out when deploying
+# local_backend: true
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Publish mode - set to editorial_workflow for draft/review process
+publish_mode: simple
+
+collections:
+  # Events Collection
+  - name: "events"
+    label: "Events"
+    folder: "content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Event Name", name: "name", widget: "string" }
+      - { label: "Short Description", name: "description", widget: "text" }
+      - { label: "Event Date", name: "date", widget: "string", hint: "e.g., September 15, 2024 or Throughout the semester" }
+      - { label: "Location", name: "location", widget: "string" }
+      - { label: "Event Type", name: "type", widget: "select", options: ["Social", "Cultural", "Academic", "Orientation", "Networking"] }
+      - { label: "Featured Image URL", name: "image", widget: "image", required: false }
+      - { label: "Color Gradient", name: "color", widget: "select", options: ["from-igsa-blue to-igsa-green", "from-igsa-saffron to-igsa-orange", "from-igsa-green to-igsa-blue", "from-igsa-orange to-igsa-saffron"] }
+      - { label: "Time", name: "time", widget: "string" }
+      - { label: "Organizer", name: "organizer", widget: "string" }
+      - { label: "Contact Email", name: "contact", widget: "string" }
+      - { label: "Phone", name: "phone", widget: "string", required: false }
+      - { label: "Capacity", name: "capacity", widget: "string", required: false }
+      - { label: "Registration Link", name: "registration", widget: "string", required: false }
+      - { label: "Detailed Description", name: "details", widget: "markdown" }
+      - label: "Highlights"
+        name: "highlights"
+        widget: "list"
+        field: { label: "Highlight", name: "highlight", widget: "string" }
+      - { label: "Requirements", name: "requirements", widget: "text", required: false }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  # Board Members Collection
+  - name: "board"
+    label: "Board Members"
+    folder: "content/board"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Position", name: "position", widget: "select", options: ["President", "Vice President", "Secretary", "Treasurer", "Cultural Coordinator", "Sports Coordinator", "Web Master", "Board Member"] }
+      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - { label: "Bio", name: "bio", widget: "text", required: false }
+      - { label: "Department", name: "department", widget: "string", required: false }
+      - { label: "Year Joined", name: "year", widget: "number", required: false }
+      - { label: "Order", name: "order", widget: "number", default: 100, hint: "Lower numbers appear first" }
+      - { label: "Active", name: "active", widget: "boolean", default: true }
+
+  # Resources Collection
+  - name: "resources"
+    label: "Resources"
+    folder: "content/resources"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["Pre-Arrival", "Post-Arrival", "Housing", "Visa", "Documents", "Living Guide", "General"] }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Content", name: "body", widget: "markdown" }
+      - { label: "Icon", name: "icon", widget: "select", options: ["Plane", "Home", "FileText", "MapPin", "BookOpen", "Users"], default: "FileText" }
+      - { label: "Order", name: "order", widget: "number", default: 100 }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - label: "Files"
+        name: "files"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "File Name", name: "name", widget: "string" }
+          - { label: "File", name: "file", widget: "file" }
+          - { label: "Description", name: "description", widget: "text", required: false }
+
+  # Site Settings
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Homepage"
+        name: "homepage"
+        file: "content/settings/homepage.json"
+        fields:
+          - label: "Hero Slides"
+            name: "heroSlides"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Subtitle", name: "subtitle", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Gradient", name: "gradient", widget: "string" }
+          - label: "Featured Stats"
+            name: "stats"
+            widget: "object"
+            fields:
+              - { label: "Members Count", name: "members", widget: "number", default: 500 }
+              - { label: "Events Per Year", name: "events", widget: "number", default: 20 }
+              - { label: "Years Active", name: "years", widget: "number", default: 20 }
+      
+      - label: "Contact Information"
+        name: "contact"
+        file: "content/settings/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "WhatsApp Admin", name: "whatsapp", widget: "string", required: false }
+          - { label: "Facebook", name: "facebook", widget: "string", required: false }
+          - { label: "Instagram", name: "instagram", widget: "string", required: false }
+          - { label: "Twitter", name: "twitter", widget: "string", required: false }
+
+      - label: "About Page"
+        name: "about"
+        file: "content/settings/about.json"
+        fields:
+          - { label: "Mission Statement", name: "mission", widget: "markdown" }
+          - { label: "History", name: "history", widget: "markdown" }
+          - { label: "What We Do", name: "whatWeDo", widget: "markdown" }
