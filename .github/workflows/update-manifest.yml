@@ -1,0 +1,44 @@
+name: Update Content Manifest
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'content/events/*.md'
+
+jobs:
+  update-manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update manifest.json
+        run: |
+          cd content/events
+          # Generate manifest.json with all .md files
+          echo "[" > manifest.json
+          first=true
+          for file in *.md; do
+            if [ "$first" = true ]; then
+              echo "  \"$file\"" >> manifest.json
+              first=false
+            else
+              echo "  ,\"$file\"" >> manifest.json
+            fi
+          done
+          echo "]" >> manifest.json
+          
+          # Format the JSON properly
+          cat manifest.json | jq -c '.' > manifest.tmp.json
+          mv manifest.tmp.json manifest.json
+
+      - name: Commit and push if changed
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add content/events/manifest.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update events manifest" && git push)
