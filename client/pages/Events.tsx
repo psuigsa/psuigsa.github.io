@@ -121,6 +121,7 @@ export default function Events() {
             return {
               id: file.name.replace('.md', ''),
               details: content,
+              highlights: [], // Default empty array
               ...frontmatter
             };
           });
@@ -129,6 +130,7 @@ export default function Events() {
             .filter((e): e is Event => e !== null && e.published !== false)
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
           
+          console.log('Loaded events from GitHub:', loadedEvents);
           setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
         } else {
           setEvents(fallbackEvents);
