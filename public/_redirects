@@ -8,5 +8,8 @@
 /#refresh_token=* /admin/#refresh_token=:splat 200
 /#error=* /admin/#error=:splat 200
 
+# Redirect Netlify domain to GitHub Pages
+ghttps://psuigsa.netlify.app/* https://psuigsa.github.io/:splat 301!
+
 # Default SPA routing for main site
 /* /index.html 200
