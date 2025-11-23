@@ -7,6 +7,9 @@ on:
     paths:
       - 'content/events/*.md'
 
+permissions:
+  contents: write
+
 jobs:
   update-manifest:
     runs-on: ubuntu-latest
