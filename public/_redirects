@@ -1,0 +1,12 @@
+# Redirect admin requests to the static admin panel
+/admin/* /admin/index.html 200
+
+# Preserve hash fragments for Netlify Identity
+/#invite_token=* /admin/#invite_token=:splat 200
+/#recovery_token=* /admin/#recovery_token=:splat 200
+/#access_token=* /admin/#access_token=:splat 200
+/#refresh_token=* /admin/#refresh_token=:splat 200
+/#error=* /admin/#error=:splat 200
+
+# Default SPA routing for main site
+/* /index.html 200
