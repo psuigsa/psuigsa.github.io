@@ -99,23 +99,30 @@ export default function Events() {
               const frontmatter: any = {};
               
               frontmatterStr.split('\n').forEach(line => {
-                if (!line.trim()) return;
+                if (!line || !line.trim()) return;
                 const colonIndex = line.indexOf(':');
                 if (colonIndex === -1) return;
                 
                 const key = line.substring(0, colonIndex).trim();
                 let value: any = line.substring(colonIndex + 1).trim();
                 
+                // Skip if value is not a string
+                if (typeof value !== 'string') return;
+                
                 // Parse YAML values
-                if (value === 'true') value = true;
-                else if (value === 'false') value = false;
-                else if (!isNaN(Number(value)) && value !== '' && value !== null) value = Number(value);
-                else if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
+                if (value === 'true') {
+                  value = true;
+                } else if (value === 'false') {
+                  value = false;
+                } else if (!isNaN(Number(value)) && value !== '') {
+                  value = Number(value);
+                } else if (value.startsWith('[') && value.endsWith(']')) {
                   try {
                     value = JSON.parse(value.replace(/'/g, '"'));
-                  } catch {}
-                }
-                else if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
+                  } catch {
+                    // Keep as string if parse fails
+                  }
+                } else if (value.startsWith('"') && value.endsWith('"')) {
                   value = value.slice(1, -1);
                 }
                 
