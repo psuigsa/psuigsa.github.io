@@ -1,7 +1,7 @@
 const client_id = "Ov23li0Xs3giaZ1IJ4VU";
 const client_secret = process.env.GITHUB_CLIENT_SECRET;
 
-export const handler = async (event: any) => {
+exports.handler = async (event: any) => {
   const { code } = event.queryStringParameters || {};
 
   if (!code) {
