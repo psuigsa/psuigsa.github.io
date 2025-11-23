@@ -2,8 +2,6 @@ backend:
   name: github
   repo: psuigsa/psuigsa.github.io
   branch: main
-
-backend:
   auth_endpoint: oauth/authorize
   token_endpoint: oauth/token
   app_id: PIynniV26ZlUxaF2lMbNZigAqpAAdjRo
