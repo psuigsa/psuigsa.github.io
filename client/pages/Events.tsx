@@ -67,15 +67,69 @@ export default function Events() {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        // Try Netlify Function first
-        const response = await fetch("/.netlify/functions/events");
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.length > 0) {
-            setEvents(data);
-          } else {
-            setEvents(fallbackEvents);
+        // Fetch from GitHub API to get latest events without rebuild
+        const response = await fetch(
+          'https://api.github.com/repos/psuigsa/psuigsa.github.io/contents/content/events',
+          {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json'
+            }
           }
+        );
+        
+        if (response.ok) {
+          const files = await response.json();
+          const mdFiles = files.filter((f: any) => f.name.endsWith('.md'));
+          
+          // Fetch each markdown file
+          const eventPromises = mdFiles.map(async (file: any) => {
+            const contentResponse = await fetch(file.download_url);
+            const markdown = await contentResponse.text();
+            
+            // Parse frontmatter
+            const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+            if (!match) return null;
+            
+            const frontmatterStr = match[1];
+            const content = match[2];
+            const frontmatter: any = {};
+            
+            frontmatterStr.split('\n').forEach(line => {
+              if (!line.trim()) return;
+              const colonIndex = line.indexOf(':');
+              if (colonIndex === -1) return;
+              
+              const key = line.substring(0, colonIndex).trim();
+              let value: any = line.substring(colonIndex + 1).trim();
+              
+              // Parse YAML values
+              if (value === 'true') value = true;
+              if (value === 'false') value = false;
+              if (!isNaN(Number(value)) && value !== '') value = Number(value);
+              if (value.startsWith('[') && value.endsWith(']')) {
+                try {
+                  value = JSON.parse(value.replace(/'/g, '"'));
+                } catch {}
+              }
+              if (value.startsWith('"') && value.endsWith('"')) {
+                value = value.slice(1, -1);
+              }
+              
+              frontmatter[key] = value;
+            });
+            
+            return {
+              id: file.name.replace('.md', ''),
+              details: content,
+              ...frontmatter
+            };
+          });
+          
+          const loadedEvents = (await Promise.all(eventPromises))
+            .filter((e): e is Event => e !== null && e.published !== false)
+            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          
+          setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
         } else {
           setEvents(fallbackEvents);
         }
