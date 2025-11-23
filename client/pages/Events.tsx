@@ -67,10 +67,15 @@ export default function Events() {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        const response = await fetch("/api/events");
+        // Try Netlify Function first
+        const response = await fetch("/.netlify/functions/events");
         if (response.ok) {
           const data = await response.json();
-          setEvents(data.length > 0 ? data : fallbackEvents);
+          if (data && data.length > 0) {
+            setEvents(data);
+          } else {
+            setEvents(fallbackEvents);
+          }
         } else {
           setEvents(fallbackEvents);
         }
