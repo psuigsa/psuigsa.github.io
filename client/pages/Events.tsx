@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { Calendar, MapPin, Users, Clock, Star, Image, Phone, Mail, ExternalLink } from "lucide-react";
@@ -10,10 +10,33 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 
+interface Event {
+  id: string;
+  name: string;
+  description: string;
+  date: string;
+  location: string;
+  type: string;
+  image?: string;
+  color: string;
+  time: string;
+  organizer: string;
+  contact: string;
+  phone?: string;
+  capacity?: string;
+  registration?: string;
+  details: string;
+  highlights: string[];
+  requirements?: string;
+}
+
 export default function Events() {
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const events = [
+  // Fallback events in case API fails
+  const fallbackEvents: Event[] = [
     {
       id: "campus-tour",
       name: "Campus Tour",
@@ -39,15 +62,30 @@ export default function Events() {
       ],
       requirements: "Comfortable walking shoes recommended"
     },
-    {
-      id: "fall-mixer",
-      name: "Fall Mixer",
-      description: "Welcome event to meet fellow Indian graduate students",
-      date: "September 15, 2024",
-      location: "Student Union Building - Heritage Hall",
-      type: "Social",
-      image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&h=300&fit=crop",
-      color: "from-igsa-saffron to-igsa-orange",
+  ];
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const response = await fetch("/api/events");
+        if (response.ok) {
+          const data = await response.json();
+          setEvents(data.length > 0 ? data : fallbackEvents);
+        } else {
+          setEvents(fallbackEvents);
+        }
+      } catch (error) {
+        console.error("Error loading events:", error);
+        setEvents(fallbackEvents);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
+  const selectedEventData = events.find((e) => e.id === selectedEvent);
       time: "6:00 PM - 9:00 PM",
       organizer: "IGSA Social Committee",
       contact: "social@psuigsa.org",
