@@ -67,10 +67,8 @@ export default function Events() {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        // Fetch manifest file that lists all events
-        const manifestResponse = await fetch(
-          'https://raw.githubusercontent.com/psuigsa/psuigsa.github.io/main/content/events/manifest.json'
-        );
+        // Fetch manifest file from static content folder
+        const manifestResponse = await fetch('/content/events/manifest.json');
         
         if (!manifestResponse.ok) {
           console.warn('Could not load manifest, using fallback events');
@@ -86,7 +84,7 @@ export default function Events() {
           .filter(file => file.endsWith('.md'))
           .map(async (filename) => {
             try {
-              const url = `https://raw.githubusercontent.com/psuigsa/psuigsa.github.io/main/content/events/${filename}`;
+              const url = `/content/events/${filename}`;
               const contentResponse = await fetch(url);
               const markdown = await contentResponse.text();
               
