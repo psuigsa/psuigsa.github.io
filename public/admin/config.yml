@@ -2,7 +2,7 @@ backend:
   name: github
   repo: psuigsa/psuigsa.github.io
   branch: main
-  auth_endpoint: /api/github-auth
+  auth_endpoint: /.netlify/functions/github-auth
   base_url: https://psuigsa.netlify.app
 
 media_folder: "public/images/uploads"
