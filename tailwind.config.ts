@@ -3,6 +3,17 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: ["./client/**/*.{ts,tsx}"],
+  safelist: [
+    "from-igsa-blue",
+    "to-igsa-green",
+    "from-igsa-saffron",
+    "to-igsa-orange",
+    "from-igsa-green",
+    "to-igsa-blue",
+    "from-igsa-orange",
+    "to-igsa-saffron",
+    "to-igsa-gold",
+  ],
   prefix: "",
   theme: {
     container: {

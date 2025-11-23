@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import { Calendar, MapPin, Users, Clock, Star, Image, Phone, Mail, ExternalLink } from "lucide-react";
 import {
@@ -9,26 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-
-interface Event {
-  id: string;
-  name: string;
-  description: string;
-  date: string;
-  location: string;
-  type: string;
-  image?: string;
-  color: string;
-  time: string;
-  organizer: string;
-  contact: string;
-  phone?: string;
-  capacity?: string;
-  registration?: string;
-  details: string;
-  highlights: string[];
-  requirements?: string;
-}
+import { loadEvents, Event } from "@/utils/content-loader";
 
 export default function Events() {
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
@@ -65,98 +45,32 @@ export default function Events() {
   ];
 
   useEffect(() => {
-    const loadEvents = async () => {
+    let cancelled = false;
+
+    const load = async () => {
       try {
-        // Fetch manifest file from static content folder
-        const manifestResponse = await fetch('/content/events/manifest.json');
-        
-        if (!manifestResponse.ok) {
-          console.warn('Could not load manifest, using fallback events');
-          setEvents(fallbackEvents);
-          setLoading(false);
-          return;
+        const loadedEvents = await loadEvents();
+        if (!cancelled) {
+          setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
         }
-        
-        const eventFiles: string[] = await manifestResponse.json();
-        
-        // Fetch each markdown file
-        const eventPromises = eventFiles
-          .filter(file => file.endsWith('.md'))
-          .map(async (filename) => {
-            try {
-              const url = `/content/events/${filename}`;
-              const contentResponse = await fetch(url);
-              const markdown = await contentResponse.text();
-              
-              // Parse frontmatter
-              const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-              if (!match) return null;
-              
-              const frontmatterStr = match[1];
-              const content = match[2];
-              const frontmatter: any = {};
-              
-              frontmatterStr.split('\n').forEach(line => {
-                if (!line || !line.trim()) return;
-                const colonIndex = line.indexOf(':');
-                if (colonIndex === -1) return;
-                
-                const key = line.substring(0, colonIndex).trim();
-                let value: any = line.substring(colonIndex + 1).trim();
-                
-                // Skip if value is not a string
-                if (typeof value !== 'string') return;
-                
-                // Parse YAML values
-                if (value === 'true') {
-                  value = true;
-                } else if (value === 'false') {
-                  value = false;
-                } else if (!isNaN(Number(value)) && value !== '') {
-                  value = Number(value);
-                } else if (value.startsWith('[') && value.endsWith(']')) {
-                  try {
-                    value = JSON.parse(value.replace(/'/g, '"'));
-                  } catch {
-                    // Keep as string if parse fails
-                  }
-                } else if (value.startsWith('"') && value.endsWith('"')) {
-                  value = value.slice(1, -1);
-                }
-                
-                frontmatter[key] = value;
-              });
-              
-              return {
-                id: filename.replace('.md', ''),
-                details: content,
-                highlights: [], // Default empty array
-                ...frontmatter
-              };
-            } catch (error) {
-              console.error(`Error loading event ${filename}:`, error);
-              return null;
-            }
-          });
-        
-        const loadedEvents = (await Promise.all(eventPromises))
-          .filter((e): e is Event => e !== null && e.published !== false)
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        
-        console.log('Loaded events from GitHub:', loadedEvents);
-        setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
       } catch (error) {
         console.error("Error loading events:", error);
-        setEvents(fallbackEvents);
+        if (!cancelled) {
+          setEvents(fallbackEvents);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     };
 
-    loadEvents();
-  }, []);
+    load();
 
-  const selectedEventData = events.find((e) => e.id === selectedEvent);
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const eventTypes = [
     { name: "All Events", count: events.length, color: "bg-gray-100 text-gray-700" },

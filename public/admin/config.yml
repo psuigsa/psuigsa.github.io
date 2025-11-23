@@ -21,7 +21,7 @@ collections:
       - { label: "Location", name: "location", widget: "string" }
       - { label: "Event Type", name: "type", widget: "select", options: ["Social", "Cultural", "Academic", "Orientation", "Networking"] }
       - { label: "Featured Image URL", name: "image", widget: "image", required: false }
-      - { label: "Color Gradient", name: "color", widget: "select", options: ["from-igsa-blue to-igsa-green", "from-igsa-saffron to-igsa-orange", "from-igsa-green to-igsa-blue", "from-igsa-orange to-igsa-saffron"] }
+      - { label: "Color Gradient", name: "color", widget: "select", options: ["from-igsa-blue to-igsa-green", "from-igsa-saffron to-igsa-orange", "from-igsa-green to-igsa-blue", "from-igsa-orange to-igsa-saffron", "from-igsa-saffron to-igsa-gold"] }
       - { label: "Time", name: "time", widget: "string" }
       - { label: "Organizer", name: "organizer", widget: "string" }
       - { label: "Contact Email", name: "contact", widget: "string" }
