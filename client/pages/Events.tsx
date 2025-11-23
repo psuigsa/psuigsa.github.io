@@ -108,14 +108,14 @@ export default function Events() {
                 
                 // Parse YAML values
                 if (value === 'true') value = true;
-                if (value === 'false') value = false;
-                if (!isNaN(Number(value)) && value !== '') value = Number(value);
-                if (value.startsWith('[') && value.endsWith(']')) {
+                else if (value === 'false') value = false;
+                else if (!isNaN(Number(value)) && value !== '' && value !== null) value = Number(value);
+                else if (typeof value === 'string' && value.startsWith('[') && value.endsWith(']')) {
                   try {
                     value = JSON.parse(value.replace(/'/g, '"'));
                   } catch {}
                 }
-                if (value.startsWith('"') && value.endsWith('"')) {
+                else if (typeof value === 'string' && value.startsWith('"') && value.endsWith('"')) {
                   value = value.slice(1, -1);
                 }
                 
