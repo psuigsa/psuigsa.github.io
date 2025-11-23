@@ -67,74 +67,79 @@ export default function Events() {
   useEffect(() => {
     const loadEvents = async () => {
       try {
-        // Fetch from GitHub API to get latest events without rebuild
-        const response = await fetch(
-          'https://api.github.com/repos/psuigsa/psuigsa.github.io/contents/content/events',
-          {
-            headers: {
-              'Accept': 'application/vnd.github.v3+json'
-            }
-          }
+        // Fetch manifest file that lists all events
+        const manifestResponse = await fetch(
+          'https://raw.githubusercontent.com/psuigsa/psuigsa.github.io/main/content/events/manifest.json'
         );
         
-        if (response.ok) {
-          const files = await response.json();
-          const mdFiles = files.filter((f: any) => f.name.endsWith('.md'));
-          
-          // Fetch each markdown file
-          const eventPromises = mdFiles.map(async (file: any) => {
-            const contentResponse = await fetch(file.download_url);
-            const markdown = await contentResponse.text();
-            
-            // Parse frontmatter
-            const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-            if (!match) return null;
-            
-            const frontmatterStr = match[1];
-            const content = match[2];
-            const frontmatter: any = {};
-            
-            frontmatterStr.split('\n').forEach(line => {
-              if (!line.trim()) return;
-              const colonIndex = line.indexOf(':');
-              if (colonIndex === -1) return;
-              
-              const key = line.substring(0, colonIndex).trim();
-              let value: any = line.substring(colonIndex + 1).trim();
-              
-              // Parse YAML values
-              if (value === 'true') value = true;
-              if (value === 'false') value = false;
-              if (!isNaN(Number(value)) && value !== '') value = Number(value);
-              if (value.startsWith('[') && value.endsWith(']')) {
-                try {
-                  value = JSON.parse(value.replace(/'/g, '"'));
-                } catch {}
-              }
-              if (value.startsWith('"') && value.endsWith('"')) {
-                value = value.slice(1, -1);
-              }
-              
-              frontmatter[key] = value;
-            });
-            
-            return {
-              id: file.name.replace('.md', ''),
-              details: content,
-              highlights: [], // Default empty array
-              ...frontmatter
-            };
-          });
-          
-          const loadedEvents = (await Promise.all(eventPromises))
-            .filter((e): e is Event => e !== null && e.published !== false)
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-          
-          console.log('Loaded events from GitHub:', loadedEvents);
-          setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
-        } else {
+        if (!manifestResponse.ok) {
+          console.warn('Could not load manifest, using fallback events');
           setEvents(fallbackEvents);
+          setLoading(false);
+          return;
         }
+        
+        const eventFiles: string[] = await manifestResponse.json();
+        
+        // Fetch each markdown file
+        const eventPromises = eventFiles
+          .filter(file => file.endsWith('.md'))
+          .map(async (filename) => {
+            try {
+              const url = `https://raw.githubusercontent.com/psuigsa/psuigsa.github.io/main/content/events/${filename}`;
+              const contentResponse = await fetch(url);
+              const markdown = await contentResponse.text();
+              
+              // Parse frontmatter
+              const match = markdown.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+              if (!match) return null;
+              
+              const frontmatterStr = match[1];
+              const content = match[2];
+              const frontmatter: any = {};
+              
+              frontmatterStr.split('\n').forEach(line => {
+                if (!line.trim()) return;
+                const colonIndex = line.indexOf(':');
+                if (colonIndex === -1) return;
+                
+                const key = line.substring(0, colonIndex).trim();
+                let value: any = line.substring(colonIndex + 1).trim();
+                
+                // Parse YAML values
+                if (value === 'true') value = true;
+                if (value === 'false') value = false;
+                if (!isNaN(Number(value)) && value !== '') value = Number(value);
+                if (value.startsWith('[') && value.endsWith(']')) {
+                  try {
+                    value = JSON.parse(value.replace(/'/g, '"'));
+                  } catch {}
+                }
+                if (value.startsWith('"') && value.endsWith('"')) {
+                  value = value.slice(1, -1);
+                }
+                
+                frontmatter[key] = value;
+              });
+              
+              return {
+                id: filename.replace('.md', ''),
+                details: content,
+                highlights: [], // Default empty array
+                ...frontmatter
+              };
+            } catch (error) {
+              console.error(`Error loading event ${filename}:`, error);
+              return null;
+            }
+          });
+        
+        const loadedEvents = (await Promise.all(eventPromises))
+          .filter((e): e is Event => e !== null && e.published !== false)
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        
+        console.log('Loaded events from GitHub:', loadedEvents);
+        setEvents(loadedEvents.length > 0 ? loadedEvents : fallbackEvents);
       } catch (error) {
         console.error("Error loading events:", error);
         setEvents(fallbackEvents);
