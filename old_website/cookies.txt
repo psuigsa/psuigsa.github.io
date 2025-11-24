@@ -1,0 +1,6 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+www.psuigsa.com	TRUE	/	FALSE	1999999999	XSRF-TOKEN	1763935005|Zfe7KqDI6zdJ
+www.psuigsa.com	TRUE	/	FALSE	1999999999	SameSite	None
+www.psuigsa.com	TRUE	/	FALSE	1999999999	ssr-caching	cache#desc=miss#varnish=miss_miss#dc#desc=fastly_virginia-pub_g
+
