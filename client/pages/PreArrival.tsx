@@ -18,9 +18,9 @@ export default function PreArrival() {
   const sections = [
     {
       id: 'visa',
-      title: 'Visa Guidelines',
-      icon: '📋',
-      description: 'F-1 student visa requirements and interview tips',
+      title: 'How to reach Penn State',
+      icon: '📍',
+      description: 'Air, train, and road options to reach State College',
       gradient: 'from-igsa-saffron to-igsa-orange',
       textColor: 'text-igsa-saffron'
     },
@@ -67,65 +67,51 @@ export default function PreArrival() {
       case 'visa':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">F-1 Student Visa Requirements</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Valid passport (must be valid for at least 6 months beyond intended stay)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Form I-20 issued by Penn State</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>SEVIS fee payment receipt</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Form DS-160 confirmation page</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Visa application fee payment receipt</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Academic transcripts and standardized test scores</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Financial documents proving ability to cover expenses</span>
-              </li>
-            </ul>
-            
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-saffron">Visa Interview Tips</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Arrive early and dress professionally</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Bring all required documents in organized folders</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Be prepared to explain your study plans and career goals</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Demonstrate strong ties to your home country</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Show proof of financial support</span>
-              </li>
-            </ul>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">How to reach Penn State</h4>
+
+            <p>
+              Pennsylvania State University (University Park campus) is located in State College, PA
+              in Centre County. You can reach State College from major US cities by air, train, or road.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Air</h5>
+            <p className="ml-4">
+              The preferred choice for first-time visitors is to fly into University Park Airport (SCE),
+              about 7 miles from campus. Connecting flights to SCE are available from Chicago, Newark,
+              Cincinnati, Detroit, Washington D.C., and Philadelphia. When possible, book a single
+              ticket from your international origin to SCE (total travel time is commonly 24–30 hours)
+              to reduce the risk and cost of missed connections. Note that some carriers (for
+              example Air India and Qatar) may offer two checked-bag allowances; combinations of
+              carriers (e.g., Air India + United) can sometimes be used to obtain extra checked
+              baggage—verify baggage rules before booking. You may also fly to major nearby airports
+              (New York, Pittsburgh, Newark, Philadelphia) and continue to State College by road.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Train</h5>
+            <p className="ml-4">
+              State College does not have direct rail service. The nearest Amtrak stations are in
+              Altoona (≈44 miles), Lewistown (≈32 miles) and Huntingdon (≈31 miles). From any of
+              these stations you can take a taxi to State College (taxi fares are typically around
+              $100 one-way; drivers often prefer cash).
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Road (Bus / Car)</h5>
+            <p className="ml-4">
+              Bus service connects State College with several major cities (Megabus, Fullington
+              Trailways, Greyhound). Fares vary by route (for example, Megabus from NYC to SCE is
+              often about $50); note that many bus services allow only one large bag and may charge
+              for a second piece. If you drive, State College sits on I-99 / US-322 and is reachable
+              via major highways. Car-rental companies servicing long-distance one-way trips include
+              Enterprise, National, Avis and Hertz (one-way fees vary; check company policies and
+              insurance). After you receive your student ID you may be eligible for student discounts
+              on some rentals.
+            </p>
 
             <div className="bg-gradient-to-r from-igsa-saffron/10 to-igsa-orange/10 border-l-4 border-igsa-saffron p-6 rounded-r-lg mt-6">
               <p className="text-igsa-saffron font-medium">
-                <strong>Important:</strong> Schedule your visa appointment well in advance as processing times vary by country.
+                <strong>Tip:</strong> If you arrive at a larger airport, compare ground-transport
+                costs and schedules (shuttle, bus, taxi or car rental) to find the most convenient
+                and economical route to State College.
               </p>
             </div>
           </div>
@@ -134,66 +120,145 @@ export default function PreArrival() {
       case 'housing':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-blue">On-Campus Housing Options</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Graduate Halls:</strong> Eastview Terrace, Nittany Apartments</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Family Housing:</strong> Available for graduate students with families</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Meal Plans:</strong> Various options available for on-campus residents</span>
-              </li>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-blue">Housing Overview</h4>
+
+            <p>
+              State College is a university town with a large student population. You will find a wide
+              range of apartments managed by private owners and professional property-management
+              companies. Below are commonly recommended complexes, tips for searching, and trusted
+              resources to help you find housing.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Popular complexes (frequently used by graduate students)</h5>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <p className="font-medium">North side</p>
+                <ul className="list-disc list-inside mt-2">
+                  <li><a href="https://www.vairovillage.com/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Vairo Village</a></li>
+                  <li><a href="https://www.apartments.com/park-forest-apartments-state-college-pa/y9xwyqt/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Park Forest Apartments</a></li>
+                  <li><a href="https://www.statecollegecollective.com/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">State College Collective (Copper Beach Townhomes)</a></li>
+                  <li><a href="https://www.apartments.com/park-crest-terrace-state-college-pa/dt71rfh/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Park Crest Terrace</a></li>
+                  <li><a href="https://www.toftrees.net/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Toftrees Apartments</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-medium">South side</p>
+                <ul className="list-disc list-inside mt-2">
+                  <li><a href="https://www.continentalrealestate.net/property/southgate-apartments/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Southgate Apartments</a></li>
+                  <li><a href="https://nittanygarden.apartmentstore.com/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Nittany Garden Apartments</a></li>
+                  <li><a href="http://www.apartmentsstatecollege.com/penn-state-housing/psu/Executive-House/id/46" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Executive House Apartments</a></li>
+                  <li><a href="https://www.lionsgateapts.com/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Lions Gate Apartments</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <h5 className="text-lg font-semibold mt-6">Other options</h5>
+            <ul className="list-disc list-inside mt-2">
+              <li><a href="https://www.morgan-properties.com/apartments/pa/state-college/briarwood/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Briarwood Apartments</a></li>
+              <li><a href="https://www.apartmentratings.com/pa/state-college/pheasant-run-townhouse_814234360816801/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Pheasant Run Townhomes</a></li>
+              <li><a href="https://www.apartments.com/paramont-woods-state-college-pa/xvwtmjm/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Paramont Woods</a></li>
             </ul>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-blue">Off-Campus Housing</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Popular areas: Downtown State College, Park Forest, Toftrees</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Consider proximity to campus and bus routes</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Budget for utilities, internet, and parking</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Start searching early, especially for fall semester</span>
-              </li>
+            <h5 className="text-lg font-semibold mt-6">Professional property managers</h5>
+            <p>
+              <a href="https://www.arpm.com/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Associated Realty Property Management (ARPM)</a>,
+              &nbsp;
+              <a href="https://www.continentalrealestate.net/" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Continental Real Estate</a>, and other local managers handle many off-campus complexes. Check their websites for availability and requirements.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Searching tips & safety</h5>
+            <ul className="list-disc list-inside mt-2 space-y-2">
+              <li>Be cautious with third-party listings and avoid sending money before you have signed a lease in person.</li>
+              <li>Your apartment is confirmed only after you pay the deposit and sign the lease — keep written records of all agreements.</li>
+              <li>Compare total monthly costs (rent plus utilities) rather than rent alone. Ask management for typical utility estimates if not listed.</li>
+              <li>Look up reviews on Google and other sites. If you have questions, email IGSA for first-hand insights from other students.</li>
             </ul>
+
+            <h5 className="text-lg font-semibold mt-6">Temporary accommodation</h5>
+            <p>
+              IGSA tries to provide basic temporary accommodation to incoming Indian graduate students for a few days while leases start. This is a goodwill service provided by volunteers at no cost. If you need temporary housing, please fill out the temporary-accommodation request form as soon as possible so we can coordinate.
+            </p>
+            <p>
+              Penn State also offers short-term and graduate-family housing options — see <a href="https://housing.psu.edu/graduate-family-housing" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">Graduate and Family Housing</a> and general arrival information at <a href="https://arrival.psu.edu/arrival-schedule-up" target="_blank" rel="noopener noreferrer" className="text-igsa-blue hover:underline">PSU Arrival</a>.
+            </p>
 
             <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-blue">Useful Resources</h4>
             <ul className="list-none space-y-3">
               <li className="flex items-start">
                 <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Penn State Housing website</span>
+                <a
+                  href="https://studentaffairs.psu.edu/housing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  Penn State Housing website
+                </a>
+              </li>
+
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <a
+                  href="https://www.apartments.com/state-college-pa/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  Apartments.com — State College listings
+                </a>
               </li>
               <li className="flex items-start">
                 <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Local real estate websites (Rent.com, Apartments.com)</span>
+                <a
+                  href="https://www.apartmentsstatecollege.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  ApartmentsStateCollege.com — local listings
+                </a>
               </li>
               <li className="flex items-start">
                 <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Facebook housing groups for State College</span>
+                <a
+                  href="https://pennstate.craigslist.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  Craigslist — Penn State area listings
+                </a>
               </li>
               <li className="flex items-start">
                 <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>IGSA housing assistance program</span>
+                <a
+                  href="https://www.facebook.com/groups/2079398628740383/?ref=share&mibextid=KtfwRi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  Facebook group: State College Housing & Rentals
+                </a>
+              </li>
+              <li className="flex items-start">
+                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <a
+                  href="https://www.facebook.com/groups/penn.state.housing.psu.sublease.rentals/?ref=share&mibextid=KtfwRi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-igsa-blue hover:underline"
+                >
+                  Facebook group: Penn State Housing — Sublease & Rentals
+                </a>
               </li>
             </ul>
 
             <div className="bg-gradient-to-r from-igsa-blue/10 to-igsa-green/10 border-l-4 border-igsa-blue p-6 rounded-r-lg mt-6">
-              <p className="text-igsa-blue font-medium">
-                <strong>Tip:</strong> Consider temporary housing (Airbnb, hotels) for your first week while you finalize permanent arrangements.
-              </p>
+                <p className="text-igsa-blue font-medium">
+                  <strong>Tip:</strong> For temporary accommodation, reach out to IGSA. IGSA volunteers can accommodate you as a guest for a few days while you finalize permanent arrangements. Please submit the temporary-accommodation request form early so we can coordinate volunteers.
+                </p>
             </div>
           </div>
         );
@@ -272,85 +337,88 @@ export default function PreArrival() {
       case 'packing':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-orange">Essential Items</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Weather-appropriate clothing (State College has cold winters!)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Professional attire for presentations and interviews</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Comfortable shoes and boots</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Personal hygiene items</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Prescription medications (3-month supply recommended)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Laptop and necessary chargers</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>International adapter/converter</span>
-              </li>
-            </ul>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-orange">Essentials</h4>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-orange">Items to Buy in the US</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Bedding and pillows</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Kitchen utensils and cookware</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Heavy winter clothing (often better value in US)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Electronics (different voltage requirements)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Furniture and home décor</span>
-              </li>
-            </ul>
+            <p>
+              And now you are ready to pack your bags and board that flight to your new life. But are
+              you confused about what you will need and what you should carry? Here are a few
+              suggestions to clear at least some of your confusion.
+            </p>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-orange">Cultural/Personal Items</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Special spices and food items from home</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Traditional clothing for cultural events</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Gifts for new friends and colleagues</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Photos and small mementos</span>
-              </li>
-            </ul>
+            <h5 className="text-lg font-semibold mt-6">Traveling with Agricultural Produce</h5>
+            <p className="ml-4">
+              You may choose to bring family-recipe masalas and the secret ingredients for your
+              favorite recipes. But do consider declaring these items if you think they fall into the
+              category of being an "Agricultural Produce". The United States Customs and Border
+              Protection requires such declarations. These items can potentially be removed at the
+              port-of-entry. You can read more about these regulations at
+              &nbsp;
+              <a
+                href="https://www.cbp.gov/travel/clearing-cbp/bringing-agricultural-products-united-states"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-igsa-orange hover:underline"
+              >
+                CBP — Bringing agricultural products
+              </a>
+              .
+            </p>
 
-            <div className="bg-gradient-to-r from-igsa-green/10 to-green-100 border-l-4 border-igsa-green p-6 rounded-r-lg mt-6">
-              <p className="text-igsa-green font-medium">
-                <strong>Pro Tip:</strong> Pack light initially. You can always have family send additional items later or buy them locally.
+            <h5 className="text-lg font-semibold mt-6">Traveling with Perishable Goods</h5>
+            <p className="ml-4">
+              We advise you not to carry perishable goods that are not sealed properly — either by
+              you or by the manufacturer. These may get taken away at Customs. Please make sure
+              any homemade pickles or achar bottles are factory-sealed if you plan to pack them in
+              checked luggage.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Carrying Kitchen Utensils</h5>
+            <p className="ml-4">
+              You can choose to carry everyday essential kitchen utensils and tools with you as long
+              as they are secure in your checked luggage. If you choose not to, you can buy them in
+              the US at stores like Walmart, Target or on Amazon.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Winter Clothing</h5>
+            <p className="ml-4">
+              State College is in the Northeastern United States and we get cold winters. If you do
+              not already have ultra-warm winter coats, our advice is to buy them in the US — you
+              can often find good quality winter clothing during sales at department stores or
+              online retailers such as Amazon, The North Face, Columbia, or Burlington Coat Factory.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">US Customs — International Visitors</h5>
+            <p className="ml-4">
+              If you are in doubt about what you can bring, consult the US Customs and Border
+              Protection guidance for international visitors:
+              &nbsp;
+              <a
+                href="https://www.cbp.gov/travel/international-visitors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-igsa-orange hover:underline"
+              >
+                CBP — International Visitors
+              </a>
+              .
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Need more help?</h5>
+            <p className="ml-4">
+              We may be able to answer specific questions based on our experience living in the
+              US. We are not qualified to provide legal advice, but we may be able to provide more
+              insights into your concern. Email us at
+              &nbsp;
+              <a href="mailto:psu.igsa@gmail.com" className="text-igsa-orange hover:underline">
+                psu.igsa@gmail.com
+              </a>
+              .
+            </p>
+
+            <div className="bg-gradient-to-r from-igsa-orange/10 to-igsa-saffron/10 border-l-4 border-igsa-orange p-6 rounded-r-lg mt-6">
+              <p className="text-igsa-orange font-medium">
+                <strong>Tip:</strong> Pack essentials and travel light. You can always buy larger
+                items locally or have family ship additional items after you settle in.
               </p>
             </div>
           </div>

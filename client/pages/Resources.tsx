@@ -75,7 +75,7 @@ export default function Resources() {
       path: "/resources/pre-arrival",
       color: "from-igsa-saffron to-igsa-orange",
       textColor: "text-igsa-saffron",
-      items: ["Visa Guidelines", "Housing Information", "Essential Documents", "Packing Checklist"]
+      items: ["How to reach Penn State", "Housing Information", "Essential Documents", "Packing Checklist"]
     },
     {
       title: "Post Arrival",
