@@ -6,18 +6,15 @@ Use this checklist to ensure your Decap CMS is properly configured and ready to 
 
 - [x] Website is hosted on GitHub Pages
 - [x] Repository is `psuigsa/psuigsa.github.io`
-- [x] GitHub Actions workflow exists (`.github/workflows/deploy.yml`)
-- [x] Admin panel files created (`public/admin/`)
-- [x] Content structure created (`content/` folder)
-- [ ] You have admin access to the GitHub repository
+- [x] You have admin access to the GitHub repository
 
-## 🔐 Authentication Setup (Choose ONE)
+## 🔐 Authentication Setup
 
 ### Add Team Members
 
-This will be done by the owner(Nishant Mishra) of the netlify project (`https://app.netlify.com/projects/psuigsa/`)
+This will be done by the owner(Nishant Mishra, currently) of the netlify project (`https://app.netlify.com/projects/psuigsa/`)
 For Netlify Identity:
-- [ ] Go to Netlify → Identity → Invite users
+- [ ] Go to [Netlify](app.netlify.com) → Projects → psuigsa → Project configuration → Identity → Users → Invite users
 - [ ] Enter team member email addresses
 - [ ] Team members receive invitation emails
 - [ ] Team members can set passwords
@@ -26,7 +23,9 @@ For Netlify Identity:
 Once the members' mail is added, the members have to navigate to the admin panel https://psuigsa.netlify.app/admin/ and continue with github.
 
 
-## 📝 Content Migration
+## 📝 Content Management
+
+Following things can be managed from the netlify backend.
 
 ### Events
 - [ ] List all current events to migrate
@@ -46,7 +45,7 @@ Once the members' mail is added, the members have to navigate to the admin panel
 - [ ] List existing resources/guides
 - [ ] Create resource entries
 - [ ] Upload associated files
-- [ ] Organize by category
+- [ ] Organise by category
 - [ ] Test file downloads
 
 
