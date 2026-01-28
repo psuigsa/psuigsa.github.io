@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navigation from "@/components/Navigation";
 import { Plane, Home, MapPin, ChevronRight, BookOpen, Users, MessageCircle, Bot, X } from "lucide-react";
 
@@ -9,9 +9,40 @@ function JoinWhatsappCard() {
     'mailto:psu.igsa@gmail.com?subject=WhatsApp Group Joining Request&body= !! Please include your name and phone number.!! '
   );
 
+  useEffect(() => {
+    function checkHash() {
+      if (window.location.hash === "#join-whatsapp") {
+        setOpen(true);
+        const el = document.getElementById("join-whatsapp");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
+
+  const openModal = () => {
+    try {
+      window.history.pushState(null, "", "#join-whatsapp");
+    } catch (e) {}
+    setOpen(true);
+    const el = document.getElementById("join-whatsapp");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  const closeModal = () => {
+    try {
+      const base = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", base);
+    } catch (e) {}
+    setOpen(false);
+  };
+
   return (
     <>
-      <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between">
+      <div id="join-whatsapp" className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between">
         <div>
           <BookOpen className="w-12 h-12 text-igsa-blue mb-4" />
           <h3 className="text-lg font-semibold text-gray-900 mb-2">Join WhatsApp Group</h3>
@@ -20,7 +51,7 @@ function JoinWhatsappCard() {
 
         <div className="mt-6">
           <button
-            onClick={() => setOpen(true)}
+            onClick={openModal}
             className="inline-flex items-center px-4 py-2 bg-igsa-blue text-white rounded-md font-semibold hover:bg-igsa-blue/90 transition-colors"
           >
             Join WhatsApp
@@ -30,11 +61,11 @@ function JoinWhatsappCard() {
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
+          <div className="absolute inset-0 bg-black/50" onClick={closeModal} />
           <div className="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full mx-4 p-6">
             <button
               aria-label="Close"
-              onClick={() => setOpen(false)}
+              onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
             >
               <X className="w-5 h-5" />
@@ -57,7 +88,7 @@ function JoinWhatsappCard() {
 
             <div className="flex justify-end mt-6">
               <a href={mailto} className="inline-flex items-center px-4 py-2 bg-igsa-saffron text-white rounded-md font-semibold mr-3">Email Now</a>
-              <button onClick={() => setOpen(false)} className="px-4 py-2 border border-gray-200 rounded-md">Close</button>
+              <button onClick={closeModal} className="px-4 py-2 border border-gray-200 rounded-md">Close</button>
             </div>
           </div>
         </div>
