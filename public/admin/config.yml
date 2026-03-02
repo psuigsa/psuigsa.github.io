@@ -44,7 +44,8 @@ collections:
     slug: "{{year}}"
     extension: "json"
     format: "json"
-    summary: "Year {{year}} • {{members.length}} members"
+    identifier_field: "year"
+    summary: "{{year}}"
     sortable_fields: ["year"]
     fields:
       - { label: "Board Year", name: "year", widget: "number", hint: "Example: 2025" }
