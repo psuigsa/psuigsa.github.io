@@ -22,6 +22,30 @@ interface EventFrontmatter {
   requirements?: string;
 }
 
+interface BoardMemberFrontmatter {
+  name?: string;
+  designation?: string;
+  position?: string;
+  photo?: string;
+  year?: string;
+  current?: boolean;
+  order?: string;
+  active?: boolean;
+  published?: boolean;
+}
+
+export interface BoardMember {
+  name: string;
+  position: string;
+  photo?: string;
+}
+
+export interface BoardYear {
+  year: number;
+  current?: boolean;
+  members: BoardMember[];
+}
+
 export interface Event extends EventFrontmatter {
   id: string;
   name: string;
@@ -53,12 +77,24 @@ const SOURCE_ORDER: ContentSource[] = [
   { baseUrl: `${RAW_CONTENT_BASE}/events`, label: "github" },
 ];
 
+const BOARD_SOURCE_ORDER: ContentSource[] = [
+  { baseUrl: `${LOCAL_CONTENT_BASE}/board`, label: "local" },
+  { baseUrl: `${RAW_CONTENT_BASE}/board`, label: "github" },
+];
+
 function getPreferredSources(): ContentSource[] {
   if (typeof window !== "undefined" && window.location.hostname.endsWith("github.io")) {
     // On GitHub Pages we prefer live GitHub content to avoid stale builds
     return [...SOURCE_ORDER].reverse();
   }
   return SOURCE_ORDER;
+}
+
+function getPreferredBoardSources(): ContentSource[] {
+  if (typeof window !== "undefined" && window.location.hostname.endsWith("github.io")) {
+    return [...BOARD_SOURCE_ORDER].reverse();
+  }
+  return BOARD_SOURCE_ORDER;
 }
 
 function withCacheBuster(url: string, cacheBuster: number) {
@@ -116,6 +152,46 @@ async function fetchEventFile(
   }
 
   throw new Error(`Unable to load ${filename} from any source`);
+}
+
+async function loadBoardManifest(cacheBuster: number) {
+  const sources = getPreferredBoardSources();
+
+  for (let i = 0; i < sources.length; i++) {
+    const source = sources[i];
+    try {
+      const files = await fetchJson<string[]>(`${source.baseUrl}/manifest.json`, cacheBuster);
+      if (Array.isArray(files)) {
+        return { files, sourceIndex: i, sources };
+      }
+    } catch (error) {
+      console.warn(`Failed to load board manifest from ${source.label}:`, error);
+    }
+  }
+
+  throw new Error("Unable to load board manifest from any source");
+}
+
+async function fetchBoardFile(
+  filename: string,
+  sources: ContentSource[],
+  primaryIndex: number,
+  cacheBuster: number
+) {
+  const orderedSources = [
+    sources[primaryIndex],
+    ...sources.filter((_, idx) => idx !== primaryIndex),
+  ];
+
+  for (const source of orderedSources) {
+    try {
+      return await fetchText(`${source.baseUrl}/${filename}`, cacheBuster);
+    } catch (error) {
+      console.warn(`Failed to load board file ${filename} from ${source.label}:`, error);
+    }
+  }
+
+  throw new Error(`Unable to load board file ${filename} from any source`);
 }
 
 // Parse YAML frontmatter from markdown (handles lists and block scalars)
@@ -219,6 +295,28 @@ function normalizeEvent(frontmatter: EventFrontmatter, body: string, id: string)
   };
 }
 
+function normalizeBoardMember(frontmatter: BoardMemberFrontmatter) {
+  const name = (frontmatter.name || "").trim();
+  const position = (frontmatter.designation || frontmatter.position || "").trim();
+  const yearValue = Number(frontmatter.year);
+  const year = Number.isFinite(yearValue) ? yearValue : new Date().getFullYear();
+  const orderValue = Number(frontmatter.order);
+  const order = Number.isFinite(orderValue) ? orderValue : 100;
+
+  if (!name) return null;
+
+  return {
+    name,
+    position,
+    photo: frontmatter.photo,
+    year,
+    current: frontmatter.current ?? false,
+    order,
+    active: frontmatter.active ?? true,
+    published: frontmatter.published ?? true,
+  };
+}
+
 // Load all events from the content directory or directly from GitHub when needed
 export async function loadEvents(): Promise<Event[]> {
   try {
@@ -249,6 +347,70 @@ export async function loadEvents(): Promise<Event[]> {
     });
   } catch (error) {
     console.error("Failed to load events:", error);
+    return [];
+  }
+}
+
+export async function loadBoardYears(): Promise<BoardYear[]> {
+  try {
+    const cacheBuster = Date.now();
+    const { files, sourceIndex, sources } = await loadBoardManifest(cacheBuster);
+    const members: Array<ReturnType<typeof normalizeBoardMember>> = [];
+
+    for (const filename of files) {
+      if (!filename.endsWith(".md")) continue;
+
+      try {
+        const markdown = await fetchBoardFile(filename, sources, sourceIndex, cacheBuster);
+        const { data } = parseFrontmatter(markdown);
+        const normalized = normalizeBoardMember(data as BoardMemberFrontmatter);
+        if (normalized && normalized.published && normalized.active) {
+          members.push(normalized);
+        }
+      } catch (error) {
+        console.warn(`Failed to load board member file ${filename}:`, error);
+      }
+    }
+
+    const grouped = new Map<number, { current: boolean; members: Array<{ name: string; position: string; photo?: string; order: number }> }>();
+
+    members.forEach((member) => {
+      if (!member) return;
+      if (!grouped.has(member.year)) {
+        grouped.set(member.year, { current: !!member.current, members: [] });
+      }
+      const bucket = grouped.get(member.year)!;
+      bucket.current = bucket.current || !!member.current;
+      bucket.members.push({
+        name: member.name,
+        position: member.position,
+        photo: member.photo,
+        order: member.order,
+      });
+    });
+
+    const boards = Array.from(grouped.entries())
+      .map(([year, value]) => ({
+        year,
+        current: value.current,
+        members: value.members
+          .sort((a, b) => a.order - b.order)
+          .map(({ order: _order, ...member }) => member),
+      }))
+      .sort((a, b) => b.year - a.year);
+
+    if (boards.length > 0) return boards;
+  } catch (error) {
+    console.warn("Failed to load board members from content:", error);
+  }
+
+  try {
+    const fallbackResponse = await fetch("/board/boards.json", { cache: "no-store" });
+    if (!fallbackResponse.ok) throw new Error("Fallback board JSON unavailable");
+    const fallbackData = await fallbackResponse.json();
+    return (fallbackData.boards || []) as BoardYear[];
+  } catch (error) {
+    console.error("Failed to load fallback board members:", error);
     return [];
   }
 }

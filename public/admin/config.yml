@@ -41,17 +41,16 @@ collections:
     label: "Board Members"
     folder: "content/board"
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{slug}}"
     fields:
       - { label: "Name", name: "name", widget: "string" }
-      - { label: "Position", name: "position", widget: "select", options: ["President", "Vice President", "Secretary", "Treasurer", "Cultural Coordinator", "Sports Coordinator", "Web Master", "Board Member"] }
-      - { label: "Email", name: "email", widget: "string" }
+      - { label: "Designation", name: "designation", widget: "string" }
       - { label: "Photo", name: "photo", widget: "image", required: false }
-      - { label: "Bio", name: "bio", widget: "text", required: false }
-      - { label: "Department", name: "department", widget: "string", required: false }
-      - { label: "Year Joined", name: "year", widget: "number", required: false }
+      - { label: "Board Year", name: "year", widget: "number" }
+      - { label: "Current Board", name: "current", widget: "boolean", default: false, required: false }
       - { label: "Order", name: "order", widget: "number", default: 100, hint: "Lower numbers appear first" }
       - { label: "Active", name: "active", widget: "boolean", default: true }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
 
   # Resources Collection
   - name: "resources"

@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import { Users, Target, Heart, Globe } from "lucide-react";
+import BoardMembers from "@/components/BoardMembers";
 
 export default function About() {
   return (
@@ -54,28 +55,7 @@ export default function About() {
                 Hindu Student Council, Association of India's Development, Penn State JaDhoom, Natya, Penn State Cricket Club among others.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <Users className="w-12 h-12 text-igsa-saffron mb-4" />
-                <h3 className="font-semibold text-gray-900 mb-2">Community</h3>
-                <p className="text-gray-600 text-sm">Building lasting friendships</p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <Target className="w-12 h-12 text-igsa-blue mb-4" />
-                <h3 className="font-semibold text-gray-900 mb-2">Academic</h3>
-                <p className="text-gray-600 text-sm">Supporting your success</p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <Heart className="w-12 h-12 text-igsa-green mb-4" />
-                <h3 className="font-semibold text-gray-900 mb-2">Cultural</h3>
-                <p className="text-gray-600 text-sm">Celebrating our heritage</p>
-              </div>
-              <div className="bg-white p-6 rounded-xl shadow-lg">
-                <Globe className="w-12 h-12 text-igsa-orange mb-4" />
-                <h3 className="font-semibold text-gray-900 mb-2">Global</h3>
-                <p className="text-gray-600 text-sm">Connecting cultures</p>
-              </div>
-            </div>
+            <BoardMembers />
           </div>
         </div>
       </section>

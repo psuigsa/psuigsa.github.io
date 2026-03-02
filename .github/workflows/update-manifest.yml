@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'content/events/*.md'
+      - 'content/board/*.md'
+      - 'content/resources/*.md'
 
 permissions:
   contents: write
@@ -19,29 +21,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update manifest.json
+      - name: Update content manifests
         run: |
-          cd content/events
-          # Generate manifest.json with all .md files
-          echo "[" > manifest.json
-          first=true
-          for file in *.md; do
-            if [ "$first" = true ]; then
-              echo "  \"$file\"" >> manifest.json
-              first=false
-            else
-              echo "  ,\"$file\"" >> manifest.json
-            fi
-          done
-          echo "]" >> manifest.json
-          
-          # Format the JSON properly
-          cat manifest.json | jq -c '.' > manifest.tmp.json
-          mv manifest.tmp.json manifest.json
+          node scripts/generate-manifests.js
 
       - name: Commit and push if changed
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
-          git add content/events/manifest.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update events manifest" && git push)
+          git add content/events/manifest.json content/board/manifest.json content/resources/manifest.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update content manifests" && git push)
