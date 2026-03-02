@@ -1,0 +1,53 @@
+{
+  "boards": [
+    {
+      "year": 2025,
+      "current": true,
+      "members": [
+        { "name": "Raghav Kumar", "position": "President", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/raghav-kumar.jpeg" },
+        { "name": "Nishant Mishra", "position": "Treasurer", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/nishant-mishar.jpeg" },
+        { "name": "Akashdeep Singh", "position": "Social Media Coordinator" },
+        { "name": "Yogeshvar Reddy Kallam", "position": "Event Planner" },
+        { "name": "Shubhom Rawat", "position": "Public Relations Coordinator", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/shivom.jpeg" },
+        { "name": "Vedant Manelkar", "position": "", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vedant.jpeg" },
+        { "name": "Tanishka Ganesh Mali", "position": "", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/tanishka-mali.jpeg" },
+        { "name": "Satwika Chivukula", "position": "", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/swasthika.jpeg" },
+        { "name": "Priyanshu Nidamarty", "position": "" },
+        { "name": "Vandan Bhavesh Sheth", "position": "", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vandan-seth2.jpeg" }
+          ,{ "name": "Vani Gupta", "position": "Advisory Panel", "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vani-gupta.jpeg" }
+      ]
+    },
+    {
+      "year": 2024,
+      "current": false,
+      "members": [
+        { "name": "Vani Gupta", "position": "President", "photo": "https://randomuser.me/api/portraits/men/11.jpg" },
+        { "name": "Rishika Thota", "position": "Vice President", "photo": "https://randomuser.me/api/portraits/women/12.jpg" },
+        { "name": "Ayan Bhatnagar", "position": "Treasurer", "photo": "https://randomuser.me/api/portraits/men/13.jpg" },
+        { "name": "Meera Joshi", "position": "Secretary", "photo": "https://randomuser.me/api/portraits/women/14.jpg" },
+        { "name": "Pooja Nair", "position": "Social Media Coordinator", "photo": "https://randomuser.me/api/portraits/women/15.jpg" },
+        { "name": "Amit Rao", "position": "Public Relations Coordinator", "photo": "https://randomuser.me/api/portraits/men/16.jpg" },
+        { "name": "Kavya Menon", "position": "Event Planner", "photo": "https://randomuser.me/api/portraits/women/17.jpg" },
+        { "name": "Aravind Kumar", "position": "Webmaster", "photo": "https://randomuser.me/api/portraits/men/18.jpg" },
+        { "name": "Sneha Patel", "position": "Outreach", "photo": "https://randomuser.me/api/portraits/women/19.jpg" },
+        { "name": "Prof. R. Singh", "position": "Advisor", "photo": "https://randomuser.me/api/portraits/men/20.jpg" }
+      ]
+    },
+    {
+      "year": 2023,
+      "current": false,
+      "members": [
+        { "name": "Vaibhav Pal", "position": "President", "photo": "https://randomuser.me/api/portraits/women/21.jpg" },
+        { "name": "Anil Kapoor", "position": "Vice President", "photo": "https://randomuser.me/api/portraits/men/22.jpg" },
+        { "name": "Divya Kaur", "position": "Treasurer", "photo": "https://randomuser.me/api/portraits/women/23.jpg" },
+        { "name": "Kunal Das", "position": "Secretary", "photo": "https://randomuser.me/api/portraits/men/24.jpg" },
+        { "name": "Rhea Singh", "position": "Social Media Coordinator", "photo": "https://randomuser.me/api/portraits/women/25.jpg" },
+        { "name": "Vivek Sharma", "position": "Public Relations Coordinator", "photo": "https://randomuser.me/api/portraits/men/26.jpg" },
+        { "name": "Nisha Gupta", "position": "Event Planner", "photo": "https://randomuser.me/api/portraits/women/27.jpg" },
+        { "name": "Saurabh Roy", "position": "Webmaster", "photo": "https://randomuser.me/api/portraits/men/28.jpg" },
+        { "name": "Tina George", "position": "Outreach", "photo": "https://randomuser.me/api/portraits/women/29.jpg" },
+        { "name": "Dr. P. Menon", "position": "Advisor", "photo": "https://randomuser.me/api/portraits/men/30.jpg" }
+      ]
+    }
+  ]
+}
