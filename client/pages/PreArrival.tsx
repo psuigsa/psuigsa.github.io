@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
+import HousingRatings from "@/components/HousingRatings";
 
 // Simple chevron component to replace Heroicons
 function ChevronDownIcon({ className }: { className?: string }) {
@@ -260,6 +261,8 @@ export default function PreArrival() {
                   <strong>Tip:</strong> For temporary accommodation, reach out to IGSA. IGSA volunteers can accommodate you as a guest for a few days while you finalize permanent arrangements. Please submit the temporary-accommodation request form early so we can coordinate volunteers.
                 </p>
             </div>
+
+            <HousingRatings />
           </div>
         );
 
