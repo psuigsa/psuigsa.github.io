@@ -539,19 +539,24 @@ export default function PreArrival() {
               <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                 Our IGSA volunteers are here to help you with personalized guidance for your pre-arrival preparations.
               </p>
+              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+                <strong>Penn State Global Pre-Arrival Advising</strong> provides support to newly admitted international students before they arrive at Penn State. Their pre-arrival advisers can help you with immigration paperwork, visa documentation, and preparation for your journey to the US. If you have questions about your I-20, DS-2019, visa process, or other official requirements, you can reach out to them for expert assistance.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  to="/contact"
+                  to="/resources"
                   className="bg-gradient-to-r from-igsa-saffron to-igsa-orange text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-shadow"
                 >
                   Contact IGSA
                 </Link>
-                <Link
-                  to="/resources"
-                  className="border-2 border-igsa-blue text-igsa-blue px-8 py-3 rounded-full font-semibold hover:bg-igsa-blue hover:text-white transition-colors"
+                <a
+                  href="https://global.psu.edu/page/contact-pre-arrival-advising"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-2 border-igsa-green text-igsa-green px-8 py-3 rounded-full font-semibold hover:bg-igsa-green hover:text-white transition-colors"
                 >
-                  Explore More Resources
-                </Link>
+                  Penn State Global Pre-Arrival Advising
+                </a>
               </div>
             </div>
           )}

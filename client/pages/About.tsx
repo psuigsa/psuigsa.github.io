@@ -29,33 +29,28 @@ export default function About() {
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Our Mission</h2>
               <p className="text-lg text-gray-600 mb-6">
-                To create a supportive and inclusive community for Indian graduate students, 
-                fostering academic excellence, cultural celebration, and lifelong connections.
+                To create a supportive and inclusive community for Indian students at Penn State, fostering academic excellence, cultural celebration, and lifelong connections.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                We bridge the gap between home and your new academic journey, providing 
-                resources, support, and a sense of belonging in State College.
+                We strive to bridge the gap between home and a new academic journey by providing resources, guidance, and a strong sense of belonging in State College.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Formed in the Spring of 2003, this student-run organization acts as a platform to 
-                integrate Indian graduate students and post-doctoral scholars at Penn State representing 
-                India and the Indian community. Our goal is to provide incoming Indian graduate students 
-                and scholars the know-how of navigating the graduate/professional life in State College, 
-                Pennsylvania and help smoothen their transition to a new place. We welcome current and incoming 
-                Indian Graduate students into our organization.
+                Formed in the Spring of 2003, the Indian Graduate Student Association (IGSA) is a student-run organisation dedicated to integrating Indian graduate students and post-doctoral scholars at Penn State. Representing India and the broader Indian community, IGSA serves as a platform to help incoming students navigate graduate and professional life in State College, Pennsylvania, and to ease their transition into a new academic and cultural environment.
+              </p>
+              <p className="text-lg text-gray-600 mb-6">
+                Although IGSA is primarily a graduate student association, we warmly welcome undergraduate students as well. Any undergraduate student coming to Penn State is encouraged to seek guidance, support, and community through IGSA. We believe in extending assistance to all members of the Indian student community and fostering an inclusive environment where everyone feels at home.
+              </p>
+              <p className="text-lg text-gray-600 mb-6">
+                The central motivation behind the formation of IGSA is to create meaningful connections among Indian students and scholars, nurturing a sense of belonging while living away from home. Throughout the year, we organise events that celebrate the rich and diverse cultural heritage of India, while encouraging participation from members of all communities. Our events aim to introduce and showcase Indian culture to the American and international communities at Penn State.
               </p>
               <p className="text-lg text-gray-600">
-                Main motivation behind the formation of IGSA is to create a platform for Indian graduate students 
-                and research scholars to connect with each other and have a sense of belongingness in a foreign land. 
-                Occassionally, we also hold events to celebrate the rich and diverse Indian culture and encourage 
-                participation from all members of the Indian community and friends from other nationalities. 
-                Our events are aimed to introduce and showcase the Indian culture to American and International 
-                Communities at Penn State.  We, as an organization, encourage and collaborate with other communities 
-                and groups at University Park, such as the Indian Culture and Language Club, Penn State Vedic Society, 
-                Hindu Student Council, Association of India's Development, Penn State JaDhoom, Natya, Penn State Cricket Club among others.
+                As an organisation, we actively collaborate with other student groups at University Park, including the Society for Indian Music and Arts, Indian Culture and Language Club, Association for India’s Development, Penn State JaDhoom, Natya, Raaga, and others, strengthening cross-community engagement and cultural exchange.
               </p>
             </div>
-            <BoardMembers />
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">IGSA Board</h2>
+              <BoardMembers />
+            </div>
           </div>
         </div>
       </section>
