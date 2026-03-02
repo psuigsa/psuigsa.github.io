@@ -44,8 +44,7 @@ collections:
     slug: "{{year}}"
     extension: "json"
     format: "json"
-    identifier_field: "year"
-    summary: "{{year}}"
+    summary: "{{fields.year}} Board"
     sortable_fields: ["year"]
     fields:
       - { label: "Board Year", name: "year", widget: "number", hint: "Example: 2025" }
@@ -54,7 +53,7 @@ collections:
         name: "members"
         widget: "list"
         label_singular: "Board Member"
-        summary: "{{fields.name}} • {{fields.designation}} • {{fields.photo}}"
+        summary: "{{fields.name}} — {{fields.designation}}"
         hint: "Each row is a member. Click a row to edit full details."
         fields:
           - { label: "Name", name: "name", widget: "string", hint: "Full name" }
