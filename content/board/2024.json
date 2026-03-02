@@ -1,0 +1,76 @@
+{
+  "year": 2024,
+  "current": false,
+  "members": [
+    {
+      "name": "Manish Verma",
+      "designation": "President",
+      "photo": "https://randomuser.me/api/portraits/men/11.jpg",
+      "order": 1,
+      "active": true
+    },
+    {
+      "name": "Sonal Bhatia",
+      "designation": "Vice President",
+      "photo": "https://randomuser.me/api/portraits/women/12.jpg",
+      "order": 2,
+      "active": true
+    },
+    {
+      "name": "Rohit Sen",
+      "designation": "Treasurer",
+      "photo": "https://randomuser.me/api/portraits/men/13.jpg",
+      "order": 3,
+      "active": true
+    },
+    {
+      "name": "Meera Joshi",
+      "designation": "Secretary",
+      "photo": "https://randomuser.me/api/portraits/women/14.jpg",
+      "order": 4,
+      "active": true
+    },
+    {
+      "name": "Pooja Nair",
+      "designation": "Social Media Coordinator",
+      "photo": "https://randomuser.me/api/portraits/women/15.jpg",
+      "order": 5,
+      "active": true
+    },
+    {
+      "name": "Amit Rao",
+      "designation": "Public Relations Coordinator",
+      "photo": "https://randomuser.me/api/portraits/men/16.jpg",
+      "order": 6,
+      "active": true
+    },
+    {
+      "name": "Kavya Menon",
+      "designation": "Event Planner",
+      "photo": "https://randomuser.me/api/portraits/women/17.jpg",
+      "order": 7,
+      "active": true
+    },
+    {
+      "name": "Aravind Kumar",
+      "designation": "Webmaster",
+      "photo": "https://randomuser.me/api/portraits/men/18.jpg",
+      "order": 8,
+      "active": true
+    },
+    {
+      "name": "Sneha Patel",
+      "designation": "Outreach",
+      "photo": "https://randomuser.me/api/portraits/women/19.jpg",
+      "order": 9,
+      "active": true
+    },
+    {
+      "name": "Prof. R. Singh",
+      "designation": "Advisor",
+      "photo": "https://randomuser.me/api/portraits/men/20.jpg",
+      "order": 10,
+      "active": true
+    }
+  ]
+}

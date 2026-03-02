@@ -27,5 +27,5 @@ function writeManifest(folder, predicate = () => true) {
 writeManifest("events", (file) => file.endsWith(".md"));
 
 // Placeholders for other collections to keep structure consistent
-writeManifest("board", (file) => file.endsWith(".md"));
+writeManifest("board", (file) => file.endsWith(".md") || file.endsWith(".json"));
 writeManifest("resources", (file) => file.endsWith(".md"));

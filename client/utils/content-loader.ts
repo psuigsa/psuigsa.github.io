@@ -32,6 +32,14 @@ interface BoardMemberFrontmatter {
   order?: string;
   active?: boolean;
   published?: boolean;
+  members?: Array<{
+    name?: string;
+    designation?: string;
+    position?: string;
+    photo?: string;
+    order?: number | string;
+    active?: boolean;
+  }>;
 }
 
 export interface BoardMember {
@@ -317,6 +325,30 @@ function normalizeBoardMember(frontmatter: BoardMemberFrontmatter) {
   };
 }
 
+function normalizeBoardFileMember(
+  member: { name?: string; designation?: string; position?: string; photo?: string; order?: number | string; active?: boolean },
+  boardYear: number,
+  boardCurrent: boolean,
+) {
+  const name = (member.name || "").trim();
+  const position = (member.designation || member.position || "").trim();
+  const orderValue = Number(member.order);
+  const order = Number.isFinite(orderValue) ? orderValue : 100;
+
+  if (!name) return null;
+
+  return {
+    name,
+    position,
+    photo: member.photo,
+    year: boardYear,
+    current: boardCurrent,
+    order,
+    active: member.active ?? true,
+    published: true,
+  };
+}
+
 // Load all events from the content directory or directly from GitHub when needed
 export async function loadEvents(): Promise<Event[]> {
   try {
@@ -358,14 +390,44 @@ export async function loadBoardYears(): Promise<BoardYear[]> {
     const members: Array<ReturnType<typeof normalizeBoardMember>> = [];
 
     for (const filename of files) {
-      if (!filename.endsWith(".md")) continue;
+      if (!filename.endsWith(".md") && !filename.endsWith(".json")) continue;
 
       try {
-        const markdown = await fetchBoardFile(filename, sources, sourceIndex, cacheBuster);
-        const { data } = parseFrontmatter(markdown);
-        const normalized = normalizeBoardMember(data as BoardMemberFrontmatter);
-        if (normalized && normalized.published && normalized.active) {
-          members.push(normalized);
+        if (filename.endsWith(".json")) {
+          const orderedSources = [
+            sources[sourceIndex],
+            ...sources.filter((_, idx) => idx !== sourceIndex),
+          ];
+
+          let boardJson: BoardMemberFrontmatter | null = null;
+          for (const source of orderedSources) {
+            try {
+              boardJson = await fetchJson<BoardMemberFrontmatter>(`${source.baseUrl}/${filename}`, cacheBuster);
+              break;
+            } catch (error) {
+              console.warn(`Failed to load board JSON ${filename} from ${source.label}:`, error);
+            }
+          }
+
+          if (boardJson && Array.isArray(boardJson.members)) {
+            const yearValue = Number(boardJson.year);
+            const boardYear = Number.isFinite(yearValue) ? yearValue : new Date().getFullYear();
+            const boardCurrent = boardJson.current ?? false;
+
+            boardJson.members.forEach((member) => {
+              const normalizedMember = normalizeBoardFileMember(member, boardYear, boardCurrent);
+              if (normalizedMember && normalizedMember.active) {
+                members.push(normalizedMember);
+              }
+            });
+          }
+        } else {
+          const markdown = await fetchBoardFile(filename, sources, sourceIndex, cacheBuster);
+          const { data } = parseFrontmatter(markdown);
+          const normalized = normalizeBoardMember(data as BoardMemberFrontmatter);
+          if (normalized && normalized.published && normalized.active) {
+            members.push(normalized);
+          }
         }
       } catch (error) {
         console.warn(`Failed to load board member file ${filename}:`, error);

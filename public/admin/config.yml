@@ -41,16 +41,26 @@ collections:
     label: "Board Members"
     folder: "content/board"
     create: true
-    slug: "{{year}}-{{slug}}"
+    slug: "{{year}}"
+    extension: "json"
+    format: "json"
+    summary: "Year {{year}} • {{members.length}} members"
+    sortable_fields: ["year"]
     fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - { label: "Designation", name: "designation", widget: "string" }
-      - { label: "Photo", name: "photo", widget: "image", required: false }
-      - { label: "Board Year", name: "year", widget: "number" }
-      - { label: "Current Board", name: "current", widget: "boolean", default: false, required: false }
-      - { label: "Order", name: "order", widget: "number", default: 100, hint: "Lower numbers appear first" }
-      - { label: "Active", name: "active", widget: "boolean", default: true }
-      - { label: "Published", name: "published", widget: "boolean", default: true }
+      - { label: "Board Year", name: "year", widget: "number", hint: "Example: 2025" }
+      - { label: "Current Board", name: "current", widget: "boolean", default: false, required: false, hint: "Enable only for the active/current year" }
+      - label: "Board Members"
+        name: "members"
+        widget: "list"
+        label_singular: "Board Member"
+        summary: "{{fields.name}} • {{fields.designation}} • {{fields.photo}}"
+        hint: "Each row is a member. Click a row to edit full details."
+        fields:
+          - { label: "Name", name: "name", widget: "string", hint: "Full name" }
+          - { label: "Designation", name: "designation", widget: "string", hint: "President, Treasurer, Advisory Panel, etc." }
+          - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload image or use a URL" }
+          - { label: "Order", name: "order", widget: "number", default: 100, hint: "Lower number shows first" }
+          - { label: "Active", name: "active", widget: "boolean", default: true, required: false }
 
   # Resources Collection
   - name: "resources"

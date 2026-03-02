@@ -1,0 +1,80 @@
+{
+  "year": 2025,
+  "current": true,
+  "members": [
+    {
+      "name": "Raghav Kumar",
+      "designation": "President",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/raghav-kumar.jpeg",
+      "order": 1,
+      "active": true
+    },
+    {
+      "name": "Nishant Mishra",
+      "designation": "Treasurer",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/nishant-mishar.jpeg",
+      "order": 2,
+      "active": true
+    },
+    {
+      "name": "Akashdeep Singh",
+      "designation": "Social Media Coordinator",
+      "order": 3,
+      "active": true
+    },
+    {
+      "name": "Yogeshvar Reddy Kallam",
+      "designation": "Event Planner",
+      "order": 4,
+      "active": true
+    },
+    {
+      "name": "Shubhom Rawat",
+      "designation": "Public Relations Coordinator",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/shivom.jpeg",
+      "order": 5,
+      "active": true
+    },
+    {
+      "name": "Vedant Manelkar",
+      "designation": "",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vedant.jpeg",
+      "order": 6,
+      "active": true
+    },
+    {
+      "name": "Tanishka Ganesh Mali",
+      "designation": "",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/tanishka-mali.jpeg",
+      "order": 7,
+      "active": true
+    },
+    {
+      "name": "Satwika Chivukula",
+      "designation": "",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/swasthika.jpeg",
+      "order": 8,
+      "active": true
+    },
+    {
+      "name": "Priyanshu Nidamarty",
+      "designation": "",
+      "order": 9,
+      "active": true
+    },
+    {
+      "name": "Vandan Bhavesh Sheth",
+      "designation": "",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vandan-seth2.jpeg",
+      "order": 10,
+      "active": true
+    },
+    {
+      "name": "Vani Gupta",
+      "designation": "Advisory Panel",
+      "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vani-gupta.jpeg",
+      "order": 11,
+      "active": true
+    }
+  ]
+}

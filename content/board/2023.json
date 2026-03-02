@@ -1,0 +1,76 @@
+{
+  "year": 2023,
+  "current": false,
+  "members": [
+    {
+      "name": "Sunita Rao",
+      "designation": "President",
+      "photo": "https://randomuser.me/api/portraits/women/21.jpg",
+      "order": 1,
+      "active": true
+    },
+    {
+      "name": "Anil Kapoor",
+      "designation": "Vice President",
+      "photo": "https://randomuser.me/api/portraits/men/22.jpg",
+      "order": 2,
+      "active": true
+    },
+    {
+      "name": "Divya Kaur",
+      "designation": "Treasurer",
+      "photo": "https://randomuser.me/api/portraits/women/23.jpg",
+      "order": 3,
+      "active": true
+    },
+    {
+      "name": "Kunal Das",
+      "designation": "Secretary",
+      "photo": "https://randomuser.me/api/portraits/men/24.jpg",
+      "order": 4,
+      "active": true
+    },
+    {
+      "name": "Rhea Singh",
+      "designation": "Social Media Coordinator",
+      "photo": "https://randomuser.me/api/portraits/women/25.jpg",
+      "order": 5,
+      "active": true
+    },
+    {
+      "name": "Vivek Sharma",
+      "designation": "Public Relations Coordinator",
+      "photo": "https://randomuser.me/api/portraits/men/26.jpg",
+      "order": 6,
+      "active": true
+    },
+    {
+      "name": "Nisha Gupta",
+      "designation": "Event Planner",
+      "photo": "https://randomuser.me/api/portraits/women/27.jpg",
+      "order": 7,
+      "active": true
+    },
+    {
+      "name": "Saurabh Roy",
+      "designation": "Webmaster",
+      "photo": "https://randomuser.me/api/portraits/men/28.jpg",
+      "order": 8,
+      "active": true
+    },
+    {
+      "name": "Tina George",
+      "designation": "Outreach",
+      "photo": "https://randomuser.me/api/portraits/women/29.jpg",
+      "order": 9,
+      "active": true
+    },
+    {
+      "name": "Dr. P. Menon",
+      "designation": "Advisor",
+      "photo": "https://randomuser.me/api/portraits/men/30.jpg",
+      "order": 10,
+      "active": true
+    }
+  ]
+}
