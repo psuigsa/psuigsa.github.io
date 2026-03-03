@@ -19,3 +19,5 @@ This website now includes a user-friendly admin panel for managing content witho
 
 ### 📚 All CMS Documentation
 See [README_CMS.md](README_CMS.md) for a complete guide to all CMS documentation and resources.
+
+https://global.psu.edu/landing/living-us
