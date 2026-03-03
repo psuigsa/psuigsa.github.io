@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "टाइमस्टैम्प": "02/03/2026 22:01:21",
+    "ईमेल पता": "nkm5752@psu.edu",
+    "I am": "a Graduate student",
+    "Apartment": "Briarwood Apartments",
+    "Enter name of your apartment": "",
+    "House rent per month": "500",
+    "Security deposit": "2 month rent",
+    "Does your apartment have a community space": "No",
+    "Pet Friendly": "No",
+    "Behaviour of management/landlord": "9",
+    "Bus Accessibility": "8",
+    "Natural light": "10",
+    "Overall": "8",
+    "Anything else you would like to share.": ""
+  },
+  {
+    "टाइमस्टैम्प": "",
+    "ईमेल पता": "",
+    "I am": "a Graduate student",
+    "Apartment": "Briarwood Apartments",
+    "Enter name of your apartment": "",
+    "House rent per month": "500",
+    "Security deposit": "2 month rent",
+    "Does your apartment have a community space": "",
+    "Pet Friendly": "",
+    "Behaviour of management/landlord": "8",
+    "Bus Accessibility": "6",
+    "Natural light": "5",
+    "Overall": "4",
+    "Anything else you would like to share.": ""
+  }
+]
