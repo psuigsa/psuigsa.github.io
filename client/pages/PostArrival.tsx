@@ -243,61 +243,98 @@ export default function PostArrival() {
       case 'legal':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-orange">SEVIS & Immigration</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Complete SEVIS check-in within 30 days of arrival</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Report any address changes to Global Programs</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Maintain full-time enrollment status</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Keep passport and I-20 documents current</span>
-              </li>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-orange">Maintaining Your F‑1 or J‑1 Status</h4>
+            <p>
+              Your immigration status is your responsibility. You must follow the rules below to
+              stay in status while studying in the United States.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Common responsibilities for all visa holders</h5>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Complete SEVIS check‑in (follow instructions from ISSA) shortly after arrival.</li>
+              <li>Keep your U.S. local address and contact information up to date — update within 10 days using the U.S. Local Address Update form in <a className="underline" href="https://istart.gp.psu.edu/istart/controllers/start/StartEngine.cfm" target="_blank" rel="noopener noreferrer">iStart</a>. Also keep all of your contact details current in <a className="underline" href="https://accounts.psu.edu/" target="_blank" rel="noopener noreferrer">Account Management</a>.</li>
+              <li>Maintain required health insurance and any program-specific coverage.</li>
+              <li>Keep your passport and immigration documents (I‑20 or DS‑2019) valid; request extensions before the end date.</li>
+              <li>Read and respond to communications from ISSA / Global Programs — they contain important reporting and compliance instructions.</li>
             </ul>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-orange">Work Authorization</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>On-campus employment (TA, RA, GA positions)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>CPT for internships and practical training</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>OPT planning for post-graduation employment</span>
-              </li>
+            <h5 className="text-lg font-semibold mt-6">DHS full‑time enrollment minimums</h5>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Undergraduate and Law students in F‑1 or J‑1 status must enroll in a minimum of 12 credits per semester to meet Department of Homeland Security (DHS) full‑time requirements.</li>
+              <li>Graduate students in F‑1 or J‑1 status must enroll in a minimum of 9 credits per semester to meet DHS full‑time requirements.</li>
             </ul>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-orange">Tax Obligations</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Understand tax treaty benefits (if applicable)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>File annual tax returns (Form 1040NR or 8843)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Attend tax workshops offered by IGSA</span>
-              </li>
+            <h5 className="text-lg font-semibold mt-6">If you are an F‑1 student</h5>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Enroll full‑time each term, or obtain prior approval for an authorized reduced course load.</li>
+              <li>Enroll in the required number of in‑person credits if your program requires it — check Enrollment Requirements.</li>
+              <li>Obtain work authorization before beginning any employment (on‑campus jobs, CPT, OPT): consult ISSA for eligibility and application steps.</li>
+              <li>If you will stop enrolling (graduation, leave, withdrawal), notify ISSA using the Exit form in iStart so your SEVIS record is handled correctly.</li>
             </ul>
+
+            <h5 className="text-lg font-semibold mt-6">If you are a J‑1 student</h5>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Enroll full‑time or secure approval for an authorized reduced course load when appropriate.</li>
+              <li>Meet mandatory health insurance requirements for J‑1 participants.</li>
+              <li>Obtain prior authorization for any employment and apply for program extensions before your DS‑2019 end date, if needed.</li>
+            </ul>
+
+            <h4 className="text-xl font-semibold mb-4 mt-6 text-igsa-orange">Travel Requirements</h4>
+            <p>
+              Traveling as an F-1 or J-1 student requires careful planning to ensure compliance with U.S. immigration regulations. Below are the key requirements and recommendations:
+            </p>
+
+            <h6 className="text-lg font-semibold mt-6">Required Travel Documents</h6>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Valid passport (must be valid at least 6 months into the future).</li>
+              <li>Valid U.S. visa in your passport (except for citizens of Canada and Bermuda).</li>
+              <li>Valid I-20 (F-1) or DS-2019 (J-1) with a travel signature. Request a travel signature in <a className="underline" href="https://istart.gp.psu.edu/istart/controllers/start/StartEngine.cfm" target="_blank" rel="noopener noreferrer">iStart</a>.</li>
+            </ul>
+
+            <h6 className="text-lg font-semibold mt-6">Additional Recommendations</h6>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Carry transcripts and enrollment verification for the next semester.</li>
+              <li>Check your I-94 arrival record after returning to the U.S. to ensure accuracy.</li>
+            </ul>
+
+            <h6 className="text-lg font-semibold mt-6">Important Notes</h6>
+            <p>
+              Re-entry is not permitted during the grace period at the end of your F-1 or J-1 status. If your visa has expired, you must renew it before re-entering the U.S. For more details, visit the <a className="underline" href="https://global.psu.edu/travel" target="_blank" rel="noopener noreferrer">Travel Resources</a> page.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Documents to Always Carry with You</h5>
+            <p>When traveling within the United States (for example, to another state) — you are required to always carry paper or electronic copies of the following documents with you:</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Your passport photo page</li>
+              <li>Your most recent <a className="underline" href="https://i94.cbp.dhs.gov/home" target="_blank" rel="noopener noreferrer">I-94</a> arrival record</li>
+              <li>Your signed I-20 or DS-2019</li>
+              <li>Your visa</li>
+            </ul>
+
+            <p className="mt-4 font-semibold">Recommended:</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>Students: your class schedule for the current semester</li>
+              <li>OPT/STEM OPT: your EAD and an employment letter or proof of employment (if applicable)</li>
+            </ul>
+
+            <p className="mt-4 font-semibold">Helpful:</p>
+            <p>
+              A copy of AILA’s <a className="underline" href="https://www.aila.org/aila-files/20036845-F2B6-4749-9E38-E47CBA77C3EE/Know-Your-Rights-2025-Update-2.pdf" target="_blank" rel="noopener noreferrer">Know Your Rights</a> document (PDF) to reference if U.S. immigration officers visit or question you.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Inviting Family or Friends to Visit</h5>
+            <p>If you would like to invite family or friends to the U.S., provide them with the following documents to support their visitor visa application and interview:</p>
+            <ul className="list-disc pl-6 space-y-2 text-gray-700">
+              <li>A letter of invitation from you (in your language and English) that includes the relationship to you, purpose of the visit, dates, where the visitor(s) will sleep and eat, and any other important information.</li>
+              <li>Evidence you can support them during the visit if you provide room and board (bank statement, assistantship information, apartment lease, etc.).</li>
+              <li>Evidence that you are a full-time student (request enrollment verification through LionPATH).</li>
+              <li>Copy of your I-20 or DS-2019.</li>
+            </ul>
+            <p className="mt-3">Visitors must show ties to their home country and evidence they intend to return abroad and not remain in the U.S.</p>
 
             <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-400 p-6 rounded-r-lg mt-6">
               <p className="text-red-700 font-medium">
-                <strong>Critical:</strong> Non-compliance with immigration regulations can result in loss of status. Always consult Global Programs for guidance.
+                <strong>Need help?</strong> Contact Penn State Global / ISSA or submit a question in <a className="underline text-red-700" href="https://istart.gp.psu.edu/istart/controllers/start/StartEngine.cfm" target="_blank" rel="noopener noreferrer">iStart</a>.
               </p>
             </div>
           </div>
