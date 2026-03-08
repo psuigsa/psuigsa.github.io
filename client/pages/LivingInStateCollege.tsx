@@ -67,60 +67,35 @@ export default function LivingInStateCollege() {
         return (
           <div className="prose max-w-none">
             <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">Public Transportation</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>CATA Bus System:</strong> Free with Penn State ID, covers campus and town</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Download CATA app for real-time bus tracking</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Key routes: Blue Loop, White Loop, Red Link</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Night service available for safe late-night transportation</span>
-              </li>
-            </ul>
-            
+            <p>
+              Getting around State College is straightforward. The Blue Loop, White Loop, and Red Link are CATA-operated Campus and Downtown Circulator Routes that primarily circulate within the university and nearby downtown; when traveling within university property these routes are free to ride. In addition to those circulators, CATA runs Community and Express Routes that connect residential neighborhoods and popular apartment complexes with the center of campus. These Community and Express services typically run frequently (about every 15 minutes) and charge approximately $2.50 per ride, although some apartment communities include a bus pass for residents. For a full schedule and information about both university and CATA services, check <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/buses-and-shuttles" target="_blank" rel="noopener noreferrer">transportation.psu.edu</a>.
+            </p>
+
+            <p>
+              For real-time and route information, download the transit apps used in the area (they can be grabbed from <a className="text-igsa-saffron underline" href="https://catabus.com/catabus/real-time-apps-and-mobile-options/" target="_blank" rel="noopener noreferrer">the CATA apps page</a>).
+            </p>
+
+            <p>
+              If you prefer on-demand options, rideshare services are widely available around campus. Penn State publishes information about its Lyft programs and partnerships at <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/lyft-programs" target="_blank" rel="noopener noreferrer">their Lyft programs page</a>, and Uber operates in State College as well (<a className="text-igsa-saffron underline" href="https://www.uber.com/global/en/r/cities/state-college-pa-us/" target="_blank" rel="noopener noreferrer">Uber — State College</a>). Between free campus buses, CATA routes, and rideshare options, most people find they can get where they need without owning a car.
+            </p>
+
             <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-saffron">Driving & Parking</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Pennsylvania driver's license (required after 60 days)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Campus parking permits available (expensive but convenient)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Car rental options: Enterprise, Hertz, Budget</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Zipcar available for short-term car sharing</span>
-              </li>
-            </ul>
+            <p>
+              If you do drive, be aware that Pennsylvania requires new residents to obtain a state driver's license after 60 days. Campus parking permits are available but can be costly, so weigh permit costs against the convenience of driving. Short-term rentals (Enterprise, Hertz, Budget) and car-sharing services like Zipcar are useful alternatives for occasional trips that need a vehicle.
+            </p>
 
             <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-saffron">Biking & Walking</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Bike-friendly campus with dedicated lanes</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Bike registration and security tips</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Winter considerations for biking and walking</span>
-              </li>
+            <p>
+              Before riding on campus, bikes must be equipped with the following:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Red rear reflector visible from 500 feet</li>
+              <li>Headlamp for night riding visible from 500 feet</li>
+              <li>Amber reflector on each side of the bicycle</li>
             </ul>
+            <p className="mt-4">
+              If you choose to ride a personal bike on campus, you must register your bike with the university as required by the Centre Region Council of Governments and University Park Campus Policy SY16. Bike registration is monitored by Penn State Transportation Services; learn more at <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/bike-registration" target="_blank" rel="noopener noreferrer">transportation.psu.edu/bike-registration</a> and review the policy at <a className="text-igsa-saffron underline" href="https://policy.psu.edu/policies/ps03" target="_blank" rel="noopener noreferrer">policy.psu.edu</a>.
+            </p>
 
             <div className="bg-gradient-to-r from-igsa-saffron/10 to-igsa-orange/10 border-l-4 border-igsa-saffron p-6 rounded-r-lg mt-6">
               <p className="text-igsa-saffron font-medium">
