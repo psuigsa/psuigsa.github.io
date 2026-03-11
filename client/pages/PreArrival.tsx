@@ -269,71 +269,60 @@ export default function PreArrival() {
       case 'documents':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-green">Documents to Carry</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Passport with valid F-1 visa</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Form I-20 (original, signed)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>SEVIS fee payment receipt</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Academic transcripts and degree certificates</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Standardized test scores (GRE, TOEFL, IELTS)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Financial documents and bank statements</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Medical records and vaccination certificates</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Prescription medications (with doctor's note)</span>
-              </li>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-green">Documents to Carry for Travel</h4>
+            <p>
+              When you travel to the United States, make sure you have the documents immigration officers need to admit you. Below are the items required for entry, followed by a short list of recommended documents to carry in case Customs or immigration ask to see them.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Required to enter the U.S.</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Valid I‑20 or DS‑2019</strong> (original, signed by your school)</li>
+              <li><strong>Unexpired F‑1 or J‑1 visa</strong> in your passport</li>
+              <li><strong>Passport</strong> valid for at least six months from your date of entry</li>
             </ul>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-green">Documents for Later Use</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Birth certificate</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Marriage certificate (if applicable)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Driver's license from home country</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>International driving permit</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Insurance documents</span>
-              </li>
+            <h5 className="text-lg font-semibold mt-6">Recommended (carry, but only show if asked)</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>I‑901 SEVIS fee payment receipt</li>
+              <li>Your official admission letter from Penn State</li>
+              <li>Financial documents and bank statements (copies)</li>
+              <li>Any supporting documents for dependents (if applicable)</li>
             </ul>
+
+            <p className="mt-4">
+              Note: Citizens of Canada and Bermuda are visa‑exempt for entry but should still carry evidence of SEVIS fee payment (I‑901 receipt) and contact ISSA for details specific to their case.
+            </p>
 
             <div className="bg-gradient-to-r from-red-50 to-red-100 border-l-4 border-red-400 p-6 rounded-r-lg mt-6">
               <p className="text-red-700 font-medium">
-                <strong>Important:</strong> Keep copies of all important documents in both physical and digital formats. Store originals safely.
+                <strong>Important:</strong> Keep both physical copies and scanned digital backups of all documents. Keep originals in your carry‑on and store backups in a secure cloud folder.
               </p>
             </div>
+
+            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-green">Other Supporting Documents</h4>
+            <p>
+              In addition to the travel documents above, you should bring supporting records that you may need after arrival for health compliance, administration, or personal reference.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Vaccination Certificates</h5>
+            <p>
+              Penn State require proof of following immunisations for all students:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>MMR (Measles, Mumps, Rubella):</strong> Most schools require proof of two doses.</li>
+              <li><strong>COVID‑19 vaccination record</strong> </li>
+            </ul>
+            <p className="mt-3">
+              If you’re missing required MMR documentation, University Health Services (UHS) can typically provide the vaccine after you arrive; this is covered under the university student health insurance plan or handled through UHS billing.
+            </p>
+
+            <h5 className="text-lg font-semibold mt-6">Health Insurance Documentation</h5>
+            <p>
+              International students must maintain valid health insurance while enrolled. Carry proof of active coverage or documentation showing you are enrolled in the university’s student health insurance, or a waiver approval if you have alternate coverage that meets Penn State’s requirements.
+            </p>
+            <p>
+              Student health insurance charges are typically posted to your Bursar account. For J‑1 exchange visitors, the U.S. Department of State also requires minimum insurance coverage—failure to maintain required coverage may affect your exchange status.
+            </p>
           </div>
         );
 

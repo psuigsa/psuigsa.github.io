@@ -66,51 +66,33 @@ export default function PostArrival() {
       case 'orientation':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">International Student Orientation</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Attend mandatory international student orientation sessions</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Complete SEVIS check-in at Global Programs office</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Register for academic courses and finalize schedule</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Obtain Penn State ID card and access credentials</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-saffron rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Connect with academic advisor and department</span>
-              </li>
-            </ul>
-            
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-saffron">Graduate Student Orientation</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Attend department-specific graduate orientation</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Meet with research advisor and lab members</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-orange rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Join IGSA welcome events and social activities</span>
-              </li>
-            </ul>
-
-            <div className="bg-gradient-to-r from-igsa-saffron/10 to-igsa-orange/10 border-l-4 border-igsa-saffron p-6 rounded-r-lg mt-6">
-              <p className="text-igsa-saffron font-medium">
-                <strong>Important:</strong> Orientation is mandatory and must be completed within your first semester.
-              </p>
-            </div>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">Orientation &amp; Check-in</h4>
+            <h5 className="text-lg font-semibold mt-4">International Student Orientation</h5>
+            <p>
+              All newly admitted international students at Penn State University Park are required to attend the International Student Welcome and orientation programmes organised by Penn State Global and the Directorate of International Student and Scholar Advising (DISSA). These sessions cover immigration basics, academic expectations, campus services, and practical tips to help you settle in. They usually run shortly before the semester starts and include presentations, Q&amp;A, and chances to meet other new students—so plan to attend.
+            </p>
+            <p>
+              International Student Welcome (ISW) is an in-person, on-campus program that introduces you to University Park resources and the Penn State student experience. University Park undergraduates, graduates, and exchange students should check the <a className="underline text-igsa-saffron" href="https://global.psu.edu/isw" target="_blank" rel="noopener noreferrer">ISW page</a> for dates, check-in times, and registration details.
+            </p>
+            <p>
+              Note: some departments or programs run additional, mandatory orientation activities—always check your department emails and program pages so you don’t miss anything important.
+            </p>
+            <h5 className="text-lg font-semibold mt-4">Complete SEVIS check-in with the Global Programs office</h5>
+            <p>
+              After arriving in the United States and before the start of classes, international students must complete the official Immigration Check-In process through Penn State Global. This process confirms your arrival and activates your immigration record in the Student and Exchange Visitor Information System (SEVIS). To complete the check-in, students must submit required documentation through the iStart system, including a copy of the I-20 or DS-2019, visa information, I-94 arrival record, and local address and contact details. The information is reviewed by International Student and Scholar Advising staff to register your legal status in SEVIS. Failure to complete this step may result in a hold on your LionPATH account that prevents course registration and could jeopardise your immigration status.
+            </p>
+            <h5 className="text-lg font-semibold mt-4">Register for academic courses and finalise your schedule</h5>
+            <p>
+              During the orientation period, students will complete course registration and confirm their academic schedule using LionPATH, Penn State’s student information system. International students must enrol full-time to maintain their visa status, and academic advisors or programme coordinators often assist with selecting appropriate courses that align with degree requirements. This step ensures that students are properly enrolled for the semester, understand the structure of their programme, and begin their academic planning at Penn State with a clear course schedule. Maintaining full-time enrolment is an important requirement for students in F-1 or J-1 visa status.
+            </p>
+            <h5 className="text-lg font-semibold mt-4">Obtain your Penn State ID</h5>
+            <p>
+              New students will need to obtain their official Penn State ID card. The ID card is used across campus for building access, library services, dining, and many student services. To receive a card, your student record must show that you are enrolled in at least one class in LionPATH and that you have accepted the Student Financial Responsibility Agreement — without an active student record the ID office cannot issue the card. Policy <a className="underline text-igsa-saffron" href="https://policy.psu.edu/policies/ad24" target="_blank" rel="noopener noreferrer">AD24</a>.
+            </p>
+            <h5 className="text-lg font-semibold mt-4">Connect with your academic advisor and department</h5>
+            <p>
+              Meeting with your academic advisor and department is an important step in beginning your graduate programme. Advisors help students understand programme requirements, academic policies, and long-term degree planning. These meetings may also introduce students to research expectations, departmental resources, and faculty members within their field of study. Establishing early communication with your department helps ensure that you have the guidance and academic support needed to successfully navigate your programme at Penn State.
+            </p>
           </div>
         );
 

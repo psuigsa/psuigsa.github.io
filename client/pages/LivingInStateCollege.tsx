@@ -68,7 +68,7 @@ export default function LivingInStateCollege() {
           <div className="prose max-w-none">
             <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">Public Transportation</h4>
             <p>
-              Getting around State College is straightforward. The Blue Loop, White Loop, and Red Link are CATA-operated Campus and Downtown Circulator Routes that primarily circulate within the university and nearby downtown; when traveling within university property these routes are free to ride. In addition to those circulators, CATA runs Community and Express Routes that connect residential neighborhoods and popular apartment complexes with the center of campus. These Community and Express services typically run frequently (about every 15 minutes) and charge approximately $2.50 per ride, although some apartment communities include a bus pass for residents. For a full schedule and information about both university and CATA services, check <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/buses-and-shuttles" target="_blank" rel="noopener noreferrer">transportation.psu.edu</a>.
+              Getting around State College is straightforward. The Blue Loop, White Loop, and Red Link are CATA-operated Campus and Downtown Circulator Routes that primarily circulate within the university and nearby downtown; when traveling within university property these routes are free to ride. In addition to those circulators, CATA runs Community and Express Routes that connect residential neighborhoods and popular apartment complexes with the center of campus. These Community and Express services typically run frequently (about every 15 minutes) and charge approximately $2.50 per ride, although some apartment communities include a bus pass for residents. If your apartment does not include a bus pass, you can apply for a Ridepass through the <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/ridepass" target="_blank" rel="noopener noreferrer">university</a>. For a full schedule and information about both university and CATA services, check <a className="text-igsa-saffron underline" href="https://transportation.psu.edu/buses-and-shuttles" target="_blank" rel="noopener noreferrer">transportation.psu.edu</a>.
             </p>
 
             <p>
@@ -179,69 +179,38 @@ export default function LivingInStateCollege() {
       case 'recreation':
         return (
           <div className="prose max-w-none">
-            <h4 className="text-xl font-semibold mb-4 text-igsa-green">Outdoor Activities</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Parks:</strong> Millbrook Marsh, Shaver's Creek, Tussey Mountain</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Hiking:</strong> Mount Nittany, Penn's Cave area trails</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Winter Sports:</strong> Tussey Mountain skiing, ice skating</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Water Activities:</strong> Whipple Dam, fishing spots</span>
-              </li>
+            <h4 className="text-xl font-semibold mb-4 text-igsa-green">Recreation & Entertainment</h4>
+            <p>
+              Life at Penn State is about more than just classes—there’s a whole world of recreation and entertainment waiting for you! Whether you’re looking to stay active, unwind, or connect with friends, campus and the State College area have something for everyone.
+            </p>
+            <h5 className="text-lg font-semibold mt-6">Campus Recreation Facilities</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>IM Building:</strong> The heart of campus fitness, offering basketball, volleyball, a climbing wall, and a huge range of cardio and strength equipment. It’s a vibrant place to work out or just hang out with friends. <a className="text-igsa-green underline" href="https://studentaffairs.psu.edu/health-wellbeing/recreation/facilities" target="_blank" rel="noopener noreferrer">Learn more</a>.</li>
+              <li><strong>White Building:</strong> Perfect for group fitness classes, martial arts, or a quick workout between classes. You’ll also find wellness resources for mind-body balance here.</li>
+              <li><strong>McCoy Natatorium:</strong> Dive in for lap swimming, open rec swims, or just to cool off. There are also diving boards and lessons for all levels.</li>
+              <li><strong>Hepper Fitness Center:</strong> A quieter spot for focused workouts, right next to Rec Hall.</li>
+              <li><strong>Outdoor Fields & Tennis Center:</strong> Enjoy soccer, ultimate frisbee, tennis, and more on Penn State’s many outdoor fields and courts.</li>
+              <li><strong>Stone Valley Recreation Area:</strong> Just a short drive from campus, this area offers hiking, biking, boating, and beautiful scenery for a weekend adventure.</li>
             </ul>
-
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-green">Campus Recreation</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>IM Building:</strong> Gym, pool, basketball, racquetball</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>White Building:</strong> Rock climbing, fitness classes</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Intramural Sports:</strong> Join teams or leagues</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Group Fitness:</strong> Yoga, spin, Zumba classes</span>
-              </li>
+            <p className="mt-4">
+              Don’t forget: You can rent sports equipment, reserve spaces for group activities, and even join intramural leagues or group fitness classes. Download the Penn State CRec app to check facility hours and register for programs on the go.
+            </p>
+            <h5 className="text-lg font-semibold mt-6">Staying Healthy & Well</h5>
+            <p>
+              Your well-being matters! Penn State offers a wide range of resources to help you stay healthy, both physically and mentally. University Health Services (UHS) provides medical care, advice, and a secure portal (<a className="text-igsa-green underline" href="https://studentaffairs.psu.edu/health-wellbeing/medical-services/myuhs" target="_blank" rel="noopener noreferrer">myUHS</a>) for appointments and health info. If you ever feel overwhelmed, <a className="text-igsa-green underline" href="https://studentaffairs.psu.edu/counseling" target="_blank" rel="noopener noreferrer">Counseling and Psychological Services (CAPS)</a> is here for confidential support.
+            </p>
+            <p>
+              Adjusting to a new place can be challenging, but you’re not alone. Explore campus, join student organizations, and don’t hesitate to reach out for help. For more tips and resources, check out <a className="text-igsa-green underline" href="https://global.psu.edu/page/health-and-wellness" target="_blank" rel="noopener noreferrer">Penn State Global’s Health & Wellness page</a>.
+            </p>
+            <h5 className="text-lg font-semibold mt-6">Entertainment & Nightlife</h5>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Theatre & Music:</strong> Catch a show at the State Theatre or Pavilion Theatre, or enjoy live music at local venues like <a className="text-igsa-green underline" href="https://bjc.psu.edu/" target="_blank" rel="noopener noreferrer">BJC</a> and Webster’s Bookstore Cafe.</li>
+              <li><strong>Nightlife:</strong> Explore local bars, pubs, and late-night eateries with friends.</li>
+              <li><strong>Festivals:</strong> Don’t miss the Arts Festival, First Night, and other community celebrations throughout the year.</li>
             </ul>
-
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-green">Entertainment & Nightlife</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Theatre:</strong> State Theatre, Pavilion Theatre</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Music Venues:</strong> BJC, Webster's Bookstore Cafe</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Bars & Pubs:</strong> Local Whiskey, The Gaff, Champs</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span><strong>Festivals:</strong> Arts Festival, First Night celebrations</span>
-              </li>
-            </ul>
-
             <div className="bg-gradient-to-r from-igsa-green/10 to-green-100 border-l-4 border-igsa-green p-6 rounded-r-lg mt-6">
               <p className="text-igsa-green font-medium">
-                <strong>Social Tip:</strong> Join IGSA events and sports clubs to meet people and explore the area together!
+                <strong>Social Tip:</strong> The best way to feel at home is to get involved—join IGSA events, try a new activity, or just say hello to someone new. There’s a place for everyone at IGSA!
               </p>
             </div>
           </div>
