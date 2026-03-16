@@ -159,6 +159,10 @@ export default function PostArrival() {
               </p>
 
               <p>
+                Family plans can be particularly beneficial if you need more shared data—joining a family plan often increases the total monthly data allowance at lower per-line cost. Students frequently post in the <a className="underline" href="https://psuigsa.github.io/resources#join-whatsapp" target="_blank" rel="noopener noreferrer">IGSA WhatsApp group</a> to ask about existing family plans and to join one, so consider checking or posting there to find a suitable shared plan.
+              </p>
+
+              <p>
                 For local help, AT&T has a kiosk at the HUB‑Robeson Building (University Park). Other carrier stores and kiosks are located around State College—use each carrier’s store locator to find the nearest location. If you have specific questions, feel free to email IGSA for guidance.
               </p>
 
