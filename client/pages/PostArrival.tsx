@@ -100,36 +100,72 @@ export default function PostArrival() {
         return (
           <div className="prose max-w-none">
             <h4 className="text-xl font-semibold mb-4 text-igsa-blue">Banking & Finance</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Open a US bank account (recommended: PNC, Wells Fargo)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Apply for Social Security Number (if eligible for work)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-blue rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Set up direct deposit for assistantship payments</span>
-              </li>
-            </ul>
+            <div className="prose max-w-none">
+              <h5 className="text-lg font-semibold mt-4">Opening a Bank Account in the US</h5>
+              <p>
+                It is extremely advisable to open a bank account with a local bank as soon as you arrive in the United States. When you open an account, you will usually be issued a debit card immediately, which makes everyday transactions—shopping, groceries, and paying bills—much easier while you settle in.
+              </p>
 
-            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-blue">Communication & Transportation</h4>
-            <ul className="list-none space-y-3">
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Get a US phone plan (Verizon, AT&T, T-Mobile)</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Download CATA bus app for local transportation</span>
-              </li>
-              <li className="flex items-start">
-                <div className="w-2 h-2 bg-igsa-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <span>Consider getting a Pennsylvania driver's license</span>
-              </li>
-            </ul>
+              <p>
+                Most students travel with a travel card or foreign currency card when first arriving. If you withdraw cash from a U.S. ATM with a travel card, note that many ATMs waive fees only for account holders of that bank. Using an out-of-network ATM often incurs a small fee (commonly $3–$5 per withdrawal), plus any fee charged by your home bank.
+              </p>
+
+              <p>
+                The International Student Orientation run by the Directorate of International Students and Scholars Advising (DISSA) provides detailed banking guidance, but here are the essentials to get started.
+              </p>
+
+              <p>
+                The most common account international students open is a <strong>checking account</strong>. This transactional account usually has the fewest maintenance requirements and is intended for everyday spending with a debit card. A <strong>savings account</strong> can earn a small amount of interest but often limits the number of withdrawals and may have minimum-balance or maintenance fees—choose a savings account if you want to build savings over time.
+              </p>
+
+              <p>
+                While in State College, many students open accounts at local branches such as PNC Bank or Santander Bank—PNC has a branch right across campus and Santander has a nearby branch on College Avenue—so these are convenient options to consider. Bank staff can assist with student-specific account options.
+              </p>
+
+              <p>
+                To open your first U.S. bank account you will typically need to visit a branch in person. Bring your passport, your I-20 or DS-2019, and proof of your local address (for example, a copy of your apartment lease). Always check the bank’s website or DISSA materials for the full list of required documents before you go.
+              </p>
+
+              <p>
+                After opening your account, download the bank’s mobile app for convenient services—paying bills, sending money, and depositing checks can usually be done from the app.
+              </p>
+
+              <p>
+                Note: PNC is widely used in Pennsylvania but has fewer branches in other states. Choose a bank based on your personal needs, branch convenience, fees, and services.
+              </p>
+
+              <ul className="list-disc pl-6 mt-4 space-y-2 text-gray-700">
+                <li>Apply for a Social Security Number if you are eligible for on-campus employment or assistantships.</li>
+                <li>Ask the bank about student account options, fee waivers, and mobile banking features.</li>
+              </ul>
+            </div>
+
+            <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-blue">Getting a US Phone Number</h4>
+            <div className="prose max-w-none">
+              <p>
+                Communication is key when you are away from home—getting a cell phone connection should be a top priority. Picking the right carrier and plan can be confusing; here are simple guidelines to help you choose.
+              </p>
+
+              <p>
+                Several carriers provide reliable coverage in State College: AT&T, Verizon, T‑Mobile, Cricket, and prepaid providers such as h2o. Check coverage maps and user reviews before choosing a carrier.
+              </p>
+
+              <p>
+                Many carriers offer contract (postpaid) plans that bundle phone-device payments with a monthly service plan. These plans usually require a Social Security Number (SSN) or a credit check; without an established US credit history you may need to pay a security deposit. A simpler alternative is a <strong>prepaid (no-contract)</strong> plan—these typically do not require an SSN or deposit and can be activated in‑store the same day. Prepaid plans commonly include unlimited calls and texts (US/Canada/Mexico) and are priced by monthly 4G/5G data allowances.
+              </p>
+
+              <p>
+                A <strong>family plan</strong> shares costs and some features between lines and can reduce monthly costs; family plans are available for both prepaid and contract options.
+              </p>
+
+              <p>
+                For local help, AT&T has a kiosk at the HUB‑Robeson Building (University Park). Other carrier stores and kiosks are located around State College—use each carrier’s store locator to find the nearest location. If you have specific questions, feel free to email IGSA for guidance.
+              </p>
+
+              <p>
+                Quick tips: compare data speeds and coverage, confirm international-texting/data options if needed, and ask about student discounts or short-term plans for new arrivals.
+              </p>
+            </div>
 
             <h4 className="text-xl font-semibold mb-4 mt-8 text-igsa-blue">Shopping & Essentials</h4>
             <ul className="list-none space-y-3">
