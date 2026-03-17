@@ -35,6 +35,10 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/resources/pre-arrival" element={<PreArrival />} />
+            <Route
+              path="/resources/housing-information"
+              element={<PreArrival initialSection="housing" standalone />}
+            />
             <Route path="/resources/post-arrival" element={<PostArrival />} />
             <Route path="/resources/living-in-state-college" element={<LivingInStateCollege />} />
             <Route path="/events" element={<Events />} />

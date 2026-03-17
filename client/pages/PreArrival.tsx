@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import HousingRatings from "@/components/HousingRatings";
@@ -12,9 +12,23 @@ function ChevronDownIcon({ className }: { className?: string }) {
   );
 }
 
-export default function PreArrival() {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+interface PreArrivalProps {
+  initialSection?: string;
+  standalone?: boolean;
+}
+
+export default function PreArrival({
+  initialSection,
+  standalone = false,
+}: PreArrivalProps = {}) {
+  const [activeSection, setActiveSection] = useState<string | null>(
+    initialSection ?? null
+  );
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialSection) setActiveSection(initialSection);
+  }, [initialSection]);
 
   const sections = [
     {
@@ -430,16 +444,22 @@ export default function PreArrival() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <Link
-              to="/resources"
+              to={standalone ? "/resources/pre-arrival" : "/resources"}
               className="inline-flex items-center text-igsa-blue hover:text-igsa-green mb-6 transition-colors"
             >
-              ← Back to Resources
+              {standalone ? "← Back to Pre-Arrival" : "← Back to Resources"}
             </Link>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Pre-Arrival <span className="text-igsa-saffron">Resources</span>
+              {standalone ? (
+                <>Housing <span className="text-igsa-saffron">Information</span></>
+              ) : (
+                <>Pre-Arrival <span className="text-igsa-saffron">Resources</span></>
+              )}
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Essential information and preparation guides for students planning to arrive in State College
+              {standalone
+                ? "On-campus and off-campus housing options, resources, and student ratings."
+                : "Essential information and preparation guides for students planning to arrive in State College"}
             </p>
           </div>
         </div>
@@ -449,12 +469,9 @@ export default function PreArrival() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {!activeSection ? (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {sections.map((section) => (
-                <div
-                  key={section.id}
-                  onClick={() => handleSectionClick(section.id)}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden cursor-pointer"
-                >
+              {sections.map((section) => {
+                const cardInner = (
+                  <>
                   {/* Header with gradient */}
                   <div className={`h-24 bg-gradient-to-r ${section.gradient} flex items-center justify-center relative overflow-hidden`}>
                     <span className="text-4xl z-10">{section.icon}</span>
@@ -478,8 +495,31 @@ export default function PreArrival() {
                       <ChevronDownIcon className="w-5 h-5 ml-2 transform rotate-[-90deg]" />
                     </div>
                   </div>
-                </div>
-              ))}
+                  </>
+                );
+
+                if (section.id === "housing") {
+                  return (
+                    <Link
+                      key={section.id}
+                      to="/resources/housing-information"
+                      className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden cursor-pointer block"
+                    >
+                      {cardInner}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <div
+                    key={section.id}
+                    onClick={() => handleSectionClick(section.id)}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden cursor-pointer"
+                  >
+                    {cardInner}
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -499,15 +539,17 @@ export default function PreArrival() {
                     </p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setActiveSection(null)}
-                  className="text-gray-500 hover:text-gray-700 p-3 rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+                {!standalone && (
+                  <button
+                    onClick={() => setActiveSection(null)}
+                    className="text-gray-500 hover:text-gray-700 p-3 rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    <span className="sr-only">Close</span>
+                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                )}
               </div>
               
               <div className="prose-lg max-w-none">
@@ -515,17 +557,26 @@ export default function PreArrival() {
               </div>
               
               <div className="mt-8 pt-8 border-t border-gray-200">
-                <button
-                  onClick={() => setActiveSection(null)}
-                  className="inline-flex items-center text-igsa-blue hover:text-igsa-green transition-colors font-semibold"
-                >
-                  ← Back to overview
-                </button>
+                {standalone ? (
+                  <Link
+                    to="/resources/pre-arrival"
+                    className="inline-flex items-center text-igsa-blue hover:text-igsa-green transition-colors font-semibold"
+                  >
+                    ← Back to Pre-Arrival overview
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => setActiveSection(null)}
+                    className="inline-flex items-center text-igsa-blue hover:text-igsa-green transition-colors font-semibold"
+                  >
+                    ← Back to overview
+                  </button>
+                )}
               </div>
             </div>
           )}
 
-          {!activeSection && (
+          {!activeSection && !standalone && (
             <div className="mt-16 text-center bg-gradient-to-r from-igsa-blue/5 to-igsa-green/5 rounded-2xl p-12">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Need Additional Help?</h3>
               <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
