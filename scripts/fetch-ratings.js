@@ -16,8 +16,9 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const SHEET_ID = "1LF_Fj7MqPxDGmKMf4171YIHshCoBOEk-jyrn2byhW-g";
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+const SHEET_ID = "1ur4xvV532M9OvQTxy4U6fz4U6xZFkaMiA5hwGmkymS0";
+const GID = "1143316911";
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
 const OUTPUT_PATH = path.join(__dirname, "../public/data/housing-ratings.json");
 
 /** Parse a CSV string into an array of objects using the first row as headers */
