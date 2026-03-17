@@ -26,15 +26,23 @@ interface RawEntry {
 const RATING_FIELDS: { key: keyof RawEntry; label: string }[] = [
   { key: "Overall ", label: "Overall" },
   { key: "Behaviour of management/landlord", label: "Management" },
+  { key: "Maintenance/Responsiveness of Management", label: "Maintenance" },
   { key: "Bus Accessibility", label: "Bus Accessibility" },
+  { key: "Safety and Security of the Area", label: "Safety" },
+  { key: "Proximity to grocery store", label: "Grocery Access" },
   { key: "Natural light", label: "Natural Light" },
+  { key: "Value for Money (Rent vs. Amenities)", label: "Value for Money" },
 ];
 
 type SortKey =
   | "Overall "
   | "Behaviour of management/landlord"
+  | "Maintenance/Responsiveness of Management"
   | "Bus Accessibility"
+  | "Safety and Security of the Area"
+  | "Proximity to grocery store"
   | "Natural light"
+  | "Value for Money (Rent vs. Amenities)"
   | "rent"
   | "reviews";
 
@@ -84,13 +92,29 @@ function getScoreByKey(entry: RawEntry, canonicalKey: keyof RawEntry): number | 
       "Behaviour of management/landlord",
       "Housing experience: [Behaviour of management/landlord]",
     ],
+    "Maintenance/Responsiveness of Management": [
+      "Maintenance/Responsiveness of Management",
+      "Housing experience: [Maintenance/Responsiveness of Management]",
+    ],
     "Bus Accessibility": [
       "Bus Accessibility",
       "Housing experience: [Proximity to Bus Stops]",
     ],
+    "Safety and Security of the Area": [
+      "Safety and Security of the Area",
+      "Housing experience: [Safety and Security of the Area]",
+    ],
+    "Proximity to grocery store": [
+      "Proximity to grocery store",
+      "Housing experience: [Proximity to grocery store]",
+    ],
     "Natural light": [
       "Natural light",
       "Housing experience: [Natural Light]",
+    ],
+    "Value for Money (Rent vs. Amenities)": [
+      "Value for Money (Rent vs. Amenities)",
+      "Housing experience: [Value for Money (Rent vs. Amenities)]",
     ],
   };
 
@@ -255,9 +279,11 @@ function ReviewList({ entries }: { entries: RawEntry[] }) {
       {open && (
         <div className="mt-3 space-y-4">
           {entries.map((e, i) => {
-            const comment = getFirst(e, [
-              "Anything else you would like to share.",
+            const challengeComment = getFirst(e, [
               "Did you face any specific challenges or issues related to housing as a member of the Indian community (e.g., cultural understanding, food smells)?",
+            ]);
+            const generalComment = getFirst(e, [
+              "Anything else you would like to share.",
             ]);
             const rent = parseNum(
               getFirst(e, ["House rent per month", "Monthly rent", "Rent per month"])
@@ -294,8 +320,11 @@ function ReviewList({ entries }: { entries: RawEntry[] }) {
                     );
                   })}
                 </div>
-                {comment && (
-                  <p className="text-gray-700 italic mt-1">"{comment}"</p>
+                {challengeComment && (
+                  <p className="text-gray-700 italic mt-1">"{challengeComment}"</p>
+                )}
+                {generalComment && (
+                  <p className="text-gray-700 italic mt-1">"{generalComment}"</p>
                 )}
               </div>
             );
