@@ -15,7 +15,7 @@ function writeManifest(folder, predicate = () => true) {
 
   const files = fs
     .readdirSync(dir)
-    .filter((file) => predicate(file))
+    .filter((file) => file !== "manifest.json" && predicate(file))
     .sort();
 
   const manifestPath = path.join(dir, "manifest.json");
