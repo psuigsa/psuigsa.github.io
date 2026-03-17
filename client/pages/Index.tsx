@@ -75,7 +75,7 @@ export default function Index() {
         {/* Hero Content */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 pointer-events-none">
           <div className="transition-all duration-1000 ease-in-out pointer-events-none">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 animate-fade-in pointer-events-none">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 animate-fade-in pointer-events-none [text-shadow:0_0_10px_rgba(0,0,0,0.3)]">
               <span className={`bg-gradient-to-r ${heroSlides[currentSlide].gradient} bg-clip-text text-transparent transition-all duration-1000 pointer-events-none`}>
                 {heroSlides[currentSlide].title}
               </span>

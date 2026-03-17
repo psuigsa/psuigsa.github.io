@@ -319,7 +319,7 @@ export default function HousingRatings() {
       <div className="mt-10 bg-gray-50 rounded-xl p-8 text-center">
         <p className="text-gray-500 mb-2">No ratings submitted yet.</p>
         <a
-          href="https://docs.google.com/spreadsheets/d/1LF_Fj7MqPxDGmKMf4171YIHshCoBOEk-jyrn2byhW-g"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfO-MGtkJVZSdAh1elYPYFBD-1QHOz0PunhNnW31bXatxt-fQ/viewform?usp=sharing&ouid=104265089151019541177"
           target="_blank"
           rel="noopener noreferrer"
           className="text-igsa-blue hover:underline font-medium text-sm"
@@ -344,7 +344,7 @@ export default function HousingRatings() {
           </span>
         </h4>
         <a
-          href="https://docs.google.com/spreadsheets/d/1LF_Fj7MqPxDGmKMf4171YIHshCoBOEk-jyrn2byhW-g"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfO-MGtkJVZSdAh1elYPYFBD-1QHOz0PunhNnW31bXatxt-fQ/viewform?usp=sharing&ouid=104265089151019541177"
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-igsa-blue hover:text-igsa-green font-medium transition-colors shrink-0"
