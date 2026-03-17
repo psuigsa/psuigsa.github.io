@@ -5,10 +5,11 @@ date: April 17, 2026
 location: HUB 117 John Bill Freeman Auditorium,
 type: Cultural
 image: /images/uploads/jashn-2026.png
-color: from-igsa-saffron to-igsa-orange
+color: from-igsa-green to-igsa-blue
 time: 17:00 - 22:00
 organizer: Indian Graduate Student Associations
 contact: psu.igsa@gmail.com
+capacity: "350"
 registration: https://forms.office.com/Pages/ResponsePage.aspx?id=RY30fNs9iUOpwcEVUm61LtAcluySKnJMibu71tBoTLVUQ0RVOTlOS1BCVUdDWUtGUlVHRzFFUjNHMyQlQCN0PWcu
 details: Jashn translates to celebration - a celebration of Indian culture,
   traditions, cuisine and talent. Jashn is an annual event conducted by IGSA@PSU
