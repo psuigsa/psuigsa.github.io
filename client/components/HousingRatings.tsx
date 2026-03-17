@@ -59,9 +59,54 @@ function parseNum(val: string | undefined): number | null {
   return isNaN(n) ? null : n;
 }
 
+function parseScore(val: string | undefined): number | null {
+  if (!val) return null;
+  const cleaned = val.trim();
+  const direct = parseNum(cleaned);
+  if (direct !== null) return direct;
+  const match = cleaned.match(/\((\d+(?:\.\d+)?)\)/);
+  if (match) return parseNum(match[1]);
+  return null;
+}
+
+function getFirst(entry: RawEntry, keys: string[]): string {
+  for (const key of keys) {
+    const v = entry[key];
+    if (typeof v === "string" && v.trim()) return v.trim();
+  }
+  return "";
+}
+
+function getScoreByKey(entry: RawEntry, canonicalKey: keyof RawEntry): number | null {
+  const keyMap: Record<string, string[]> = {
+    "Overall ": ["Overall ", "Overall", "Rate the overall living experience at your apartment complex."],
+    "Behaviour of management/landlord": [
+      "Behaviour of management/landlord",
+      "Housing experience: [Behaviour of management/landlord]",
+    ],
+    "Bus Accessibility": [
+      "Bus Accessibility",
+      "Housing experience: [Proximity to Bus Stops]",
+    ],
+    "Natural light": [
+      "Natural light",
+      "Housing experience: [Natural Light]",
+    ],
+  };
+
+  const val = getFirst(entry, keyMap[canonicalKey as string] ?? [canonicalKey as string]);
+  return parseScore(val);
+}
+
 function getApartmentName(entry: RawEntry): string {
-  const free = entry["Enter name of your apartment"]?.trim();
-  const dropdown = entry["Apartment"]?.trim();
+  const free = getFirst(entry, [
+    "Enter name of your apartment",
+    "If you selected 'Other' above, please specify the name of the apartment or housing location.",
+  ]);
+  const dropdown = getFirst(entry, [
+    "Apartment",
+    "Which apartment complex did you live in or are you currently living in?",
+  ]);
   return free || dropdown || "Unknown";
 }
 
@@ -89,28 +134,52 @@ function buildSummaries(entries: RawEntry[]): ApartmentSummary[] {
     const avgRatings: Record<string, number> = {};
     for (const { key } of RATING_FIELDS) {
       const nums = rows
-        .map((r) => parseNum(r[key]))
+        .map((r) => getScoreByKey(r, key))
         .filter((n): n is number => n !== null);
       if (nums.length)
         avgRatings[key] = nums.reduce((a, b) => a + b, 0) / nums.length;
     }
 
     const rents = rows
-      .map((r) => parseNum(r["House rent per month"]))
+      .map((r) =>
+        parseNum(
+          getFirst(r, ["House rent per month", "Monthly rent", "Rent per month"]) 
+        )
+      )
       .filter((n): n is number => n !== null);
     const rentRange = rents.length
       ? { min: Math.min(...rents), max: Math.max(...rents) }
       : null;
+
+    const petValues = rows.map((r) => {
+      const direct = getFirst(r, ["Pet Friendly"]);
+      if (direct) return direct;
+      const amenities = getFirst(r, [
+        "Which amenities are available to you at this location? (Select all that apply)",
+      ]).toLowerCase();
+      if (!amenities) return "";
+      return amenities.includes("pet") ? "Yes" : "No";
+    });
+
+    const communityValues = rows.map((r) => {
+      const direct = getFirst(r, ["Does your apartment have a community space"]);
+      if (direct) return direct;
+      const amenities = getFirst(r, [
+        "Which amenities are available to you at this location? (Select all that apply)",
+      ]).toLowerCase();
+      if (!amenities) return "";
+      return amenities.includes("community") || amenities.includes("common")
+        ? "Yes"
+        : "No";
+    });
 
     summaries.push({
       name,
       entries: rows,
       avgRatings,
       rentRange,
-      petFriendly: yesNoMajority(rows.map((r) => r["Pet Friendly"])),
-      communitySpace: yesNoMajority(
-        rows.map((r) => r["Does your apartment have a community space"])
-      ),
+      petFriendly: yesNoMajority(petValues),
+      communitySpace: yesNoMajority(communityValues),
       reviewCount: rows.length,
     });
   }
@@ -186,10 +255,15 @@ function ReviewList({ entries }: { entries: RawEntry[] }) {
       {open && (
         <div className="mt-3 space-y-4">
           {entries.map((e, i) => {
-            const comment = e["Anything else you would like to share."]?.trim();
-            const rent = parseNum(e["House rent per month"]);
-            const deposit = e["Security deposit"]?.trim();
-            const studentType = e["I am"]?.trim();
+            const comment = getFirst(e, [
+              "Anything else you would like to share.",
+              "Did you face any specific challenges or issues related to housing as a member of the Indian community (e.g., cultural understanding, food smells)?",
+            ]);
+            const rent = parseNum(
+              getFirst(e, ["House rent per month", "Monthly rent", "Rent per month"])
+            );
+            const deposit = getFirst(e, ["Security deposit"]);
+            const studentType = getFirst(e, ["I am", "How long have you lived at this location?"]);
             return (
               <div key={i} className="bg-gray-50 rounded-lg p-4 text-sm">
                 <div className="flex flex-wrap gap-2 mb-2">
@@ -211,7 +285,7 @@ function ReviewList({ entries }: { entries: RawEntry[] }) {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 mb-2">
                   {RATING_FIELDS.map(({ key, label }) => {
-                    const n = parseNum(e[key]);
+                    const n = getScoreByKey(e, key);
                     if (n === null) return null;
                     return (
                       <span key={key} className="text-xs text-gray-600">
@@ -273,7 +347,9 @@ export default function HousingRatings() {
     if (filterType !== "all") {
       list = list.filter((a) =>
         a.entries.some((e) =>
-          e["I am"]?.toLowerCase().includes(filterType)
+          getFirst(e, ["I am", "How long have you lived at this location?"])
+            .toLowerCase()
+            .includes(filterType)
         )
       );
     }
