@@ -293,21 +293,12 @@ export default function BoardMembers() {
             return (
               <div
                 key={`${activeBoard.year}-${memberIndex}`}
-                className={`relative group bg-white rounded-xl p-3 shadow-lg border transition-transform duration-200 overflow-hidden flex flex-col items-center justify-center min-h-[220px] max-w-[320px] mx-auto touch-none ${isMovable ? "cursor-grab active:cursor-grabbing" : "cursor-not-allowed opacity-95"} ${isDragging ? "z-20" : ""}`}
+                className={`relative group bg-white rounded-xl p-3 shadow-lg border transition-transform duration-200 overflow-hidden flex flex-col items-center justify-center min-h-[220px] max-w-[320px] mx-auto ${isMovable ? "cursor-default" : "cursor-not-allowed opacity-95"} ${isDragging ? "z-20" : ""}`}
                 style={{
                   transform: isDragging ? `translate(${dragState.dx}px, ${dragState.dy}px)` : undefined,
                   transition: isDragging
                     ? (dragState.phase === "settling" ? "transform 140ms ease-out" : "none")
                     : undefined,
-                }}
-                onPointerDown={(event) => handlePointerDown(event, cellIndex, emptyIndex)}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerCancel={handlePointerUp}
-                onClick={() => {
-                  if (!dragState && isMovable) {
-                    moveTile(activeBoard.year, cellIndex);
-                  }
                 }}
               >
                 {/* Full-card glow radiating from behind the photo */}
@@ -320,20 +311,35 @@ export default function BoardMembers() {
                   <div className={`absolute inset-0 z-0 opacity-20 bg-gradient-to-b ${colors[memberIndex % colors.length]}`} />
                 )}
                 <div className="relative z-10 flex flex-col items-center justify-center w-full">
-                  {m.photo ? (
-                    <img
-                      src={m.photo}
-                      alt={m.name}
-                      crossOrigin="anonymous"
-                      draggable={false}
-                      onDragStart={(event) => event.preventDefault()}
-                      className="h-36 w-36 rounded-2xl object-cover mb-2 border-4 border-white shadow-lg transition-transform duration-200 pointer-events-none select-none"
-                    />
-                  ) : (
-                    <div className={`h-36 w-36 rounded-2xl bg-gradient-to-br ${colors[memberIndex % colors.length]} flex items-center justify-center mb-2 text-3xl font-bold text-white shadow-lg border-4 border-white transition-transform duration-200 pointer-events-none select-none`}>
-                      {m.name.split(' ').map(n=>n[0]).slice(0,2).join('')}
-                    </div>
-                  )}
+                  <div
+                    role="button"
+                    aria-label={`Slide ${m.name} tile`}
+                    className={`mb-2 rounded-2xl ${isMovable ? "cursor-grab active:cursor-grabbing touch-none" : "cursor-not-allowed"}`}
+                    onPointerDown={(event) => handlePointerDown(event, cellIndex, emptyIndex)}
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerCancel={handlePointerUp}
+                    onClick={() => {
+                      if (!dragState && isMovable) {
+                        moveTile(activeBoard.year, cellIndex);
+                      }
+                    }}
+                  >
+                    {m.photo ? (
+                      <img
+                        src={m.photo}
+                        alt={m.name}
+                        crossOrigin="anonymous"
+                        draggable={false}
+                        onDragStart={(event) => event.preventDefault()}
+                        className="h-36 w-36 rounded-2xl object-cover border-4 border-white shadow-lg transition-transform duration-200 pointer-events-none select-none"
+                      />
+                    ) : (
+                      <div className={`h-36 w-36 rounded-2xl bg-gradient-to-br ${colors[memberIndex % colors.length]} flex items-center justify-center text-3xl font-bold text-white shadow-lg border-4 border-white transition-transform duration-200 pointer-events-none select-none`}>
+                        {m.name.split(' ').map(n=>n[0]).slice(0,2).join('')}
+                      </div>
+                    )}
+                  </div>
                   <div className="text-base font-semibold text-gray-900 text-center group-hover:text-igsa-blue transition-colors duration-200 mt-1">{m.name}</div>
                   <div className="text-xs text-gray-500 text-center group-hover:text-igsa-orange transition-colors duration-200">{m.position}</div>
                 </div>
