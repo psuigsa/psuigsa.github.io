@@ -66,6 +66,13 @@
       "active": true
     },
     {
+      "order": 10,
+      "active": true,
+      "name": "Rohan Deshmukh",
+      "designation": "Digital Communication Manager for Social Media",
+      "photo": "https://th.bing.com/th/id/OIP.Fu6cxIxSZaMuasb9zMqL7AHaHa?w=179&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
+    },
+    {
       "name": "Prof. Anil Kulkarni",
       "designation": "Advisor",
       "photo": "https://iee.psu.edu/sites/default/files/styles/profile_photo/public/profile-photos/Anil%20Kulkarni.jpeg?itok=tqcS7aPQ",
