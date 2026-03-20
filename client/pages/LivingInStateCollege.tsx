@@ -170,7 +170,7 @@ export default function LivingInStateCollege() {
 
             <div className="bg-gradient-to-r from-igsa-blue/10 to-igsa-green/10 border-l-4 border-igsa-blue p-6 rounded-r-lg mt-6">
               <p className="text-igsa-blue font-medium">
-                <strong>Money Saving Tip:</strong> Many restaurants offer student discounts - always ask and show your Penn State ID!
+                <strong>Money Saving Tip:</strong> Also check <a className="text-igsa-blue underline" href="https://thesnackscout.com/" target="_blank" rel="noopener noreferrer">The Snack Scout</a> for listings of free food events.
               </p>
             </div>
           </div>
