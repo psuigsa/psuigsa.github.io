@@ -57,7 +57,7 @@ collections:
         hint: "Each row is a member. Click a row to edit full details."
         fields:
           - { label: "Name", name: "name", widget: "string", hint: "Full name" }
-            - { label: "Designation", name: "designation", widget: "string", required: false, hint: "President, Treasurer, Advisory Panel, etc." }
+          - { label: "Designation", name: "designation", widget: "string", required: false, hint: "President, Treasurer, Advisory Panel, etc." }
           - { label: "Photo", name: "photo", widget: "image", required: false, hint: "Upload image or use a URL" }
           - { label: "Order", name: "order", widget: "number", default: 100, hint: "Lower number shows first" }
           - { label: "Active", name: "active", widget: "boolean", default: true, required: false }
