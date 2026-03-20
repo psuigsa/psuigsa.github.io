@@ -3,16 +3,16 @@
   "current": false,
   "members": [
     {
-      "name": "Manish Verma",
+      "name": "Vani Gupta",
       "designation": "President",
-      "photo": "https://randomuser.me/api/portraits/men/11.jpg",
+      "photo": "https://th.bing.com/th/id/OIP.yDoQl_5p80YR0xTVu6w90QAAAA?w=150&h=150&c=7&r=0&o=7&pid=1.7&rm=3",
       "order": 1,
       "active": true
     },
     {
-      "name": "Sonal Bhatia",
-      "designation": "Vice President",
-      "photo": "https://randomuser.me/api/portraits/women/12.jpg",
+      "name": "Ayan Bhatnagar",
+      "designation": "Treasurer",
+      "photo": "https://th.bing.com/th/id/OIP.kU1efOqNzr-olXYbRO_AxAHaHa?w=143&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
       "order": 2,
       "active": true
     },
@@ -66,9 +66,9 @@
       "active": true
     },
     {
-      "name": "Prof. R. Singh",
+      "name": "Prof. Anil Kulkarni",
       "designation": "Advisor",
-      "photo": "https://randomuser.me/api/portraits/men/20.jpg",
+      "photo": "https://iee.psu.edu/sites/default/files/styles/profile_photo/public/profile-photos/Anil%20Kulkarni.jpeg?itok=tqcS7aPQ",
       "order": 10,
       "active": true
     }
