@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { loadBoardYears } from "@/utils/content-loader";
+import { Info } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { loadBoardYears, loadContactSettings } from "@/utils/content-loader";
 
 type Member = {
   name: string;
@@ -55,6 +57,7 @@ export default function BoardMembers() {
   const [memberColors, setMemberColors] = useState<Record<string, string>>(/* name: gradient */{});
   const [puzzleOrders, setPuzzleOrders] = useState<Record<number, number[]>>({});
   const [dragState, setDragState] = useState<DragState | null>(null);
+  const [contactEmail, setContactEmail] = useState("psu.igsa@gmail.com");
   const [gridCols, setGridCols] = useState(() => {
     if (typeof window === "undefined") return 3;
     return getGridCols(window.innerWidth);
@@ -73,9 +76,15 @@ export default function BoardMembers() {
   useEffect(() => {
     async function load() {
       try {
-        const loadedBoards = await loadBoardYears();
+        const [loadedBoards, contactSettings] = await Promise.all([
+          loadBoardYears(),
+          loadContactSettings(),
+        ]);
         const sorted: Board[] = [...loadedBoards].sort((a: Board, b: Board) => b.year - a.year);
         setBoards(sorted);
+        if (contactSettings?.email) {
+          setContactEmail(contactSettings.email);
+        }
         const initialOrders: Record<number, number[]> = {};
         sorted.forEach((board) => {
           initialOrders[board.year] = [...board.members.map((_, memberIndex) => memberIndex), -1];
@@ -360,7 +369,29 @@ export default function BoardMembers() {
             ))}
           </div>
         </div>
-        <div className="mt-2 text-center text-xs text-gray-400">Slide a tile next to the empty slot to solve the board puzzle. Works with mouse and touch.</div>
+        <div className="mt-2 flex items-center justify-center gap-2 text-center text-xs text-gray-500">
+          <span>Help us complete our history.</span>
+          <Popover>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                aria-label="More information about sharing previous board member details"
+                className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-igsa-blue/20 bg-white text-igsa-blue shadow-sm transition-colors hover:border-igsa-blue hover:bg-igsa-blue hover:text-white focus:outline-none focus:ring-2 focus:ring-igsa-blue/40"
+              >
+                <Info className="h-3.5 w-3.5" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 border-igsa-blue/20 bg-white text-sm text-gray-700">
+              <p>
+                If you have information about previous board members, please share it with us at{" "}
+                <a href={`mailto:${contactEmail}`} className="font-medium text-igsa-blue underline underline-offset-2 hover:text-igsa-orange">
+                  {contactEmail}
+                </a>
+                .
+              </p>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
     </section>
   );
