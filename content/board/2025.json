@@ -70,6 +70,13 @@
       "photo": "https://raw.githubusercontent.com/psuigsa/directory/main/images/board/2025/vani-gupta.jpeg",
       "order": 11,
       "active": true
+    },
+    {
+      "order": 100,
+      "active": true,
+      "name": "Prof. Anil Kulkarni",
+      "designation": "Advisor",
+      "photo": "https://th.bing.com/th/id/OIP.-3s6Ss38MyMTD8FHeg-qYAAAAA?w=133&h=180&c=7&r=0&o=7&pid=1.7&rm=3"
     }
   ]
 }
