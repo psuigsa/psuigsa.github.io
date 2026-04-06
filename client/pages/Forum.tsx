@@ -40,7 +40,7 @@ export default function Forum() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "1",
-      text: "Hi! I'm the IGSA AI assistant. I am still being developed, I will do my best to help you with any questions you have about IGSA, events, housing, or student life!",
+      text: "Hi! I'm the IGSA AI assistant powered by Google Gemini. I can help you with questions about IGSA, events, housing, or student life at Penn State!",
       sender: "bot",
       timestamp: new Date()
     }
@@ -49,52 +49,42 @@ export default function Forum() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [showNewPost, setShowNewPost] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
 
-  // Simple AI response generator
-  const generateAIResponse = (query: string): string => {
-    const queryLower = query.toLowerCase();
-    
-    if (queryLower.includes('event') || queryLower.includes('when')) {
-      return "IGSA hosts monthly social events and quarterly academic workshops. Check our Events page for the latest schedule. We announce events 2 weeks in advance via newsletter and social media. You can also join our community discussions to stay updated!";
+  // Backend API URL - Update this to your Cloudflare tunnel URL
+  // Example: https://your-tunnel-name.trycloudflare.com
+  const CHATBOT_API_URL = import.meta.env.VITE_CHATBOT_API_URL || "http://localhost:8000";
+
+  // AI response generator using backend API
+  const generateAIResponse = async (query: string): Promise<string> => {
+    try {
+      const response = await fetch(`${CHATBOT_API_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: query,
+          conversation_history: messages.slice(-10) // Send last 10 messages for context
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.response;
+    } catch (error) {
+      console.error('Error calling chatbot API:', error);
+      
+      // Fallback to basic response if API is unavailable
+      return "I'm having trouble connecting to my AI service right now. Please try again in a moment, or check our Resources section for comprehensive guides about IGSA, housing, and student life at Penn State.";
     }
-    
-    if (queryLower.includes('housing') || queryLower.includes('apartment') || queryLower.includes('live')) {
-      return "For housing, popular options include Beaver Hill graduate housing, private apartments near campus, and shared housing. Start your search 3-4 months before arrival. Check our Living in State College guide under Resources for detailed recommendations and tips from other students.";
-    }
-    
-    if (queryLower.includes('visa') || queryLower.includes('immigration')) {
-      return "For visa and immigration questions, check our Pre-Arrival resources which include visa guidelines and essential documents. The International Student Services office at Penn State is also a great resource for official guidance.";
-    }
-    
-    if (queryLower.includes('job') || queryLower.includes('work') || queryLower.includes('employment')) {
-      return "International students can work on-campus and may be eligible for CPT/OPT. Check our Academic Resources section and consult with International Student Services for work authorization details.";
-    }
-    
-    if (queryLower.includes('bank') || queryLower.includes('ssn') || queryLower.includes('social security')) {
-      return "For banking and SSN applications, check our Post-Arrival guide. You'll typically need to wait for your SSN before opening most bank accounts. Some banks offer accounts for international students without SSN initially.";
-    }
-    
-    if (queryLower.includes('health') || queryLower.includes('insurance') || queryLower.includes('medical')) {
-      return "Penn State requires all students to have health insurance. Check our Post-Arrival resources for health insurance information and local healthcare providers in State College.";
-    }
-    
-    if (queryLower.includes('transport') || queryLower.includes('bus') || queryLower.includes('car')) {
-      return "State College has CATA bus system for public transportation. Many students also use bikes or cars. Check our Living in State College guide for transportation tips and options.";
-    }
-    
-    if (queryLower.includes('food') || queryLower.includes('grocery') || queryLower.includes('restaurant')) {
-      return "State College has diverse dining options and several grocery stores. Check our Living in State College guide for restaurant recommendations and grocery shopping tips for international students.";
-    }
-    
-    if (queryLower.includes('involve') || queryLower.includes('volunteer') || queryLower.includes('committee')) {
-      return "There are many ways to get involved with IGSA! You can join committees, volunteer for events, attend monthly meetings, or run for executive positions. Visit our About section or contact our VP of Internal Affairs for current opportunities.";
-    }
-    
-    return "That's a great question! For detailed information, I recommend checking our Resources section which has comprehensive guides for pre-arrival, post-arrival, and living in State College. You can also explore our Events page to see upcoming activities and networking opportunities.";
   };
 
-  const handleSendMessage = () => {
-    if (!inputText.trim()) return;
+  const handleSendMessage = async () => {
+    if (!inputText.trim() || isThinking) return;
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
@@ -103,16 +93,35 @@ export default function Forum() {
       timestamp: new Date()
     };
 
-    const response = generateAIResponse(inputText);
-    const botMessage: ChatMessage = {
-      id: (Date.now() + 1).toString(),
-      text: response,
-      sender: "bot",
-      timestamp: new Date()
-    };
-
-    setMessages(prev => [...prev, userMessage, botMessage]);
+    // Add user message immediately
+    setMessages(prev => [...prev, userMessage]);
     setInputText("");
+    setIsThinking(true);
+
+    try {
+      // Get AI response
+      const responseText = await generateAIResponse(userMessage.text);
+      
+      const botMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        text: responseText,
+        sender: "bot",
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      // Add error message if something goes wrong
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        text: "I encountered an error. Please try again or visit our Resources section for help.",
+        sender: "bot",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsThinking(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -384,13 +393,20 @@ export default function Forum() {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 className="flex-1"
+                disabled={isThinking}
               />
               <Button 
                 onClick={handleSendMessage}
-                disabled={!inputText.trim()}
-                className="bg-igsa-saffron hover:bg-igsa-orange"
+                disabled={!inputText.trim() || isThinking}
+                className="bg-igsa-saffron hover:bg-igsa-orange min-w-[100px]"
               >
-                <Send className="h-4 w-4" />
+                {isThinking ? (
+                  <span className="flex items-center gap-2">
+                    <span className="animate-pulse">●</span> Thinking...
+                  </span>
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
               </Button>
             </div>
             <p className="text-xs text-gray-500 mt-2">
