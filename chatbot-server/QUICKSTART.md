@@ -98,6 +98,44 @@ https://your-chatbot-name.trycloudflare.com
 
 That is the URL your GitHub Pages frontend must call.
 
+### If You Are Using a Named Cloudflare Tunnel
+
+For a named tunnel, Cloudflare usually does not print a public URL in the terminal.
+
+Instead, you must add a public hostname route in the Cloudflare dashboard:
+
+1. Log in to Cloudflare
+2. Open the account that owns your domain
+3. Go to `Networking` -> `Tunnels`
+4. Click your tunnel
+5. Open `Routes`
+6. Click `Add route`
+7. Choose `Published application`
+8. Under `Hostname`, enter the subdomain you want, for example `chat`
+9. Choose your domain, for example `riderop.com`
+10. Under `Service`, enter:
+
+```text
+http://127.0.0.1:8000
+```
+
+11. Save the route
+
+Example result:
+
+```text
+https://chat.riderop.com
+```
+
+After saving the route, test it:
+
+```bash
+curl https://chat.riderop.com/health
+curl -X POST https://chat.riderop.com/chat \
+  -H "Content-Type: application/json" \
+  -d '{"message":"What is IGSA?","conversation_history":[]}'
+```
+
 ## Step 5. Set the Frontend Env File
 
 On the machine where you build and push the website:
@@ -185,3 +223,41 @@ For a stable long-term setup, use:
 For a real deployment, run the backend and tunnel under `screen` or `systemd` so they survive terminal disconnects.
 
 See [README.md](README.md) for the fuller reference documentation.
+
+## After Deployment
+
+After the website is deployed, the Linux server must keep both of these running:
+
+### 1. The chatbot backend
+
+```bash
+cd /path/to/psuigsa.github.io/chatbot-server
+source venv/bin/activate
+python main.py
+```
+
+### 2. The Cloudflare tunnel
+
+If you are using a named tunnel:
+
+```bash
+cloudflared tunnel run --token YOUR_TUNNEL_TOKEN
+```
+
+If you are using a quick tunnel:
+
+```bash
+cloudflared tunnel --url http://127.0.0.1:8000
+```
+
+If either process stops, the deployed website will no longer be able to use the chatbot.
+
+Recommended:
+- use `screen` for a simple setup
+- use `systemd` for a long-term setup
+
+Quick health check:
+
+```bash
+curl https://your-public-chatbot-hostname/health
+```
