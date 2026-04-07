@@ -99,7 +99,7 @@ export default function LivingInStateCollege() {
 
             <div className="bg-gradient-to-r from-igsa-saffron/10 to-igsa-orange/10 border-l-4 border-igsa-saffron p-6 rounded-r-lg mt-6">
               <p className="text-igsa-saffron font-medium">
-                <strong>Pro Tip:</strong> Download the CATA app and always carry your Penn State ID for free bus rides!
+                <strong>Pro Tip:</strong> Download the CATA app to plan your bus rides efficiently!
               </p>
             </div>
           </div>
