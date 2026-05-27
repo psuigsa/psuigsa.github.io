@@ -15,6 +15,34 @@ export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const openEventModal = (id: string) => {
+    try {
+      window.history.pushState(null, "", `#event-${id}`);
+    } catch (e) {}
+    setSelectedEvent(id);
+  };
+
+  const closeEventModal = () => {
+    try {
+      const base = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", base);
+    } catch (e) {}
+    setSelectedEvent(null);
+  };
+
+  useEffect(() => {
+    function checkHash() {
+      const hash = window.location.hash;
+      if (hash.startsWith("#event-")) {
+        const id = hash.slice("#event-".length);
+        setSelectedEvent(id);
+      }
+    }
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
+
   const hasText = (value?: string) => Boolean(value?.trim());
 
   // Fallback events in case API fails
@@ -122,7 +150,7 @@ export default function Events() {
             {events.map((event, index) => (
               <button
                 key={index}
-                onClick={() => setSelectedEvent(event.id)}
+                onClick={() => openEventModal(event.id)}
                 className="group bg-white rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 overflow-hidden text-left w-full"
               >
                 {/* Event Image */}
@@ -200,7 +228,7 @@ export default function Events() {
       </section>
 
       {/* Event Details Modal */}
-      <Dialog open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
+      <Dialog open={!!selectedEvent} onOpenChange={(open) => { if (!open) closeEventModal(); }}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           {selectedEvent && (() => {
             const event = events.find(e => e.id === selectedEvent);

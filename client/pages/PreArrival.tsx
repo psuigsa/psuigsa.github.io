@@ -21,18 +21,23 @@ export default function PreArrival({
   initialSection,
   standalone = false,
 }: PreArrivalProps = {}) {
+  const normalizeSectionId = (sectionId?: string | null) => {
+    if (!sectionId) return null;
+    return sectionId === "visa" ? "travel" : sectionId;
+  };
+
   const [activeSection, setActiveSection] = useState<string | null>(
-    initialSection ?? null
+    normalizeSectionId(initialSection)
   );
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (initialSection) setActiveSection(initialSection);
+    if (initialSection) setActiveSection(normalizeSectionId(initialSection));
   }, [initialSection]);
 
   const sections = [
     {
-      id: 'visa',
+      id: 'travel',
       title: 'How to reach Penn State',
       icon: '📍',
       description: 'Air, train, and road options to reach State College',
@@ -66,6 +71,9 @@ export default function PreArrival({
   ];
 
   const handleSectionClick = (sectionId: string) => {
+    try {
+      window.history.pushState(null, "", `#${sectionId}`);
+    } catch (e) {}
     setActiveSection(sectionId);
     // Smooth scroll to content area after state update
     setTimeout(() => {
@@ -77,9 +85,36 @@ export default function PreArrival({
     }, 100);
   };
 
+  const closeSection = () => {
+    try {
+      const base = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", base);
+    } catch (e) {}
+    setActiveSection(null);
+  };
+
+  useEffect(() => {
+    if (initialSection) return;
+    function checkHash() {
+      const rawHash = window.location.hash.slice(1);
+      const hash = normalizeSectionId(rawHash);
+      if (hash && sections.find(s => s.id === hash)) {
+        if (rawHash !== hash) {
+          try {
+            window.history.replaceState(null, "", `#${hash}`);
+          } catch (e) {}
+        }
+        setActiveSection(hash);
+      }
+    }
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
+
   const renderSectionContent = (sectionId: string) => {
     switch (sectionId) {
-      case 'visa':
+      case 'travel':
         return (
           <div className="prose max-w-none">
             <h4 className="text-xl font-semibold mb-4 text-igsa-saffron">How to reach Penn State</h4>
@@ -541,7 +576,7 @@ export default function PreArrival({
                 </div>
                 {!standalone && (
                   <button
-                    onClick={() => setActiveSection(null)}
+                    onClick={closeSection}
                     className="text-gray-500 hover:text-gray-700 p-3 rounded-full hover:bg-gray-100 transition-colors"
                   >
                     <span className="sr-only">Close</span>
@@ -566,7 +601,7 @@ export default function PreArrival({
                   </Link>
                 ) : (
                   <button
-                    onClick={() => setActiveSection(null)}
+                    onClick={closeSection}
                     className="inline-flex items-center text-igsa-blue hover:text-igsa-green transition-colors font-semibold"
                   >
                     ← Back to overview

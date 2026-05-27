@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 
@@ -51,6 +51,9 @@ export default function PostArrival() {
   ];
 
   const handleSectionClick = (sectionId: string) => {
+    try {
+      window.history.pushState(null, "", `#${sectionId}`);
+    } catch (e) {}
     setActiveSection(sectionId);
     setTimeout(() => {
       contentRef.current?.scrollIntoView({ 
@@ -60,6 +63,26 @@ export default function PostArrival() {
       });
     }, 100);
   };
+
+  const closeSection = () => {
+    try {
+      const base = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", base);
+    } catch (e) {}
+    setActiveSection(null);
+  };
+
+  useEffect(() => {
+    function checkHash() {
+      const hash = window.location.hash.slice(1);
+      if (sections.find(s => s.id === hash)) {
+        setActiveSection(hash);
+      }
+    }
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
 
   const renderSectionContent = (sectionId: string) => {
     switch (sectionId) {
@@ -443,7 +466,7 @@ export default function PostArrival() {
                   </div>
                 </div>
                 <button
-                  onClick={() => setActiveSection(null)}
+                  onClick={closeSection}
                   className="text-gray-500 hover:text-gray-700 p-3 rounded-full hover:bg-gray-100 transition-colors"
                 >
                   <span className="sr-only">Close</span>
@@ -459,7 +482,7 @@ export default function PostArrival() {
               
               <div className="mt-8 pt-8 border-t border-gray-200">
                 <button
-                  onClick={() => setActiveSection(null)}
+                  onClick={closeSection}
                   className="inline-flex items-center text-igsa-blue hover:text-igsa-green transition-colors font-semibold"
                 >
                   ← Back to overview

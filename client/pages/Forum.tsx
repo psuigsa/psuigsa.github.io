@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Navigation from "@/components/Navigation";
@@ -37,6 +37,33 @@ interface ChatMessage {
 
 export default function Forum() {
   const [showAIChat, setShowAIChat] = useState(false);
+
+  const openAIChat = () => {
+    try {
+      window.history.pushState(null, "", "#ai-chat");
+    } catch (e) {}
+    setShowAIChat(true);
+  };
+
+  const closeAIChat = () => {
+    try {
+      const base = window.location.pathname + window.location.search;
+      window.history.replaceState(null, "", base);
+    } catch (e) {}
+    setShowAIChat(false);
+  };
+
+  useEffect(() => {
+    function checkHash() {
+      if (window.location.hash === "#ai-chat") {
+        setShowAIChat(true);
+      }
+    }
+    checkHash();
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
+
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "1",
@@ -249,7 +276,7 @@ export default function Forum() {
             </p>
             <div className="flex justify-center">
               <Button
-                onClick={() => setShowAIChat(true)}
+                onClick={() => openAIChat()}
                 className="bg-gradient-to-r from-igsa-saffron to-igsa-orange hover:shadow-lg text-lg px-8 py-4 rounded-full"
               >
                 <Bot className="w-5 h-5 mr-2" />
@@ -275,7 +302,7 @@ export default function Forum() {
                 </div>
               </div>
               <Button
-                onClick={() => setShowAIChat(true)}
+                onClick={() => openAIChat()}
                 className="bg-igsa-blue hover:bg-igsa-blue/90"
               >
                 Start Chat
@@ -328,7 +355,7 @@ export default function Forum() {
 
       {/* Floating AI Chat Button */}
       <Button
-        onClick={() => setShowAIChat(true)}
+        onClick={() => openAIChat()}
         className="fixed bottom-6 right-6 rounded-full h-14 w-14 shadow-lg bg-igsa-saffron hover:bg-igsa-orange z-50"
         size="icon"
       >
@@ -336,7 +363,7 @@ export default function Forum() {
       </Button>
 
       {/* AI Chat Modal */}
-      <Dialog open={showAIChat} onOpenChange={setShowAIChat}>
+      <Dialog open={showAIChat} onOpenChange={(open) => { if (!open) closeAIChat(); }}>
         <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
           <DialogHeader>
             <DialogTitle className="flex items-center space-x-2">
